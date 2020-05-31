@@ -1,0 +1,39 @@
+/* You can add global styles to this file, and also import other style files */
+
+body { margin: 0; }
+
+html, body { 
+  height: 100%;
+  background-color:#303030;
+  
+}
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.full {
+  height: 100vh;
+}
+.margin-bottom-16 {
+  margin-bottom: 16px;
+}
+button .fa-spin {
+  margin-left: 5px;
+}
+.primary {
+  color: #7b1fa2!important
+}
+button:hover {
+  background-color: #7c51c8!important;
+}
+.pointer {
+  cursor: pointer;
+}
+.icon {
+  cursor: pointer;
+  color: #673ab7;
+}
+.icon:hover {
+  color: #7c51c8;
+}
+.padding-top-16 {
+    padding-top: 16px;
+}
