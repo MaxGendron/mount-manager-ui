@@ -1,6 +1,6 @@
 {
     "error": {
-        "userNotfound": "Can't found your account, please check your credentials and try again.",
+        "userNotfound": "Cannot find your account, please check your credentials and try again.",
         "unexpected": "An unexpected error occured, please try again."
     },
     "button": {

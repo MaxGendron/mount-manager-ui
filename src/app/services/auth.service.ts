@@ -9,6 +9,7 @@ export class AuthService {
   public currentUserSubject: BehaviorSubject<any>;
   public currentUser: Observable<any>;
 
+  //Add user into storage and keep a reference
   constructor(private router: Router) {
     this.currentUserSubject = new BehaviorSubject<any>(JSON.parse(localStorage.getItem('currentUser')));
     this.currentUser = this.currentUserSubject.asObservable();
@@ -18,6 +19,7 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  //Remove user from localStorage
   logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
