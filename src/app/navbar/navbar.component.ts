@@ -18,13 +18,17 @@ export class NavbarComponent {
   error;
   loading = false;
 
-  connectedUsername: string;
+  connectedUsername: string = "Admin";
 
-  constructor(private userService: UserService, private authService: AuthService, 
+  constructor(private userService: UserService, public authService: AuthService, 
     private translateService: TranslateService, private router: Router) { }
 
   logout(): void {
     this.authService.logout();
+  }
+
+  openLoginPopup(): void {
+
   }
 
   //Try to login the user

@@ -4,11 +4,15 @@
         "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer."
     },
     "button": {
-        "login": "Se connecter"
+        "login": "Se connecter",
+        "logout": "Se déconnecter"
     },
     "login": {
         "username": "Nom de compte",
         "password": "Mot de passe",
-        "title": "Se connecter à WMS"
+        "title": "Se connecter"
+    },
+    "navbar": {
+        "account": "Mon compte"
     }
 }

@@ -4,11 +4,15 @@
         "unexpected": "An unexpected error occured, please try again."
     },
     "button": {
-        "login": "Login"
+        "login": "Login",
+        "logout": "Logout"
     },
     "login": {
         "username": "Username",
         "password": "Password",
         "title": "Login"
+    },
+    "navbar": {
+        "account": "My account"
     }
 }

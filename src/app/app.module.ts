@@ -20,14 +20,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { IndexComponent } from './index/index.component';
 import { AuthGuard } from './services/auth.guard';
 import { NavbarComponent } from './navbar/navbar.component'
+import { MatMenuModule } from '@angular/material/menu';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent},
+  { path: '', redirectTo: 'index', pathMatch: 'full' },
   { path: 'index', component: IndexComponent, canActivate: [AuthGuard]},
   { path: '**', component: LoginComponent}
 ];
@@ -61,7 +61,8 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatButtonToggleModule,
     MatIconModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatMenuModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
