@@ -14,10 +14,12 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatIconModule } from '@angular/material/icon';
 import { IndexComponent } from './index/index.component';
-import { AuthGuard } from './services/auth.guard'
+import { AuthGuard } from './services/auth.guard';
+import { NavbarComponent } from './navbar/navbar.component'
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -27,13 +29,15 @@ const appRoutes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent},
   { path: 'index', component: IndexComponent, canActivate: [AuthGuard]},
+  { path: '**', component: LoginComponent}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    IndexComponent
+    IndexComponent,
+    NavbarComponent
   ],
   imports: [
     FormsModule,
@@ -56,7 +60,8 @@ const appRoutes: Routes = [
     MatCardModule,
     MatButtonModule,
     MatButtonToggleModule,
-    MatIconModule
+    MatIconModule,
+    MatToolbarModule
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

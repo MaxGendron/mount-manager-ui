@@ -4,7 +4,7 @@ import { AuthService } from '../services/auth.service';
 @Component({
   selector: 'app-index',
   templateUrl: './index.component.html',
-  styleUrls: ['./index.component.css']
+  styleUrls: ['./index.component.scss']
 })
 export class IndexComponent implements OnInit {
 
@@ -14,9 +14,5 @@ export class IndexComponent implements OnInit {
 
   ngOnInit(): void {
     this.username = this.authService.currentUserValue.username
-  }
-
-  logout(): void {
-    this.authService.logout();
   }
 }

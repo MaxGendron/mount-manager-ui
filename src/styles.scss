@@ -1,0 +1,59 @@
+@import '~@angular/material/theming';
+@import './main_theme.scss';
+
+$primary: map-get($theme, primary);
+$accent: map-get($theme, accent);
+
+html, body { 
+  height: 100%;
+}
+
+.full {
+  height: 100vh;
+}
+
+.margin-bottom-16 {
+  margin-bottom: 16px;
+}
+
+button .fa-spin {
+  margin-left: 5px;
+}
+
+.primary {
+  color: mat-color($primary) !important;
+
+  &-light {
+    color: mat-color($primary, 300) !important;
+  }
+
+  &-dark {
+    color: mat-color($primary, 900) !important;
+  }
+}
+
+.accent {
+  color: mat-color($accent) !important;
+
+  &-light {
+    color: mat-color($accent, 300) !important;
+  }
+
+  &-dark {
+    color: mat-color($accent, 900) !important;
+  }
+}
+
+button {
+  &:hover {
+    background-color: mat-color($accent, 300) !important;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.padding-top-16 {
+    padding-top: 16px;
+}

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -6,11 +6,11 @@ import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-navbar',
+  templateUrl: './navbar.component.html',
+  styleUrls: ['./navbar.component.scss']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class NavbarComponent {
 
   private subscription: Subscription = new Subscription();
   username;
@@ -18,13 +18,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   error;
   loading = false;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router, private translateService: TranslateService) { }
+  connectedUsername: string;
 
-  ngOnInit(): void {
-  }
+  constructor(private userService: UserService, private authService: AuthService, 
+    private translateService: TranslateService, private router: Router) { }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  logout(): void {
+    this.authService.logout();
   }
 
   //Try to login the user
@@ -38,6 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       } else {
         localStorage.setItem('currentUser', JSON.stringify(response.user));
         this.authService.currentUserSubject.next(response.user);
+        this.connectedUsername = this.authService.currentUserValue;
         this.router.navigate(['index']);
       }
       this.loading = false;
