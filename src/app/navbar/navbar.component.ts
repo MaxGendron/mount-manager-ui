@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { UserService } from '../services/user.service';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
+import { MatDialog } from '@angular/material/dialog';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component'
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,50 +9,34 @@ import { Subscription } from 'rxjs';
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.scss']
 })
-export class NavbarComponent {
+export class NavbarComponent implements OnInit, OnDestroy {
 
+  connectedUsername: string;
   private subscription: Subscription = new Subscription();
-  username;
-  password;
-  error;
-  loading = false;
 
-  connectedUsername: string = "Admin";
+  constructor(public authService: AuthService,  public dialog: MatDialog) { }
 
-  constructor(private userService: UserService, public authService: AuthService, 
-    private translateService: TranslateService, private router: Router) { }
+  ngOnInit(): void {
+    this.subscription.add((this.authService.currentUser).subscribe(u => {
+      if (this.authService.currentUserValue != null) {
+        this.connectedUsername = this.authService.currentUserValue.username;
+      } else {
+        this.connectedUsername = null;
+      }
+    }));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   logout(): void {
     this.authService.logout();
   }
-
+  
   openLoginPopup(): void {
-
-  }
-
-  //Try to login the user
-  login(): void {
-    this.loading = true;
-
-    this.subscription.add(this.userService.validateUser(this.username, this.password).subscribe(response => {
-      //Look if the user is valid or not
-      if (response.isValid !== true) {
-        this.error = this.translateService.instant('error.userNotfound');
-      } else {
-        localStorage.setItem('currentUser', JSON.stringify(response.user));
-        this.authService.currentUserSubject.next(response.user);
-        this.connectedUsername = this.authService.currentUserValue;
-        this.router.navigate(['index']);
-      }
-      this.loading = false;
-    }, error => {
-      //Error handling
-      if (error.name === 'NotFound') {
-        this.error = this.translateService.instant('error.userNotfound');
-      } else {
-        this.error = this.translateService.instant('error.unexpected');
-      }
-      this.loading = false;
-    }));
+    this.dialog.open(LoginDialogComponent, {
+      width: '400px'
+    });
   }
 }

@@ -7,7 +7,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RouterModule, Routes } from '@angular/router';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './login/login.component';
 import { JwtInterceptor } from './interceptor/jwt.interceptor';
 import { ErrorInterceptor } from './interceptor/error.interceptor';
 import { MatInputModule } from '@angular/material/input';
@@ -21,23 +20,24 @@ import { IndexComponent } from './index/index.component';
 import { AuthGuard } from './services/auth.guard';
 import { NavbarComponent } from './navbar/navbar.component'
 import { MatMenuModule } from '@angular/material/menu';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
 
 const appRoutes: Routes = [
-  { path: '', redirectTo: 'index', pathMatch: 'full' },
-  { path: 'index', component: IndexComponent, canActivate: [AuthGuard]},
-  { path: '**', component: LoginComponent}
+  { path: '', component: IndexComponent },
+  // { path: 'index', component: IndexComponent, canActivate: [AuthGuard]}
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
     IndexComponent,
-    NavbarComponent
+    NavbarComponent,
+    LoginDialogComponent
   ],
   imports: [
     FormsModule,
@@ -62,7 +62,11 @@ const appRoutes: Routes = [
     MatButtonToggleModule,
     MatIconModule,
     MatToolbarModule,
-    MatMenuModule
+    MatMenuModule,
+    MatDialogModule
+  ],
+  entryComponents: [
+    LoginDialogComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

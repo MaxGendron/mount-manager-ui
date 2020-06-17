@@ -1,16 +1,17 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Inject, OnDestroy } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { TranslateService } from '@ngx-translate/core';
+import { Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  selector: 'app-login-dialog',
+  templateUrl: './login-dialog.component.html',
+  styleUrls: ['./login-dialog.component.css']
 })
-export class LoginComponent implements OnInit, OnDestroy {
+export class LoginDialogComponent implements OnDestroy {
 
   private subscription: Subscription = new Subscription();
   username;
@@ -18,10 +19,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   error;
   loading = false;
 
-  constructor(private userService: UserService, private authService: AuthService, private router: Router, private translateService: TranslateService) { }
-
-  ngOnInit(): void {
-  }
+  constructor(public dialogRef: MatDialogRef<LoginDialogComponent>, private translateService: TranslateService,
+    private userService: UserService, private authService: AuthService) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -38,7 +37,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       } else {
         localStorage.setItem('currentUser', JSON.stringify(response.user));
         this.authService.currentUserSubject.next(response.user);
-        this.router.navigate(['index']);
+        //Close the dialog
+        this.dialogRef.close();
       }
       this.loading = false;
     }, error => {
