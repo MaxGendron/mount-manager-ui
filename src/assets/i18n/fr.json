@@ -5,12 +5,15 @@
   },
   "button": {
     "login": "Se connecter",
-    "logout": "Se déconnecter"
+    "logout": "Se déconnecter",
+    "register": "S'inscrire"
   },
   "login": {
     "username": "Nom de compte",
     "password": "Mot de passe",
-    "title": "Se connecter"
+    "login": "Connexion",
+    "register": "Inscription",
+    "register-text": "Pas encore de compte avec nous? Inscrivez vous maintenant pour profiter de toute les fonctionnalités!"
   },
   "navbar": {
     "account": "Mon compte"

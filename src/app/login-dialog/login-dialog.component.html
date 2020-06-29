@@ -1,6 +1,6 @@
-<div class="row">
-  <div class="col-lg-6">
-    <h1 mat-dialog-title class="primary font-weight-bold">{{ "button.login" | translate }}</h1>
+<div class="row" id="popup-container">
+  <div class="col-lg-8">
+    <h1 mat-dialog-title class="primary font-weight-bold">{{ "login.login" | translate }}</h1>
     <div mat-dialog-content class="row">
       <mat-form-field appearance="standard" class="col-lg-12">
         <mat-label>{{ "login.username" | translate }}</mat-label>
@@ -24,13 +24,24 @@
       <button
         color="accent"
         mat-raised-button
-        class="text-right"
-        [disabled]="loading"
-        (click)="login()" >
+        [disabled]="isDisabled()"
+        (click)="login()"
+        >
         {{ "button.login" | translate }}
         <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
       </button>
     </div>
   </div>
-  <div id="register-container" class="col-lg-6 debug"></div>
+  <div class="col-lg-4">
+    <h1 mat-dialog-title class="font-weight-bold text-center">{{ "login.register" | translate }}</h1>
+    <p class="font-weight-bold text-center padding-top-16">{{ "login.register-text" | translate }}</p>
+    <div mat-dialog-actions align="center" class="margin-top-16">
+      <button
+      mat-raised-button
+      (click)="register()"
+      >
+      {{ "button.register" | translate }}
+    </button>
+    </div>
+  </div>
 </div>

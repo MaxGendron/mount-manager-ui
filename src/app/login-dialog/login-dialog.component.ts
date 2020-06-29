@@ -1,10 +1,10 @@
-import { Component, Inject, OnDestroy } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { Component, OnDestroy } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
-import { Router } from '@angular/router';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login-dialog',
@@ -24,6 +24,10 @@ export class LoginDialogComponent implements OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  isDisabled(): boolean {
+    return !this.username || !this.password || this.loading;
   }
 
   //Try to login the user
@@ -50,5 +54,9 @@ export class LoginDialogComponent implements OnDestroy {
       }
       this.loading = false;
     }));
+  }
+
+  register(): void {
+    this.dialogRef.close();
   }
 }

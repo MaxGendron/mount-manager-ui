@@ -5,12 +5,15 @@
   },
   "button": {
     "login": "Login",
-    "logout": "Logout"
+    "logout": "Logout",
+    "register": "Register"
   },
   "login": {
     "username": "Username",
     "password": "Password",
-    "title": "Login"
+    "login": "Login",
+    "register": "Register",
+    "register-text": "Don't have an account with us yet? Register now to have access to all the feature!"
   },
   "navbar": {
     "account": "My account"
