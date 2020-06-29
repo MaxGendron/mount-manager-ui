@@ -9,14 +9,14 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
-  styleUrls: ['./login-dialog.component.css']
+  styleUrls: ['./login-dialog.component.scss']
 })
 export class LoginDialogComponent implements OnDestroy {
 
   private subscription: Subscription = new Subscription();
-  username;
-  password;
-  error;
+  username : string;
+  password : string;
+  error : string;
   loading = false;
 
   constructor(public dialogRef: MatDialogRef<LoginDialogComponent>, private translateService: TranslateService,

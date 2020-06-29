@@ -1,18 +1,18 @@
 {
-    "error": {
-        "userNotfound": "Impossible de trouver votre compte, vérifiez vos informations d'identification et réessayez.",
-        "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer."
-    },
-    "button": {
-        "login": "Se connecter",
-        "logout": "Se déconnecter"
-    },
-    "login": {
-        "username": "Nom de compte",
-        "password": "Mot de passe",
-        "title": "Se connecter"
-    },
-    "navbar": {
-        "account": "Mon compte"
-    }
+  "error": {
+    "userNotfound": "Impossible de trouver votre compte, vérifiez vos informations d'identification et réessayez.",
+    "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer."
+  },
+  "button": {
+    "login": "Se connecter",
+    "logout": "Se déconnecter"
+  },
+  "login": {
+    "username": "Nom de compte",
+    "password": "Mot de passe",
+    "title": "Se connecter"
+  },
+  "navbar": {
+    "account": "Mon compte"
+  }
 }

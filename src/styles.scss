@@ -1,32 +1,13 @@
-@import '~@angular/material/theming';
-@import './main_theme.scss';
+@import "~@angular/material/theming";
+@import "./main_theme.scss";
+@import "./override.scss";
 
 //For testing purpose, to remove
 .debug {
   border: 1px solid red !important;
 }
 
-/*Overriding mat-menu here, because overriding it in navbar.component doesn't work since the "menu" 
-  component is higher than the navbar in the dom hierarchy */
-.navbar-menu {
-  background-color: $primary;
-  border: 1px solid $primary-dark;
-  width: 150px !important;
-
-  .mat-menu-content {
-    padding: 0 !important;
-    
-    span {
-      text-align: center !important;
-
-      &:first-child {
-        border-bottom: 1px solid $primary-dark;
-      }
-    }
-  }
-}
-
-html, body { 
+html, body {
   height: 100%;
 }
 
@@ -66,6 +47,18 @@ button .fa-spin {
   }
 }
 
+.warning {
+  color: $warning;
+
+  &-light {
+    color: $warning-light;
+  }
+
+  &-dark {
+    color: $warning-dark;
+  }
+}
+
 button {
   &:hover {
     background-color: $accent-light;
@@ -77,7 +70,7 @@ button {
 }
 
 .padding-top-16 {
-    padding-top: 16px;
+  padding-top: 16px;
 }
 
 .error-div {

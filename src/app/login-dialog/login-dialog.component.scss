@@ -1,0 +1,18 @@
+@import "~@angular/material/theming";
+@import "../../main_theme.scss";
+
+.mat-dialog-actions {
+  margin-bottom: -16px;
+}
+
+mat-form-field {
+  padding: 0;
+}
+
+h1 {
+  font-size: 32px;
+}
+
+#register-container {
+  background-color: $primary-light;
+}

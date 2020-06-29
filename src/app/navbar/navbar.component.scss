@@ -1,23 +1,23 @@
-@import '~@angular/material/theming';
-@import '../../main_theme.scss';
+@import "~@angular/material/theming";
+@import "../../main_theme.scss";
 
 .fill-remaining-space {
-    flex: 1 1 auto;
+  flex: 1 1 auto;
 }
 
 .login-container {
-    padding: 16px 32px;
-    cursor: pointer;
+  padding: 16px 32px;
+  cursor: pointer;
 
-    &:hover {
-        background-color: mat-color($main-app-primary, 400);
-    }
+  &:hover {
+    background-color: mat-color($main-app-primary, 400);
+  }
 
-    i {
-        padding-left: 8px;
-    }
+  i {
+    padding-left: 8px;
+  }
 }
 
 mat-toolbar {
-    padding-right: 0;
+  padding-right: 0;
 }
