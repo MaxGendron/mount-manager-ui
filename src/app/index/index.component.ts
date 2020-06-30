@@ -8,11 +8,9 @@ import { AuthService } from '../services/auth.service';
 })
 export class IndexComponent implements OnInit {
 
-  username: string;
 
-  constructor(private authService: AuthService) { }
+  constructor() { }
 
   ngOnInit(): void {
-    this.username = this.authService.currentUserValue.username
   }
 }

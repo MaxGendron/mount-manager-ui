@@ -1,0 +1,50 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <h1 mat-dialog-title class="primary font-weight-bold">{{ "register.title" | translate }}</h1>
+  <div mat-dialog-content class="row">
+    <mat-form-field appearance="standard" class="col-lg-12">
+      <mat-label>{{ "form.username" | translate }}</mat-label>
+      <input 
+        formControlName="username"
+        type="text"
+        name="username"
+        required
+        matInput />
+    </mat-form-field>
+    <div formGroupName="passwords">
+      <mat-form-field appearance="standard" class="col-lg-12">
+        <mat-label>{{ "form.password" | translate }}</mat-label>
+        <input
+          formControlName="password"
+          type="password"
+          name="password"
+          required
+          matInput />
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="col-lg-12">
+        <mat-label>{{ "form.confirmPassword" | translate }}</mat-label>
+        <input
+          formControlName="confirmPassword"
+          type="confirmPassword"
+          name="confirmPassword"
+          required
+          matInput />
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="margin-bottom-16 error-div">
+    <span *ngIf="error" class="warning">
+      <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
+    </span>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button
+      type="submit"
+      color="accent"
+      mat-raised-button
+      [disabled]="isDisabled()"
+      >
+      {{ "button.login" | translate }}
+      <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
+    </button>
+  </div>
+</form>

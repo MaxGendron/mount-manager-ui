@@ -22,6 +22,7 @@ import { NavbarComponent } from './navbar/navbar.component'
 import { MatMenuModule } from '@angular/material/menu';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RegisterPopupComponent } from './register-popup/register-popup.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -37,7 +38,8 @@ const appRoutes: Routes = [
     AppComponent,
     IndexComponent,
     NavbarComponent,
-    LoginDialogComponent
+    LoginDialogComponent,
+    RegisterPopupComponent
   ],
   imports: [
     FormsModule,
@@ -66,7 +68,8 @@ const appRoutes: Routes = [
     MatDialogModule
   ],
   entryComponents: [
-    LoginDialogComponent
+    LoginDialogComponent,
+    RegisterPopupComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

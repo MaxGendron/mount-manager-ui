@@ -126,7 +126,8 @@
   "defaultProject": "test-app",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "style": "scss",
+      "spec": false
     }
   }
 }

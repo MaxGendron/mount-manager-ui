@@ -1,17 +1,18 @@
-import { Component, OnDestroy } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { UserService } from '../services/user.service';
 import { AuthService } from '../services/auth.service';
 import { Validators, FormBuilder } from '@angular/forms';
+import { RegisterPopupComponent } from '../register-popup/register-popup.component';
 
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
   styleUrls: ['./login-dialog.component.scss']
 })
-export class LoginDialogComponent implements OnDestroy {
+export class LoginDialogComponent implements OnDestroy, OnInit {
 
   private subscription: Subscription = new Subscription();
   error : string;
@@ -23,10 +24,18 @@ export class LoginDialogComponent implements OnDestroy {
   });
 
   constructor(public dialogRef: MatDialogRef<LoginDialogComponent>, private translateService: TranslateService,
-    private userService: UserService, private authService: AuthService, private fb: FormBuilder) {}
+    private userService: UserService, private authService: AuthService, private fb: FormBuilder,
+    public dialog: MatDialog) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  ngOnInit(): void {
+    //Listen on value changes to reset error message
+    this.loginForm.valueChanges.subscribe(value => {
+      this.error = "";
+    });
   }
 
   isDisabled(): boolean {
@@ -37,16 +46,11 @@ export class LoginDialogComponent implements OnDestroy {
   login(): void {
     this.loading = true;
 
-    this.subscription.add(this.userService.validateUser(this.loginForm.value.username, this.loginForm.value.password).subscribe(response => {
-      //Look if the user is valid or not
-      if (response.isValid !== true) {
-        this.error = this.translateService.instant('error.userNotfound');
-      } else {
-        localStorage.setItem('currentUser', JSON.stringify(response.user));
-        this.authService.currentUserSubject.next(response.user);
-        //Close the dialog
-        this.dialogRef.close();
-      }
+    this.subscription.add(this.userService.validateUser(this.loginForm.get("username").value, this.loginForm.get("password").value)
+    .subscribe(response => {
+      this.authService.login(response.user);
+      //Close the dialog
+      this.dialogRef.close();
       this.loading = false;
     }, error => {
       //Error handling
@@ -61,5 +65,13 @@ export class LoginDialogComponent implements OnDestroy {
 
   register(): void {
     this.dialogRef.close();
+    this.dialog.open(RegisterPopupComponent, {
+      id: "register-popup",
+      width: "600px",
+      data: {
+        username: this.loginForm.value.username
+      },
+      autoFocus: false
+    });
   }
 }

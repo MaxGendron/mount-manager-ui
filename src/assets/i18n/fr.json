@@ -1,21 +1,27 @@
 {
   "error": {
     "userNotfound": "Impossible de trouver votre compte, vérifiez vos informations d'identification et réessayez.",
-    "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer."
+    "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer.",
+    "matchPassword": "Les mots de passe ne correspondent pas."
   },
   "button": {
     "login": "Se connecter",
     "logout": "Se déconnecter",
     "register": "S'inscrire"
   },
-  "login": {
+  "form": {
     "username": "Nom de compte",
     "password": "Mot de passe",
-    "login": "Connexion",
-    "register": "Inscription",
+    "confirmPassword": "Confirmation du mot de passe"
+  },
+  "login": {
+    "title": "Connexion",
     "register-text": "Pas encore de compte avec nous? Inscrivez vous maintenant pour profiter de toute les fonctionnalités!"
   },
   "navbar": {
     "account": "Mon compte"
+  },
+  "register": {
+    "title": "Inscription"
   }
 }

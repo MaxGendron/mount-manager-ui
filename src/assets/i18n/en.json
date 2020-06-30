@@ -1,21 +1,27 @@
 {
   "error": {
     "userNotfound": "Cannot find your account, please check your credentials and try again.",
-    "unexpected": "An unexpected error occured, please try again."
+    "unexpected": "An unexpected error occured, please try again.",
+    "matchPassword": "The passwords doesn't match."
   },
   "button": {
     "login": "Login",
     "logout": "Logout",
     "register": "Register"
   },
-  "login": {
+  "form": {
     "username": "Username",
     "password": "Password",
-    "login": "Login",
-    "register": "Register",
+    "confirmPassword": "Confirm Password"
+  },
+  "login": {
+    "title": "Login",
     "register-text": "Don't have an account with us yet? Register now to have access to all the feature!"
   },
   "navbar": {
     "account": "My account"
+  },
+  "register": {
+    "title": "Register"
   }
 }

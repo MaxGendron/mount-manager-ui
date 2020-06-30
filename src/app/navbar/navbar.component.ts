@@ -37,7 +37,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   openLoginPopup(): void {
     this.dialog.open(LoginDialogComponent, {
       id: "login-popup",
-      width: "600px"
+      width: "600px",
+      autoFocus: false
     });
   }
 }

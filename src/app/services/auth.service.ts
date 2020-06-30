@@ -19,6 +19,12 @@ export class AuthService {
     return this.currentUserSubject.value;
   }
 
+  //Set the user in the localStorage & currentUser
+  login(user) {
+    localStorage.setItem('currentUser', JSON.stringify(user));
+    this.currentUserSubject.next(user);
+  }
+
   //Remove user from localStorage
   logout() {
     localStorage.removeItem('currentUser');
