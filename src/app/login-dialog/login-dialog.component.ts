@@ -33,8 +33,8 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
 
   ngOnInit(): void {
     //Listen on value changes to reset error message
-    this.loginForm.valueChanges.subscribe(value => {
-      this.error = "";
+    this.loginForm.valueChanges.subscribe(() => {
+      this.error = '';
     });
   }
 
@@ -46,7 +46,7 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
   login(): void {
     this.loading = true;
 
-    this.subscription.add(this.userService.validateUser(this.loginForm.get("username").value, this.loginForm.get("password").value)
+    this.subscription.add(this.userService.validateUser(this.loginForm.get('username').value, this.loginForm.get('password').value)
     .subscribe(response => {
       this.authService.login(response.user);
       //Close the dialog
@@ -56,6 +56,8 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
       //Error handling
       if (error.name === 'NotFound') {
         this.error = this.translateService.instant('error.userNotfound');
+      } else if (error.name = 'UndefinedParameter') {
+        this.error = this.translateService.instant('error.allFields');
       } else {
         this.error = this.translateService.instant('error.unexpected');
       }
@@ -66,8 +68,8 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
   register(): void {
     this.dialogRef.close();
     this.dialog.open(RegisterPopupComponent, {
-      id: "register-popup",
-      width: "600px",
+      id: 'register-popup',
+      width: '600px',
       data: {
         username: this.loginForm.value.username
       },

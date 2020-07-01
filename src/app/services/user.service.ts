@@ -16,8 +16,12 @@ export class UserService {
     return this.http.post<any>(environment.webApiEndPoint + this.usersEndpoint + 'validate', userObject);
   }
 
-  registerUser(username, password) {
-    const userObject = { 'username': username, 'password': password };
+  registerUser(username, password, email) {
+    const userObject = { 'username': username, 'password': password, 'email': email };
     return this.http.post<any>(environment.webApiEndPoint + this.usersEndpoint, userObject);
+  }
+
+  exist(query) {
+    return this.http.post<any>(environment.webApiEndPoint + this.usersEndpoint + 'exist', query);
   }
 }

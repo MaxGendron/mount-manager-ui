@@ -1,8 +1,14 @@
 {
   "error": {
-    "userNotfound": "Impossible de trouver votre compte, vérifiez vos informations d'identification et réessayez.",
-    "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer.",
-    "matchPassword": "Les mots de passe ne correspondent pas."
+    "userNotfound": "Impossible de trouver votre compte, vérifiez vos informations d'identification et réessayez",
+    "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer",
+    "matchPassword": "Les mots de passe ne correspondent pas",
+    "allFields": "Veuillez remplir tout les champs",
+    "required": "{{input}} is required",
+    "invalidEmail": "L'adresse courriel n'est pas dans un format valide",
+    "accountExist": "L'adresse courriel ou le nom de compte est déjà pris, veuillez réessayer",
+    "emailExist": "L'adresse courriel spécifié existe déjà",
+    "usernameExist": "Le nom d'utilisateur spécifié existe déjà"
   },
   "button": {
     "login": "Se connecter",
@@ -11,6 +17,8 @@
   },
   "form": {
     "username": "Nom de compte",
+    "email": "Adresse courriel",
+    "usernameOrEmail": "Nom de compte ou address courriel",
     "password": "Mot de passe",
     "confirmPassword": "Confirmation du mot de passe"
   },
