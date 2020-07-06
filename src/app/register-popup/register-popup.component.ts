@@ -53,31 +53,32 @@ export class RegisterPopupComponent implements OnInit, OnDestroy {
       query: {'username': username}
     }
 
-    this.subscription.add(this.userService.exist(query)
-    .subscribe(response => {
-      if (response.exist) {
-        this.registerForm.get("username").setErrors({'exist': true}); 
-      }
-      //Not subscribing on error because we don't wanna afraid the user for nothing
-      //and the existing account is checked on register, so no worries about sanity
-    }));
+    this.subscription.add(
+      this.userService.exist(query).subscribe((response) => {
+        if (response.exist) {
+          this.registerForm.get('username').setErrors({ exist: true });
+        }
+        //Not subscribing on error because we don't wanna afraid the user for nothing
+        //and the existing account is checked on register, so no worries about sanity
+      })
+    );
   }
 
-    //Verify the email don't exist
-    onEmailBlur(email: string) {
-      let query = {
-        query: {'email': email}
-      }
-  
-      this.subscription.add(this.userService.exist(query)
+  //Verify the email don't exist
+  onEmailBlur(email: string) {
+    let query = {
+      query: { 'email': email }
+    }
+
+    this.subscription.add(this.userService.exist(query)
       .subscribe(response => {
         if (response.exist) {
-          this.registerForm.get("email").setErrors({'exist': true}); 
+          this.registerForm.get('email').setErrors({ 'exist': true });
         }
         //Not subscribing on error because we don't wanna afraid the user for nothing
         //and the existing account is checked on register, so no worries about sanity
       }));
-    }
+  }
 
   //Try registering the user
   register(): void {

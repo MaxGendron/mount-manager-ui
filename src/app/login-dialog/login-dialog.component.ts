@@ -47,22 +47,22 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
     this.loading = true;
 
     this.subscription.add(this.userService.validateUser(this.loginForm.get('username').value, this.loginForm.get('password').value)
-    .subscribe(response => {
-      this.authService.login(response.user);
-      //Close the dialog
-      this.dialogRef.close();
-      this.loading = false;
-    }, error => {
-      //Error handling
-      if (error.name === 'NotFound') {
-        this.error = this.translateService.instant('error.userNotfound');
-      } else if (error.name = 'UndefinedParameter') {
-        this.error = this.translateService.instant('error.allFields');
-      } else {
-        this.error = this.translateService.instant('error.unexpected');
-      }
-      this.loading = false;
-    }));
+      .subscribe(response => {
+        this.authService.login(response.user);
+        //Close the dialog
+        this.dialogRef.close();
+        this.loading = false;
+      }, error => {
+        //Error handling
+        if (error.name === 'NotFound') {
+          this.error = this.translateService.instant('error.userNotfound');
+        } else if (error.name = 'UndefinedParameter') {
+          this.error = this.translateService.instant('error.allFields');
+        } else {
+          this.error = this.translateService.instant('error.unexpected');
+        }
+        this.loading = false;
+      }));
   }
 
   register(): void {
