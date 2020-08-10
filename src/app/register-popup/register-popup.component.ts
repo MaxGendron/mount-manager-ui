@@ -88,7 +88,7 @@ export class RegisterPopupComponent implements OnInit, OnDestroy {
       this.registerForm.get('passwords').get('password').value,
       this.registerForm.get('email').value )
     .subscribe(response => {
-      this.authService.login(response.user);
+      this.authService.login(response);
       //Close the dialog
       this.dialogRef.close();
       this.loading = false;

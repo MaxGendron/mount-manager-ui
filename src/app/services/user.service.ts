@@ -11,9 +11,9 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  validateUser(username, password) {
+  loginUser(username, password) {
     const userObject = { 'username': username, 'password': password };
-    return this.http.post<any>(environment.webApiEndPoint + this.usersEndpoint + 'validate', userObject);
+    return this.http.post<any>(environment.webApiEndPoint + this.usersEndpoint + 'login', userObject);
   }
 
   registerUser(username, password, email) {

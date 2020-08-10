@@ -46,9 +46,9 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
   login(): void {
     this.loading = true;
 
-    this.subscription.add(this.userService.validateUser(this.loginForm.get('username').value, this.loginForm.get('password').value)
+    this.subscription.add(this.userService.loginUser(this.loginForm.get('username').value, this.loginForm.get('password').value)
       .subscribe(response => {
-        this.authService.login(response.user);
+        this.authService.login(response);
         //Close the dialog
         this.dialogRef.close();
         this.loading = false;
