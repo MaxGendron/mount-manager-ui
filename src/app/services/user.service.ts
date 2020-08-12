@@ -21,7 +21,8 @@ export class UserService {
     return this.http.post<any>(environment.webApiEndPoint + this.usersEndpoint, userObject);
   }
 
-  exist(query) {
-    return this.http.post<any>(environment.webApiEndPoint + this.usersEndpoint + 'exist', query);
+  validatePropertyValue(property, value) {
+    const data = {property: property, value: value};
+    return this.http.get<any>(environment.webApiEndPoint + this.usersEndpoint + 'validate', {params: data});
   }
 }

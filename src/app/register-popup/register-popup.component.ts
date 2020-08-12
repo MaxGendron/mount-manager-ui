@@ -49,12 +49,9 @@ export class RegisterPopupComponent implements OnInit, OnDestroy {
 
   //Verify the username don't exist
   onUsernameBlur(username: string) {
-    let query = {
-      query: {'username': username}
-    }
-
     this.subscription.add(
-      this.userService.exist(query).subscribe((response) => {
+      this.userService.validatePropertyValue('username', username)
+      .subscribe(response => {
         if (response.exist) {
           this.registerForm.get('username').setErrors({ exist: true });
         }
@@ -66,11 +63,8 @@ export class RegisterPopupComponent implements OnInit, OnDestroy {
 
   //Verify the email don't exist
   onEmailBlur(email: string) {
-    let query = {
-      query: { 'email': email }
-    }
-
-    this.subscription.add(this.userService.exist(query)
+    this.subscription.add(
+      this.userService.validatePropertyValue('email', email)
       .subscribe(response => {
         if (response.exist) {
           this.registerForm.get('email').setErrors({ 'exist': true });

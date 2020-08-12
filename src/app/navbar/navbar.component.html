@@ -12,7 +12,7 @@
       <span>{{ connectedUsername }}<i class="far fa-user-circle"></i></span>
       <mat-menu #accountMenu="matMenu" xPosition="before" class="navbar-menu">
         <!-- Make the routerlink redirecting to my account -->
-        <span mat-menu-item [routerLink]="['index']">{{ 'navbar.account' | translate }}</span>
+        <span mat-menu-item [routerLink]="['']">{{ 'navbar.account' | translate }}</span>
         <span mat-menu-item (click)="logout()">{{'button.logout' | translate }}</span>
       </mat-menu>
     </div>
