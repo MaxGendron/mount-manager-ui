@@ -1,0 +1,59 @@
+<div class="row" id="popup-container">
+  <form class="col-lg-8" [formGroup]="loginForm" (ngSubmit)="login()">
+    <h1 mat-dialog-title class="primary font-weight-bold">{{ "login.title" | translate }}</h1>
+    <div mat-dialog-content class="row">
+      <mat-form-field appearance="standard" class="col-lg-12">
+        <mat-label>{{ "form.usernameOrEmail" | translate }}</mat-label>
+        <input 
+          formControlName="username"
+          type="text"
+          name="username"
+          required
+          matInput />
+        <mat-error *ngIf="loginForm.get('username').hasError('required')">
+          {{"error.required" | translate: { input: "form.usernameOrEmail" | translate } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="col-lg-12">
+        <mat-label>{{ "form.password" | translate }}</mat-label>
+        <input
+          formControlName="password"
+          type="password"
+          name="password"
+          required
+          matInput />
+        <mat-error *ngIf="loginForm.get('password').hasError('required')">
+          {{"error.required" | translate: { input: "form.password" | translate } }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="margin-bottom-16 error-div">
+      <span *ngIf="error" class="warning">
+        <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
+      </span>
+    </div>
+    <div mat-dialog-actions align="end">
+      <button
+        type="submit"
+        color="accent"
+        mat-raised-button
+        [disabled]="isDisabled()"
+        >
+        {{ "button.login" | translate }}
+        <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
+      </button>
+    </div>
+  </form>
+  <div class="col-lg-4">
+    <h1 mat-dialog-title class="font-weight-bold text-center">{{ "register.title" | translate }}</h1>
+    <p class="font-weight-bold text-center padding-top-16">{{ "login.register-text" | translate }}</p>
+    <div mat-dialog-actions align="center" class="margin-top-16">
+      <button
+      mat-raised-button
+      (click)="register()"
+      >
+      {{ "button.register" | translate }}
+    </button>
+    </div>
+  </div>
+</div>

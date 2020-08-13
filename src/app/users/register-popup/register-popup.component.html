@@ -1,0 +1,82 @@
+<form [formGroup]="registerForm" (ngSubmit)="register()">
+  <h1 mat-dialog-title class="primary font-weight-bold">{{ "register.title" | translate }}</h1>
+  <div mat-dialog-content class="row">
+    <mat-form-field appearance="standard" class="col-lg-12">
+      <mat-label>{{ "form.username" | translate }}</mat-label>
+      <input
+        (blur)="onUsernameBlur($event.target.value)"
+        formControlName="username"
+        type="text"
+        name="username"
+        required
+        matInput />
+      <mat-error *ngIf="registerForm.get('username').hasError('required')">
+        {{"error.required" | translate: { input: "form.username" | translate } }}
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('username').hasError('exist')">
+        {{ "error.usernameExist" | translate }}
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="standard" class="col-lg-12">
+      <mat-label>{{ "form.email" | translate }}</mat-label>
+      <input
+        (blur)="onEmailBlur($event.target.value)"
+        formControlName="email"
+        type="email"
+        name="email"
+        required
+        matInput />
+      <mat-error *ngIf="registerForm.get('email').hasError('pattern')">
+        {{"error.invalidEmail" | translate }}
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('email').hasError('required')">
+        {{"error.required" | translate: { input: "form.email" | translate } }}
+      </mat-error>
+      <mat-error *ngIf="registerForm.get('email').hasError('exist')">
+        {{ "error.emailExist" | translate }}
+      </mat-error>
+    </mat-form-field>
+    <div formGroupName="passwords">
+      <mat-form-field appearance="standard" class="col-lg-12">
+        <mat-label>{{ "form.password" | translate }}</mat-label>
+        <input
+          formControlName="password"
+          type="password"
+          name="password"
+          required
+          matInput />
+        <mat-error *ngIf="registerForm.get('passwords').get('password').hasError('required')">
+          {{"error.required" | translate: { input: "form.password" | translate } }}
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field appearance="standard" class="col-lg-12">
+        <mat-label>{{ "form.confirmPassword" | translate }}</mat-label>
+        <input
+          [errorStateMatcher]="passwordMatcher"
+          formControlName="confirmPassword"
+          type="confirmPassword"
+          name="confirmPassword"
+          matInput />
+        <mat-error *ngIf="registerForm.get('passwords').hasError('notSame')">
+          {{"error.matchPassword" | translate }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+  </div>
+  <div class="margin-bottom-16 error-div">
+    <span *ngIf="error" class="warning">
+      <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
+    </span>
+  </div>
+  <div mat-dialog-actions align="end">
+    <button
+      type="submit"
+      color="accent"
+      mat-raised-button
+      [disabled]="isDisabled()"
+      >
+      {{ "button.login" | translate }}
+      <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
+    </button>
+  </div>
+</form>
