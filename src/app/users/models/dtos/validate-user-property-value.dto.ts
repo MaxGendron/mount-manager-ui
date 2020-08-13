@@ -1,11 +1,8 @@
 export enum UserPropertyEnum {
   Username = 'username',
-  Email = 'email'
+  Email = 'email',
 }
 
 export class ValidateUserPropertyValueDto {
-  constructor(
-    public property: UserPropertyEnum,
-    public value: string
-  ) {}
+  constructor(public property: UserPropertyEnum, public value: string) {}
 }

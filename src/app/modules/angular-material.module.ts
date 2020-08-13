@@ -21,12 +21,12 @@ const angularMaterial = [
   MatIconModule,
   MatToolbarModule,
   MatMenuModule,
-  MatDialogModule
-]
+  MatDialogModule,
+];
 
 @NgModule({
   declarations: [],
   imports: angularMaterial,
-  exports: angularMaterial
+  exports: angularMaterial,
 })
-export class AngularMaterialModule { }
+export class AngularMaterialModule {}

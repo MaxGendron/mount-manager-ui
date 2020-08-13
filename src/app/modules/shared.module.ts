@@ -32,12 +32,10 @@ const appRoutes: Routes = [
       loader: {
         provide: TranslateLoader,
         useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
+        deps: [HttpClient],
+      },
     }),
-    RouterModule.forRoot(
-      appRoutes
-    ),
+    RouterModule.forRoot(appRoutes),
     AngularMaterialModule,
   ],
   exports: [
@@ -48,7 +46,7 @@ const appRoutes: Routes = [
     HttpClientModule,
     TranslateModule,
     RouterModule,
-    AngularMaterialModule
+    AngularMaterialModule,
   ],
 })
-export class SharedModule { }
+export class SharedModule {}

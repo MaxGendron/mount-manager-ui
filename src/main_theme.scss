@@ -4,11 +4,7 @@ $main-app-primary: mat-palette($mat-indigo, 500, 200, 800);
 $main-app-accent: mat-palette($mat-amber, 500, 200, 800);
 $main-app-warning: mat-palette($mat-red, 500, 200, 800);
 
-$theme: mat-dark-theme(
-  $main-app-primary,
-  $main-app-accent,
-  $main-app-warning
-);
+$theme: mat-dark-theme($main-app-primary, $main-app-accent, $main-app-warning);
 
 $primary: mat-color($main-app-primary, 500) !important;
 $primary-light: mat-color($main-app-primary, 200) !important;

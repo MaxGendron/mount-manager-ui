@@ -4,7 +4,7 @@ import { Observable, BehaviorSubject } from 'rxjs';
 import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   public currentUserSubject: BehaviorSubject<LoggedUserResponseDto>;
@@ -12,7 +12,9 @@ export class AuthService {
 
   //Add user into storage and keep a reference
   constructor(private router: Router) {
-    this.currentUserSubject = new BehaviorSubject<LoggedUserResponseDto>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUserSubject = new BehaviorSubject<LoggedUserResponseDto>(
+      JSON.parse(localStorage.getItem('currentUser')),
+    );
     this.currentUser = this.currentUserSubject.asObservable();
   }
 

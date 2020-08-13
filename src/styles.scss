@@ -1,13 +1,14 @@
-@import "~@angular/material/theming";
-@import "./main_theme.scss";
-@import "./override.scss";
+@import '~@angular/material/theming';
+@import './main_theme.scss';
+@import './override.scss';
 
 //For testing purpose, to remove
 .debug {
   border: 1px solid red !important;
 }
 
-html, body {
+html,
+body {
   height: 100%;
 }
 

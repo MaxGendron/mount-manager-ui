@@ -11,22 +11,26 @@ import { LoginDto } from '../models/dtos/login.dto';
 @Component({
   selector: 'app-login-dialog',
   templateUrl: './login-dialog.component.html',
-  styleUrls: ['./login-dialog.component.scss']
+  styleUrls: ['./login-dialog.component.scss'],
 })
 export class LoginDialogComponent implements OnDestroy, OnInit {
-
   private subscription: Subscription = new Subscription();
-  error : string;
+  error: string;
   loading = false;
 
   loginForm = this.fb.group({
     username: ['', Validators.required],
-    password: ['', Validators.required]
+    password: ['', Validators.required],
   });
 
-  constructor(public dialogRef: MatDialogRef<LoginDialogComponent>, private translateService: TranslateService,
-    private userService: UserService, private authService: AuthService, private fb: FormBuilder,
-    public dialog: MatDialog) {}
+  constructor(
+    public dialogRef: MatDialogRef<LoginDialogComponent>,
+    private translateService: TranslateService,
+    private userService: UserService,
+    private authService: AuthService,
+    private fb: FormBuilder,
+    public dialog: MatDialog,
+  ) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -46,25 +50,32 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
   //Try to login the user
   login(): void {
     this.loading = true;
-    const loginDto = new LoginDto(this.loginForm.get('username').value, this.loginForm.get('password').value);
-    
-    this.subscription.add(this.userService.loginUser(loginDto)
-      .subscribe(response => {
-        this.authService.login(response);
-        //Close the dialog
-        this.dialogRef.close();
-        this.loading = false;
-      }, error => {
-        //Error handling
-        if (error.name === 'NotFound') {
-          this.error = this.translateService.instant('error.userNotfound');
-        } else if (error.name = 'UndefinedParameter') {
-          this.error = this.translateService.instant('error.allFields');
-        } else {
-          this.error = this.translateService.instant('error.unexpected');
-        }
-        this.loading = false;
-      }));
+    const loginDto = new LoginDto(
+      this.loginForm.get('username').value,
+      this.loginForm.get('password').value,
+    );
+
+    this.subscription.add(
+      this.userService.loginUser(loginDto).subscribe(
+        response => {
+          this.authService.login(response);
+          //Close the dialog
+          this.dialogRef.close();
+          this.loading = false;
+        },
+        error => {
+          //Error handling
+          if (error.name === 'NotFound') {
+            this.error = this.translateService.instant('error.userNotfound');
+          } else if ((error.name = 'UndefinedParameter')) {
+            this.error = this.translateService.instant('error.allFields');
+          } else {
+            this.error = this.translateService.instant('error.unexpected');
+          }
+          this.loading = false;
+        },
+      ),
+    );
   }
 
   register(): void {
@@ -73,9 +84,9 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
       id: 'register-popup',
       width: '600px',
       data: {
-        username: this.loginForm.value.username
+        username: this.loginForm.value.username,
       },
-      autoFocus: false
+      autoFocus: false,
     });
   }
 }

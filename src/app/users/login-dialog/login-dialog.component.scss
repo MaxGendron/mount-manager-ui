@@ -1,5 +1,5 @@
-@import "~@angular/material/theming";
-@import "../../../main_theme.scss";
+@import '~@angular/material/theming';
+@import '../../../main_theme.scss';
 
 .mat-dialog-actions {
   margin-bottom: -16px;
@@ -14,21 +14,22 @@ h1 {
 }
 
 #popup-container {
-  margin: 0!important;
+  margin: 0 !important;
 
-  > div, form {
+  > div,
+  form {
     padding: 24px;
 
     &:last-child {
       background-color: $accent-light;
-      color:rgba(0, 0, 0, 0.87);
+      color: rgba(0, 0, 0, 0.87);
 
       p {
         font-size: 16px;
       }
 
       button:hover {
-        background-color:rgba(66, 66, 66, 0.85)!important;
+        background-color: rgba(66, 66, 66, 0.85) !important;
       }
     }
   }
