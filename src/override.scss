@@ -1,0 +1,23 @@
+/*File to override stuffs that are higher in the dom hiearchy than their components*/
+
+.navbar-menu {
+  background-color: $primary;
+  border: 1px solid $primary-dark;
+  width: 150px !important;
+
+  .mat-menu-content {
+    padding: 0 !important;
+
+    span {
+      text-align: center !important;
+
+      &:first-child {
+        border-bottom: 1px solid $primary-dark;
+      }
+    }
+  }
+}
+
+.mat-dialog-container[id='login-popup'] {
+  padding: 0 !important;
+}

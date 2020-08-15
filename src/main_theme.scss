@@ -1,0 +1,19 @@
+@import '~@angular/material/theming';
+
+$main-app-primary: mat-palette($mat-indigo, 500, 200, 800);
+$main-app-accent: mat-palette($mat-amber, 500, 200, 800);
+$main-app-warning: mat-palette($mat-red, 500, 200, 800);
+
+$theme: mat-dark-theme($main-app-primary, $main-app-accent, $main-app-warning);
+
+$primary: mat-color($main-app-primary, 500) !important;
+$primary-light: mat-color($main-app-primary, 200) !important;
+$primary-dark: mat-color($main-app-primary, 800) !important;
+
+$accent: mat-color($main-app-accent, 500) !important;
+$accent-light: mat-color($main-app-accent, 200) !important;
+$accent-dark: mat-color($main-app-accent, 800) !important;
+
+$warning: mat-color($main-app-warning, 500) !important;
+$warning-light: mat-color($main-app-warning, 200) !important;
+$warning-dark: mat-color($main-app-warning, 800) !important;

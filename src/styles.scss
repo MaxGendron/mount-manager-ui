@@ -1,0 +1,83 @@
+@import '~@angular/material/theming';
+@import './main_theme.scss';
+@import './override.scss';
+
+//For testing purpose, to remove
+.debug {
+  border: 1px solid red !important;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+.full {
+  height: 100vh;
+}
+
+.margin-bottom-16 {
+  margin-bottom: 16px;
+}
+
+.margin-top-16 {
+  margin-top: 16px;
+}
+
+button .fa-spin {
+  margin-left: 5px;
+}
+
+.primary {
+  color: $primary;
+
+  &-light {
+    color: $primary-light;
+  }
+
+  &-dark {
+    color: $primary-dark;
+  }
+}
+
+.accent {
+  color: $accent;
+
+  &-light {
+    color: $accent-light;
+  }
+
+  &-dark {
+    color: $accent-dark;
+  }
+}
+
+.warning {
+  color: $warning;
+
+  &-light {
+    color: $warning-light;
+  }
+
+  &-dark {
+    color: $warning-dark;
+  }
+}
+
+button {
+  &:hover:enabled {
+    background-color: $accent-light;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.padding-top-16 {
+  padding-top: 16px;
+}
+
+.error-div {
+  height: 20px;
+}

@@ -1,14 +1,35 @@
 {
-    "error": {
-        "userNotfound": "Cannot find your account, please check your credentials and try again.",
-        "unexpected": "An unexpected error occured, please try again."
-    },
-    "button": {
-        "login": "Login"
-    },
-    "login": {
-        "username": "Username",
-        "password": "Password",
-        "title": "Login"
-    }
+  "error": {
+    "userNotfound": "Cannot find your account, please check your credentials and try again",
+    "unexpected": "An unexpected error occured, please try again",
+    "matchPassword": "The passwords doesn't match",
+    "allFields": "Please fill all the fields",
+    "required": "{{input}} is required",
+    "invalidEmail": "Email isn't in a valid format",
+    "accountExist": "Email address or username is already taken, please try again",
+    "emailExist": "The specified email adress already exist",
+    "usernameExist": "The specified username already exist"
+  },
+  "button": {
+    "login": "Login",
+    "logout": "Logout",
+    "register": "Register"
+  },
+  "form": {
+    "username": "Username",
+    "email": "Email",
+    "usernameOrEmail": "Username or email",
+    "password": "Password",
+    "confirmPassword": "Confirm Password"
+  },
+  "login": {
+    "title": "Login",
+    "register-text": "Don't have an account with us yet? Register now to have access to all the features!"
+  },
+  "navbar": {
+    "account": "My account"
+  },
+  "register": {
+    "title": "Register"
+  }
 }
