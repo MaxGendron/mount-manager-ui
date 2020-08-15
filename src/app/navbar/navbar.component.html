@@ -1,6 +1,9 @@
 <mat-toolbar color="primary">
   <span class="pointer">Mount Manager</span>
   <span class="fill-remaining-space"></span>
+  <span id="switchlang" (click)="switchLang()">{{
+    'button.lang' | translate
+  }}</span>
   <ng-container
     *ngIf="!connectedUsername; then notConnected; else connected"
   ></ng-container>

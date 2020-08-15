@@ -3,6 +3,7 @@ import { AuthService } from '../users/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../users/login-dialog/login-dialog.component';
 import { Subscription } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-navbar',
@@ -13,7 +14,11 @@ export class NavbarComponent implements OnInit, OnDestroy {
   connectedUsername: string;
   private subscription: Subscription = new Subscription();
 
-  constructor(public authService: AuthService, public dialog: MatDialog) {}
+  constructor(
+    public authService: AuthService,
+    public dialog: MatDialog,
+    private translateService: TranslateService,
+  ) {}
 
   ngOnInit(): void {
     this.subscription.add(
@@ -41,5 +46,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
       width: '600px',
       autoFocus: false,
     });
+  }
+
+  //Only have 2 lang
+  switchLang() {
+    if (this.translateService.getDefaultLang() === 'fr') {
+      this.translateService.setDefaultLang('en');
+    } else {
+      this.translateService.setDefaultLang('fr');
+    }
   }
 }

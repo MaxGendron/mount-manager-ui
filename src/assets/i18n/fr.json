@@ -13,7 +13,8 @@
   "button": {
     "login": "Se connecter",
     "logout": "Se déconnecter",
-    "register": "S'inscrire"
+    "register": "S'inscrire",
+    "lang": "English"
   },
   "form": {
     "username": "Nom de compte",
