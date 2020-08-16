@@ -13,7 +13,8 @@
   "button": {
     "login": "Login",
     "logout": "Logout",
-    "register": "Register"
+    "register": "Register",
+    "lang": "Français"
   },
   "form": {
     "username": "Username",
