@@ -9,6 +9,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 //Modules for all the imports related to angular material
 const angularMaterial = [
@@ -22,6 +23,7 @@ const angularMaterial = [
   MatToolbarModule,
   MatMenuModule,
   MatDialogModule,
+  MatSidenavModule
 ];
 
 @NgModule({

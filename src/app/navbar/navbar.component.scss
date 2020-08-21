@@ -20,9 +20,27 @@
 
 mat-toolbar {
   padding-right: 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
 }
 
 #switchlang {
   cursor: pointer;
   padding-right: 16px;
+}
+
+#menu {
+  &:hover:enabled {
+    background-color: $primary;
+  }
+}
+
+mat-sidenav-container {
+  position: absolute;
+  top: 64px;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }

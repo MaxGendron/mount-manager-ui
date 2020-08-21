@@ -1,5 +1,8 @@
 <mat-toolbar color="primary">
-  <span class="pointer">Mount Manager</span>
+  <button mat-icon-button id="menu" (click)="sidenav.toggle()">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <span class="pointer outline-none" [routerLink]="['account-settings']">Mount Manager</span>
   <span class="fill-remaining-space"></span>
   <span id="switchlang" (click)="switchLang()">{{
     'button.lang' | translate
@@ -16,8 +19,7 @@
     <div [matMenuTriggerFor]="accountMenu" class="login-container">
       <span>{{ connectedUsername }}<i class="far fa-user-circle"></i></span>
       <mat-menu #accountMenu="matMenu" xPosition="before" class="navbar-menu">
-        <!-- Make the routerlink redirecting to my account -->
-        <span mat-menu-item [routerLink]="['']">{{
+        <span mat-menu-item [routerLink]="['account-settings']">{{
           'navbar.account' | translate
         }}</span>
         <span mat-menu-item (click)="logout()">{{
@@ -27,3 +29,12 @@
     </div>
   </ng-template>
 </mat-toolbar>
+
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side">
+    <p>Auto-resizing sidenav</p>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <router-outlet></router-outlet>
+  </mat-sidenav-content>
+</mat-sidenav-container>

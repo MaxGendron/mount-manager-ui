@@ -7,9 +7,10 @@ import { IndexComponent } from './index/index.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { UsersModule } from './users/users.module';
 import { SharedModule } from './modules/shared.module';
+import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 @NgModule({
-  declarations: [AppComponent, IndexComponent, NavbarComponent],
+  declarations: [AppComponent, IndexComponent, NavbarComponent, AccountSettingsComponent],
   imports: [UsersModule, SharedModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

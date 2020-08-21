@@ -9,11 +9,7 @@
 
 html,
 body {
-  height: 100%;
-}
-
-.full {
-  height: 100vh;
+  margin: 0 !important;
 }
 
 .margin-bottom-16 {
@@ -65,6 +61,7 @@ button .fa-spin {
 }
 
 button {
+  outline: none !important;
   &:hover:enabled {
     background-color: $accent-light;
   }
@@ -72,6 +69,10 @@ button {
 
 .pointer {
   cursor: pointer;
+}
+
+.outline-none {
+  outline: none
 }
 
 .padding-top-16 {
