@@ -22,6 +22,7 @@
         {{ 'error.usernameExist' | translate }}
       </mat-error>
     </mat-form-field>
+
     <mat-form-field appearance="standard" class="col-lg-12">
       <mat-label>{{ 'form.email' | translate }}</mat-label>
       <input
@@ -42,6 +43,7 @@
         {{ 'error.emailExist' | translate }}
       </mat-error>
     </mat-form-field>
+
     <div formGroupName="passwords">
       <mat-form-field appearance="standard" class="col-lg-12">
         <mat-label>{{ 'form.password' | translate }}</mat-label>
@@ -65,6 +67,7 @@
           }}
         </mat-error>
       </mat-form-field>
+
       <mat-form-field appearance="standard" class="col-lg-12">
         <mat-label>{{ 'form.confirmPassword' | translate }}</mat-label>
         <input
@@ -80,11 +83,13 @@
       </mat-form-field>
     </div>
   </div>
+
   <div class="margin-bottom-16 error-div">
     <span *ngIf="error" class="warning">
       <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
     </span>
   </div>
+
   <div mat-dialog-actions align="end">
     <button
       type="submit"

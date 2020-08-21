@@ -10,7 +10,12 @@ import { SharedModule } from './modules/shared.module';
 import { AccountSettingsComponent } from './account-settings/account-settings.component';
 
 @NgModule({
-  declarations: [AppComponent, IndexComponent, NavbarComponent, AccountSettingsComponent],
+  declarations: [
+    AppComponent,
+    IndexComponent,
+    NavbarComponent,
+    AccountSettingsComponent,
+  ],
   imports: [UsersModule, SharedModule],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

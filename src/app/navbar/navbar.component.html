@@ -2,19 +2,24 @@
   <button mat-icon-button id="menu" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
-  <span class="pointer outline-none" [routerLink]="['account-settings']">Mount Manager</span>
+  <span class="pointer outline-none" [routerLink]="['account-settings']"
+    >Mount Manager</span
+  >
   <span class="fill-remaining-space"></span>
   <span id="switchlang" (click)="switchLang()">{{
     'button.lang' | translate
   }}</span>
+
   <ng-container
     *ngIf="!connectedUsername; then notConnected; else connected"
   ></ng-container>
+
   <ng-template #notConnected>
     <div class="accent login-container" (click)="openLoginPopup()">
       <span>{{ 'button.login' | translate }}</span>
     </div>
   </ng-template>
+
   <ng-template #connected>
     <div [matMenuTriggerFor]="accountMenu" class="login-container">
       <span>{{ connectedUsername }}<i class="far fa-user-circle"></i></span>
@@ -34,6 +39,7 @@
   <mat-sidenav #sidenav mode="side">
     <p>Auto-resizing sidenav</p>
   </mat-sidenav>
+
   <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>

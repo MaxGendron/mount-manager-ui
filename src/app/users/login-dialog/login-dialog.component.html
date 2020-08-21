@@ -20,6 +20,7 @@
           }}
         </mat-error>
       </mat-form-field>
+
       <mat-form-field appearance="standard" class="col-lg-12">
         <mat-label>{{ 'form.password' | translate }}</mat-label>
         <input
@@ -36,11 +37,13 @@
         </mat-error>
       </mat-form-field>
     </div>
+
     <div class="margin-bottom-16 error-div">
       <span *ngIf="error" class="warning">
         <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
       </span>
     </div>
+
     <div mat-dialog-actions align="end">
       <button
         type="submit"
@@ -53,6 +56,7 @@
       </button>
     </div>
   </form>
+
   <div class="col-lg-4">
     <h1 mat-dialog-title class="font-weight-bold text-center">
       {{ 'register.title' | translate }}

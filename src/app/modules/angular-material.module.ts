@@ -23,7 +23,7 @@ const angularMaterial = [
   MatToolbarModule,
   MatMenuModule,
   MatDialogModule,
-  MatSidenavModule
+  MatSidenavModule,
 ];
 
 @NgModule({
