@@ -60,7 +60,17 @@ mat-list-item {
   cursor: pointer;
   outline: none;
   padding: 0 16px;
+
   &:hover {
     background: rgba(255, 255, 255, 0.04);
   }
+
+  mat-icon {
+    margin-right: 8px !important;
+  }
+}
+
+a {
+  text-decoration: none;
+  color: #ffffff;
 }

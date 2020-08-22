@@ -8,12 +8,10 @@
   .mat-menu-content {
     padding: 0 !important;
 
-    span {
+    a {
       text-align: center !important;
-
-      &:first-child {
-        border-bottom: 1px solid $primary-dark;
-      }
+      text-decoration: none;
+      color: #ffffff;
     }
   }
 }
@@ -26,6 +24,6 @@
   justify-content: center;
 }
 
-.mat-menu-panel {            
+.mat-menu-panel {
   min-height: 0 !important;
 }

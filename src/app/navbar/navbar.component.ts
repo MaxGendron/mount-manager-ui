@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../users/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../users/login-dialog/login-dialog.component';
