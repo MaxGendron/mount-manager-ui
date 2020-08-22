@@ -13,8 +13,10 @@
     background-color: mat-color($main-app-primary, 400);
   }
 
-  i {
+  mat-icon {
     padding-left: 8px;
+    display: inline-flex;
+    vertical-align: middle;
   }
 }
 
@@ -43,4 +45,22 @@ mat-sidenav-container {
   bottom: 0;
   left: 0;
   right: 0;
+}
+
+mat-sidenav {
+  width: 15%;
+}
+
+mat-list {
+  padding: 0;
+}
+
+mat-list-item {
+  justify-content: center !important;
+  cursor: pointer;
+  outline: none;
+  padding: 0 16px;
+  &:hover {
+    background: rgba(255, 255, 255, 0.04);
+  }
 }

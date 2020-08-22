@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core';
 import { AuthService } from '../users/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../users/login-dialog/login-dialog.component';
@@ -13,7 +13,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class NavbarComponent implements OnInit, OnDestroy {
   connectedUsername: string;
   private subscription: Subscription = new Subscription();
-
+  color: string;
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
@@ -49,7 +49,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   //Only have 2 lang
-  switchLang() {
+  switchLang(): void {
     if (this.translateService.getDefaultLang() === 'fr') {
       this.translateService.setDefaultLang('en');
     } else {
