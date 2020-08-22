@@ -4,6 +4,6 @@ export class AccountSettingDto {
   constructor(
     public username: string,
     public serverName: string,
-    public mountType: MountTypeEnum[]
+    public mountType: MountTypeEnum[],
   ) {}
 }
