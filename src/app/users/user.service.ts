@@ -6,6 +6,7 @@ import { NewUserDto } from './models/dtos/new-user.dto';
 import { ValidateUserPropertyValueDto } from './models/dtos/validate-user-property-value.dto';
 import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
 import { ExistReponseDto } from './models/dtos/responses/exist.response.dto';
+import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -13,14 +14,14 @@ export class UserService {
 
   constructor(private http: HttpClient) {}
 
-  loginUser(loginDto: LoginDto) {
+  loginUser(loginDto: LoginDto): Observable<LoggedUserResponseDto> {
     return this.http.post<LoggedUserResponseDto>(
       environment.webApiEndPoint + this.usersEndpoint + 'login',
       loginDto,
     );
   }
 
-  registerUser(newUserDto: NewUserDto) {
+  registerUser(newUserDto: NewUserDto): Observable<LoggedUserResponseDto> {
     return this.http.post<LoggedUserResponseDto>(
       environment.webApiEndPoint + this.usersEndpoint,
       newUserDto,
@@ -29,7 +30,7 @@ export class UserService {
 
   validatePropertyValue(
     validateUserPropertyValueDto: ValidateUserPropertyValueDto,
-  ) {
+  ): Observable<ExistReponseDto> {
     const data = {
       property: validateUserPropertyValueDto.property,
       value: validateUserPropertyValueDto.value,
