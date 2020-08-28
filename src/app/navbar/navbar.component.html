@@ -45,6 +45,7 @@
           matRipple
           [routerLink]="['account-settings']"
           [matRippleColor]="color"
+          (click)="sidenav.toggle()"
         >
           <mat-icon>account_circle</mat-icon>
           <span>{{ 'navbar.account' | translate }}</span>
@@ -54,7 +55,7 @@
     </div>
   </mat-sidenav>
 
-  <mat-sidenav-content>
+  <mat-sidenav-content (click)="sidenav.toggle()">
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
