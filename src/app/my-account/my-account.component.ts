@@ -3,7 +3,9 @@ import { Subscription } from 'rxjs';
 import { AccountSettingsService } from './account-settings/account-settings.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import ValidatorUtil, { PasswordErrorStateMatcher } from '../utils/validator-util';
+import ValidatorUtil, {
+  PasswordErrorStateMatcher,
+} from '../utils/validator-util';
 import { UserService } from '../users/user.service';
 import { UserResponseDto } from '../users/models/dtos/responses/user.response.dto';
 import { UpdateUserDto } from '../users/models/dtos/update-user.dto';
@@ -28,7 +30,7 @@ export class MyAccountComponent implements OnInit {
     private accountSettingsService: AccountSettingsService,
     private userService: UserService,
     private fb: FormBuilder,
-    ) {}
+  ) {}
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
@@ -44,7 +46,7 @@ export class MyAccountComponent implements OnInit {
       username: [this.userInfo.username],
       email: [
         this.userInfo.email,
-        Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i)
+        Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i),
       ],
       passwords: this.fb.group(
         {
@@ -74,25 +76,28 @@ export class MyAccountComponent implements OnInit {
       const updateUserDto = new UpdateUserDto();
       updateUserDto.username = username;
 
-      this.subscription.add(this.userService.updateUser(updateUserDto, this.userInfo._id).subscribe(
-        user => {
-          //Set userInfo to new info
-          this.userInfo = user;
-          //Add visual info to the user
-          this.usernameUpdated = true;
-        },
-        error => {
-          //Error handling
-          if (error.name === 'CannotInsert') {
-            this.userForm.get('username').setErrors({ exist: true });
-          } else {
-            const field = this.translateService.instant('form.username');
-            this.error = this.translateService.instant(
-              'error.unexpectedUpdate', {field: field}
-            );
-          }
-        },
-      ));
+      this.subscription.add(
+        this.userService.updateUser(updateUserDto, this.userInfo._id).subscribe(
+          user => {
+            //Set userInfo to new info
+            this.userInfo = user;
+            //Add visual info to the user
+            this.usernameUpdated = true;
+          },
+          error => {
+            //Error handling
+            if (error.name === 'CannotInsert') {
+              this.userForm.get('username').setErrors({ exist: true });
+            } else {
+              const field = this.translateService.instant('form.username');
+              this.error = this.translateService.instant(
+                'error.unexpectedUpdate',
+                { field: field },
+              );
+            }
+          },
+        ),
+      );
     }
   }
 
@@ -103,28 +108,30 @@ export class MyAccountComponent implements OnInit {
       const updateUserDto = new UpdateUserDto();
       updateUserDto.email = email;
 
-      this.subscription.add(this.userService.updateUser(updateUserDto, this.userInfo._id).subscribe(
-        user => {
-          //Set userInfo to new info
-          this.userInfo = user;
-          //Add visual info to the user
-          this.emailUpdated = true;
-        },
-        error => {
-          //Error handling
-          if (error.name === 'BadParameter') {
-            this.userForm.get('email').setErrors({ pattern: true });
-          }
-          else if (error.name === 'CannotInsert') {
-            this.userForm.get('email').setErrors({ exist: true });
-          } else {
-            const field = this.translateService.instant('form.email');
-            this.error = this.translateService.instant(
-              'error.unexpectedUpdate', {field: field}
-            );
-          }
-        },
-      ));
+      this.subscription.add(
+        this.userService.updateUser(updateUserDto, this.userInfo._id).subscribe(
+          user => {
+            //Set userInfo to new info
+            this.userInfo = user;
+            //Add visual info to the user
+            this.emailUpdated = true;
+          },
+          error => {
+            //Error handling
+            if (error.name === 'BadParameter') {
+              this.userForm.get('email').setErrors({ pattern: true });
+            } else if (error.name === 'CannotInsert') {
+              this.userForm.get('email').setErrors({ exist: true });
+            } else {
+              const field = this.translateService.instant('form.email');
+              this.error = this.translateService.instant(
+                'error.unexpectedUpdate',
+                { field: field },
+              );
+            }
+          },
+        ),
+      );
     }
   }
 }

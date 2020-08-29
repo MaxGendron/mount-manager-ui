@@ -85,11 +85,17 @@
 
     <mat-form-field appearance="standard" class="col-lg-12">
       <mat-label>{{ 'form.mountTypes' | translate }}</mat-label>
-      <mat-select formControlName="mountTypes" multiple required >
-        <mat-option *ngFor="let mountType of keys(mountTypes)" [value]="mountTypes[mountType]">{{mountType}}</mat-option>
+      <mat-select formControlName="mountTypes" multiple required>
+        <mat-option
+          *ngFor="let mountType of keys(mountTypes)"
+          [value]="mountTypes[mountType]"
+          >{{ mountType }}</mat-option
+        >
       </mat-select>
       <mat-error *ngIf="registerForm.get('mountTypes').hasError('required')">
-        {{ 'error.required' | translate: { input: 'form.mountTypes' | translate } }}
+        {{
+          'error.required' | translate: { input: 'form.mountTypes' | translate }
+        }}
       </mat-error>
     </mat-form-field>
   </div>

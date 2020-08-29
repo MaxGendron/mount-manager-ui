@@ -37,17 +37,22 @@ export class UserService {
       property: validateUserPropertyValueDto.property,
       value: validateUserPropertyValueDto.value,
     };
-    return this.http.get<ExistReponseDto>(
-      `${this.usersEndpoint}validate`,
-      { params: data },
-    );
+    return this.http.get<ExistReponseDto>(`${this.usersEndpoint}validate`, {
+      params: data,
+    });
   }
 
-  getUserByUserId() : Observable<UserResponseDto> {
+  getUserByUserId(): Observable<UserResponseDto> {
     return this.http.get<UserResponseDto>(`${this.usersEndpoint}find/user-id`);
   }
 
-  updateUser(updateUserDto: UpdateUserDto, userId: string): Observable<UserResponseDto> {
-    return this.http.put<UserResponseDto>(`${this.usersEndpoint}${userId}`, updateUserDto);
+  updateUser(
+    updateUserDto: UpdateUserDto,
+    userId: string,
+  ): Observable<UserResponseDto> {
+    return this.http.put<UserResponseDto>(
+      `${this.usersEndpoint}${userId}`,
+      updateUserDto,
+    );
   }
 }

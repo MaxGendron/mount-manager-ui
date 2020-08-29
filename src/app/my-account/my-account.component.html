@@ -12,7 +12,7 @@
           <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
         </span>
       </div>
-      
+
       <h2 class="section-title">{{ 'myAccount.accountInfo' | translate }}</h2>
 
       <form *ngIf="userForm" [formGroup]="userForm">
@@ -26,12 +26,15 @@
               name="username"
               matInput
             />
-            <mat-hint *ngIf="usernameUpdated" class="success">{{ 'myAccount.updated' | translate: { field: 'form.username' | translate } }}</mat-hint>
+            <mat-hint *ngIf="usernameUpdated" class="success">{{
+              'myAccount.updated'
+                | translate: { field: 'form.username' | translate }
+            }}</mat-hint>
             <mat-error *ngIf="userForm.get('username').hasError('exist')">
               {{ 'error.usernameExist' | translate }}
             </mat-error>
           </mat-form-field>
-          
+
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.email' | translate }}</mat-label>
             <input
@@ -41,7 +44,10 @@
               name="email"
               matInput
             />
-            <mat-hint *ngIf="emailUpdated" class="success">{{ 'myAccount.updated' | translate: { field: 'form.email' | translate } }}</mat-hint>
+            <mat-hint *ngIf="emailUpdated" class="success">{{
+              'myAccount.updated'
+                | translate: { field: 'form.email' | translate }
+            }}</mat-hint>
             <mat-error *ngIf="userForm.get('email').hasError('pattern')">
               {{ 'error.invalidEmail' | translate }}
             </mat-error>

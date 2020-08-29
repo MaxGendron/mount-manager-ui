@@ -8,9 +8,7 @@ import { AuthService } from '../auth.service';
 import ValidatorUtil, {
   PasswordErrorStateMatcher,
 } from '../../utils/validator-util';
-import {
-  ValidateUserPropertyValueDto
-} from '../models/dtos/validate-user-property-value.dto';
+import { ValidateUserPropertyValueDto } from '../models/dtos/validate-user-property-value.dto';
 import { RegisterDto } from '../models/dtos/register.dto';
 import { MountTypeEnum } from 'src/app/my-account/account-settings/models/enum/mount-type.enum';
 import { UserPropertyEnum } from '../models/enum/user-property.enum';
@@ -44,7 +42,7 @@ export class RegisterPopupComponent implements OnInit, OnDestroy {
       },
       { validators: ValidatorUtil.matchPasswords },
     ),
-    mountTypes: ['', Validators.required]
+    mountTypes: ['', Validators.required],
   });
 
   constructor(
@@ -116,7 +114,7 @@ export class RegisterPopupComponent implements OnInit, OnDestroy {
       this.registerForm.get('username').value,
       this.registerForm.get('email').value,
       this.registerForm.get('passwords').get('password').value,
-      this.registerForm.get('mountTypes').value
+      this.registerForm.get('mountTypes').value,
     );
 
     this.subscription.add(

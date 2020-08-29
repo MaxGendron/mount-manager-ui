@@ -18,10 +18,12 @@ export class AccountSettingsService {
 
   updateAccountSetting(
     accountSettingDto: AccountSettingDto,
-    accountSettingsId: string
+    accountSettingsId: string,
   ): Observable<AccountSettingDto> {
     return this.http.post<AccountSettingDto>(
-      environment.webApiEndPoint + this.acountSettingsEndpoint + accountSettingsId,
+      environment.webApiEndPoint +
+        this.acountSettingsEndpoint +
+        accountSettingsId,
       accountSettingDto,
     );
   }
