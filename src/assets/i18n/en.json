@@ -8,7 +8,8 @@
     "invalidEmail": "Email isn't in a valid format",
     "accountExist": "Email address or username is already taken, please try again",
     "emailExist": "The specified email adress already exist",
-    "usernameExist": "The specified username already exist"
+    "usernameExist": "The specified username already exist",
+    "unexpectedUpdate": "An unexpected error occured when updating \"{{field}}\", please try again"
   },
   "button": {
     "login": "Login",
@@ -33,5 +34,10 @@
   },
   "register": {
     "title": "Register"
+  },
+  "myAccount": {
+    "title": "My Account",
+    "accountInfo": "Account Info",
+    "updated": "{{field}} updated!"
   }
 }

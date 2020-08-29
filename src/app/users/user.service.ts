@@ -7,24 +7,25 @@ import { ValidateUserPropertyValueDto } from './models/dtos/validate-user-proper
 import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
 import { ExistReponseDto } from './models/dtos/responses/exist.response.dto';
 import { UserResponseDto } from './models/dtos/responses/user.response.dto';
+import { UpdateUserDto } from './models/dtos/update-user.dto';
 import { Observable } from 'rxjs';
 
 @Injectable()
 export class UserService {
-  private usersEndpoint = 'users/';
+  private usersEndpoint = `${environment.webApiEndPoint}users/`;
 
   constructor(private http: HttpClient) {}
 
   loginUser(loginDto: LoginDto): Observable<LoggedUserResponseDto> {
     return this.http.post<LoggedUserResponseDto>(
-      environment.webApiEndPoint + this.usersEndpoint + 'login',
+      `${this.usersEndpoint}login`,
       loginDto,
     );
   }
 
   registerUser(registerDto: RegisterDto): Observable<LoggedUserResponseDto> {
     return this.http.post<LoggedUserResponseDto>(
-      environment.webApiEndPoint + this.usersEndpoint,
+      this.usersEndpoint,
       registerDto,
     );
   }
@@ -37,12 +38,16 @@ export class UserService {
       value: validateUserPropertyValueDto.value,
     };
     return this.http.get<ExistReponseDto>(
-      environment.webApiEndPoint + this.usersEndpoint + 'validate',
+      `${this.usersEndpoint}validate`,
       { params: data },
     );
   }
 
   getUserByUserId() : Observable<UserResponseDto> {
-    return this.http.get<UserResponseDto>(environment.webApiEndPoint + this.usersEndpoint + 'find/user-id');
+    return this.http.get<UserResponseDto>(`${this.usersEndpoint}find/user-id`);
+  }
+
+  updateUser(updateUserDto: UpdateUserDto, userId: string): Observable<UserResponseDto> {
+    return this.http.put<UserResponseDto>(`${this.usersEndpoint}${userId}`, updateUserDto);
   }
 }

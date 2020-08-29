@@ -8,7 +8,8 @@
     "invalidEmail": "L'adresse courriel n'est pas dans un format valide",
     "accountExist": "L'adresse courriel ou le nom de compte est déjà pris, veuillez réessayer",
     "emailExist": "L'adresse courriel spécifié existe déjà",
-    "usernameExist": "Le nom d'utilisateur spécifié existe déjà"
+    "usernameExist": "Le nom d'utilisateur spécifié existe déjà",
+    "unexpectedUpdate": "Une erreur inattendue s'est produite en mettant a jour \"{{field}}\", veuillez réessayer"
   },
   "button": {
     "login": "Se connecter",

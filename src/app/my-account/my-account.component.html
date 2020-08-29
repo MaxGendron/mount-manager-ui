@@ -1,24 +1,32 @@
-<div style="margin: auto; width: 50%;">
-  <mat-card style="margin-top: 32px;">
+<div id="main-content">
+  <mat-card id="card">
     <mat-card-header>
-      <mat-card-title><h1 style="font-weight: 500;">My account (blue)</h1></mat-card-title>
+      <mat-card-title>
+        <h1 id="card-title">{{ 'myAccount.title' | translate }}</h1>
+      </mat-card-title>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <h2 style="padding-top: 16px;margin-bottom: 0;">Account info</h2>
+      <div *ngIf="error" class="margin-top-16">
+        <span class="warning">
+          <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
+        </span>
+      </div>
+      
+      <h2 class="section-title">{{ 'myAccount.accountInfo' | translate }}</h2>
 
       <form *ngIf="userForm" [formGroup]="userForm">
         <div class="row">
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.username' | translate }}</mat-label>
             <input
-              (blur)="updateUsername($event.target.value)"
-              (keydown.enter)="$event.target.blur()"
+              (keydown.enter)="updateUsername($event.target.value)"
               formControlName="username"
               type="text"
               name="username"
               matInput
             />
+            <mat-hint *ngIf="usernameUpdated" class="success">{{ 'myAccount.updated' | translate: { field: 'form.username' | translate } }}</mat-hint>
             <mat-error *ngIf="userForm.get('username').hasError('exist')">
               {{ 'error.usernameExist' | translate }}
             </mat-error>
@@ -27,13 +35,13 @@
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.email' | translate }}</mat-label>
             <input
-              (blur)="updateEmail($event.target.value)"
-              (keydown.enter)="$event.target.blur()"
+              (keydown.enter)="updateEmail($event.target.value)"
               formControlName="email"
               type="email"
               name="email"
               matInput
             />
+            <mat-hint *ngIf="emailUpdated" class="success">{{ 'myAccount.updated' | translate: { field: 'form.email' | translate } }}</mat-hint>
             <mat-error *ngIf="userForm.get('email').hasError('pattern')">
               {{ 'error.invalidEmail' | translate }}
             </mat-error>

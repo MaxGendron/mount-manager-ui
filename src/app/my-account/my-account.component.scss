@@ -1,0 +1,22 @@
+@import '~@angular/material/theming';
+@import '../../main_theme.scss';
+
+#card {
+  margin-top: 32px;
+}
+
+#card-title {
+  font-weight: 600;
+  color: $primary;
+  margin-bottom: 0;
+}
+
+.section-title {
+  padding-top: 16px;
+  margin-bottom: 0 !important;
+}
+
+#main-content {
+  margin: auto;
+  width: 50%;
+} 
