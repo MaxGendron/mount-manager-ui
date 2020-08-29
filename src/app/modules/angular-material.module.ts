@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
+import { MatSelectModule } from '@angular/material/select';
 
 //Modules for all the imports related to angular material
 const angularMaterial = [
@@ -28,6 +29,7 @@ const angularMaterial = [
   MatSidenavModule,
   MatListModule,
   MatRippleModule,
+  MatSelectModule,
 ];
 
 @NgModule({

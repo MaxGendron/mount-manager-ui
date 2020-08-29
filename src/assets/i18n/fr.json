@@ -21,7 +21,8 @@
     "email": "Adresse courriel",
     "usernameOrEmail": "Nom de compte ou address courriel",
     "password": "Mot de passe",
-    "confirmPassword": "Confirmation du mot de passe"
+    "confirmPassword": "Confirmation du mot de passe",
+    "mountTypes": "Type de montures"
   },
   "login": {
     "title": "Connexion",

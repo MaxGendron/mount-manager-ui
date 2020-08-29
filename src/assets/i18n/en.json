@@ -21,7 +21,8 @@
     "email": "Email",
     "usernameOrEmail": "Username or email",
     "password": "Password",
-    "confirmPassword": "Confirm Password"
+    "confirmPassword": "Confirm Password",
+    "mountTypes": "Mount Types"
   },
   "login": {
     "title": "Login",
