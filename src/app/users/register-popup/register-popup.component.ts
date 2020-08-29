@@ -13,7 +13,7 @@ import {
   UserPropertyEnum,
 } from '../models/dtos/validate-user-property-value.dto';
 import { RegisterDto } from '../models/dtos/register.dto';
-import { MountTypeEnum } from 'src/app/account-settings/models/enum/mount-type.enum';
+import { MountTypeEnum } from 'src/app/my-account/account-settings/models/enum/mount-type.enum';
 
 @Component({
   selector: 'app-register-popup',

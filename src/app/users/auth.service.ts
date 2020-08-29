@@ -26,7 +26,7 @@ export class AuthService {
   login(user: LoggedUserResponseDto): void {
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
-    this.router.navigate(['account-settings']);
+    this.router.navigate(['my-account']);
   }
 
   //Remove user from localStorage

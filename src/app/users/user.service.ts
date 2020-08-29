@@ -6,6 +6,7 @@ import { RegisterDto } from './models/dtos/register.dto';
 import { ValidateUserPropertyValueDto } from './models/dtos/validate-user-property-value.dto';
 import { LoggedUserResponseDto } from './models/dtos/responses/logged-user.response.dto';
 import { ExistReponseDto } from './models/dtos/responses/exist.response.dto';
+import { UserResponseDto } from './models/dtos/responses/user.response.dto';
 import { Observable } from 'rxjs';
 
 @Injectable()
@@ -39,5 +40,9 @@ export class UserService {
       environment.webApiEndPoint + this.usersEndpoint + 'validate',
       { params: data },
     );
+  }
+
+  getUserByUserId() : Observable<UserResponseDto> {
+    return this.http.get<UserResponseDto>(environment.webApiEndPoint + this.usersEndpoint + 'find/user-id');
   }
 }

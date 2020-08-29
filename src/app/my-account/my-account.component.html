@@ -1,0 +1,87 @@
+<div style="margin: auto; width: 50%;">
+  <mat-card style="margin-top: 32px;">
+    <mat-card-header>
+      <mat-card-title><h1 style="font-weight: 500;">My account (blue)</h1></mat-card-title>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <h2 style="padding-top: 16px;margin-bottom: 0;">Account info</h2>
+
+      <form *ngIf="userForm" [formGroup]="userForm">
+        <div class="row">
+          <mat-form-field appearance="standard" class="col-lg-6">
+            <mat-label>{{ 'form.username' | translate }}</mat-label>
+            <input
+              (blur)="updateUsername($event.target.value)"
+              (keydown.enter)="$event.target.blur()"
+              formControlName="username"
+              type="text"
+              name="username"
+              matInput
+            />
+            <mat-error *ngIf="userForm.get('username').hasError('exist')">
+              {{ 'error.usernameExist' | translate }}
+            </mat-error>
+          </mat-form-field>
+          
+          <mat-form-field appearance="standard" class="col-lg-6">
+            <mat-label>{{ 'form.email' | translate }}</mat-label>
+            <input
+              (blur)="updateEmail($event.target.value)"
+              (keydown.enter)="$event.target.blur()"
+              formControlName="email"
+              type="email"
+              name="email"
+              matInput
+            />
+            <mat-error *ngIf="userForm.get('email').hasError('pattern')">
+              {{ 'error.invalidEmail' | translate }}
+            </mat-error>
+            <mat-error *ngIf="userForm.get('email').hasError('exist')">
+              {{ 'error.emailExist' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
+
+        <!-- <div formGroupName="passwords" class="row">
+          <mat-form-field appearance="standard" class="col-lg-6">
+            <mat-label>{{ 'form.password' | translate }}</mat-label>
+            <input
+              formControlName="password"
+              type="password"
+              name="password"
+              required
+              matInput
+            />
+            <mat-error
+              *ngIf="
+              accountForm
+                  .get('passwords')
+                  .get('password')
+                  .hasError('required')
+              "
+            >
+              {{
+                'error.required' | translate: { input: 'form.password' | translate }
+              }}
+            </mat-error>
+          </mat-form-field>
+    
+          <mat-form-field appearance="standard" class="col-lg-6">
+            <mat-label>{{ 'form.confirmPassword' | translate }}</mat-label>
+            <input
+              [errorStateMatcher]="passwordMatcher"
+              formControlName="confirmPassword"
+              type="confirmPassword"
+              name="confirmPassword"
+              matInput
+            />
+            <mat-error *ngIf="accountForm.get('passwords').hasError('notSame')">
+              {{ 'error.matchPassword' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div> -->
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>
