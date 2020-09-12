@@ -24,12 +24,16 @@
               type="text"
               name="username"
               matInput
+              required
             />
             <mat-hint *ngIf="usernameUpdated" class="success small">{{
               'myAccount.updated' | translate: { field: 'form.username' | translate }
             }}</mat-hint>
             <mat-error *ngIf="userForm.get('username').hasError('exist')">
               {{ 'error.usernameExist' | translate }}
+            </mat-error>
+            <mat-error *ngIf="userForm.get('username').hasError('required')">
+              {{ 'error.updateEmpty' | translate }}
             </mat-error>
           </mat-form-field>
 
@@ -41,6 +45,7 @@
               type="email"
               name="email"
               matInput
+              required
             />
             <mat-hint *ngIf="emailUpdated" class="success small">{{
               'myAccount.updated' | translate: { field: 'form.email' | translate }
@@ -50,6 +55,9 @@
             </mat-error>
             <mat-error *ngIf="userForm.get('email').hasError('exist')">
               {{ 'error.emailExist' | translate }}
+            </mat-error>
+            <mat-error *ngIf="userForm.get('email').hasError('required')">
+              {{ 'error.updateEmpty' | translate }}
             </mat-error>
           </mat-form-field>
         </div>
@@ -105,7 +113,55 @@
 
       <!--NgIf needed because we initialize on init instead on constructor-->
       <form *ngIf="accountSettingForm" [formGroup]="accountSettingForm">
+        <div class="row">
+          <mat-form-field appearance="standard" class="col-lg-6">
+            <mat-label>{{ 'form.igUsername' | translate }} ({{ 'form.optional' | translate }})</mat-label>
+            <input
+              (keydown.enter)="updateigUsername($event.target)"
+              formControlName="igUsername"
+              type="text"
+              name="igUsername"
+              matInput
+              required
+            />
+            <mat-hint *ngIf="igUsernameUpdated" class="success small">{{
+              'myAccount.updated' | translate: { field: 'form.igUsername' | translate }
+            }}</mat-hint>
+            <mat-error *ngIf="accountSettingForm.get('igUsername').hasError('required')">
+              {{ 'error.updateEmpty' | translate }}
+            </mat-error>
+          </mat-form-field>
 
+          <mat-form-field appearance="standard" class="col-lg-6">
+            <mat-label>{{ 'form.serverName' | translate }} ({{ 'form.optional' | translate }})</mat-label>
+            <!--Call update on select-->
+            <mat-select formControlName="serverName" name="serverName" required>
+              <mat-option *ngFor="let server of servers" [value]="server.serverName">{{
+                server.serverName
+              }}</mat-option>
+            </mat-select>
+            <mat-hint *ngIf="serverNameUpdated" class="success small">{{
+              'myAccount.updated' | translate: { field: 'form.serverName' | translate }
+            }}</mat-hint>
+          </mat-form-field>
+        </div>
+
+        <div class="row">
+          <mat-form-field appearance="standard" class="col-lg-6">
+            <mat-label>{{ 'form.mountTypes' | translate }}</mat-label>
+            <mat-select formControlName="mountTypes" name="mountTypes" multiple required>
+              <mat-option *ngFor="let mountType of keys(mountTypes)" [value]="mountTypes[mountType]">
+                {{ ("mountTypeEnum." + mountType) | translate}}
+              </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="mountTypesUpdated" class="success small">{{
+              'myAccount.updated' | translate: { field: 'form.mountTypes' | translate }
+            }}</mat-hint>
+            <mat-error *ngIf="accountSettingForm.get('mountTypes').hasError('required')">
+              {{ 'error.updateEmpty' | translate }}
+            </mat-error>
+          </mat-form-field>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

@@ -7,7 +7,11 @@ import ValidatorUtil, { PasswordErrorStateMatcher } from '../utils/validator-uti
 import { UserService } from '../users/user.service';
 import { UserResponseDto } from '../users/models/dtos/responses/user.response.dto';
 import { UpdateUserDto } from '../users/models/dtos/update-user.dto';
-import { AccountSettingsDto } from './accounts-settings/models/dtos/account-settings.dto';
+import { AccountSettingsDto } from './accounts-settings/models/dtos/responses/account-settings.dto';
+import { UpdateAccountSettingsDto } from './accounts-settings/models/dtos/update-account-settings.dto';
+import { ServerDto } from './servers/models/dtos/responses/server.dto';
+import { ServerService } from './servers/server.service';
+import { MountTypeEnum } from './accounts-settings/models/enum/mount-type.enum';
 
 @Component({
   selector: 'app-my-account',
@@ -19,6 +23,8 @@ export class MyAccountComponent implements OnInit {
   error: string;
   loading = false;
   showPassword = false;
+  mountTypes = MountTypeEnum;
+  keys = Object.keys;
 
   passwordMatcher = new PasswordErrorStateMatcher();
   userForm: FormGroup;
@@ -26,14 +32,19 @@ export class MyAccountComponent implements OnInit {
 
   userInfo: UserResponseDto;
   accountSettingsInfo: AccountSettingsDto;
+  servers: ServerDto[];
 
   usernameUpdated = false;
   emailUpdated = false;
   passwordUpdated = false;
+  igUsernameUpdated = false;
+  serverNameUpdated = false;
+  mountTypesUpdated = false;
 
   constructor(
     private translateService: TranslateService,
     private accountSettingsService: AccountSettingsService,
+    private serverService: ServerService, 
     private userService: UserService,
     private fb: FormBuilder,
   ) {}
@@ -46,12 +57,17 @@ export class MyAccountComponent implements OnInit {
     //Get the connected user
     this.userInfo = await this.userService.getUserByUserId().toPromise();
     //Get the accountsSettings
-
+    this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
+    //Get the servers
+    this.servers = await this.serverService.getServers().toPromise();
 
     //Initialize the user form
     this.userForm = this.fb.group({
-      username: [this.userInfo.username],
-      email: [this.userInfo.email, Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i)],
+      username: [this.userInfo.username, Validators.required],
+      email: [
+        this.userInfo.email,
+        Validators.compose([Validators.required, Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i)])
+      ],
       passwords: this.fb.group(
         {
           password: ['', Validators.required],
@@ -60,20 +76,35 @@ export class MyAccountComponent implements OnInit {
         { validators: ValidatorUtil.matchPasswords },
       ),
     });
+
     //Initialize the accountSettings form
     this.accountSettingForm = this.fb.group({
-      igUsername: [''],
-      server: [''],
-      mountTypes : ['']
+      igUsername: [this.accountSettingsInfo.igUsername, Validators.required],
+      serverName: [this.accountSettingsInfo.serverName, Validators.required],
+      mountTypes: [this.accountSettingsInfo.mountTypes, Validators.required]
     })
 
-    //Listen on value changes to reset error message
+    //Listen on value changes to reset error & success message
     this.userForm.valueChanges.subscribe(() => {
       this.error = '';
       this.usernameUpdated = false;
       this.emailUpdated = false;
       this.passwordUpdated = false;
     });
+    this.accountSettingForm.valueChanges.subscribe(() => {
+      this.error = '';
+      this.igUsernameUpdated = false;
+      this.serverNameUpdated = false;
+      this.mountTypesUpdated = false;
+    })
+
+    //Listen on value changes on the selects to call the update 
+    this.accountSettingForm.get('serverName').valueChanges.subscribe(serverName => {
+      this.updateServerName(serverName);
+    })
+    this.accountSettingForm.get('mountTypes').valueChanges.subscribe(mountTypes => {
+      this.updateMountTypes(mountTypes);
+    })
   }
 
   isPasswordButtonDisabled(): boolean {
@@ -87,8 +118,8 @@ export class MyAccountComponent implements OnInit {
   //Update username
   updateUsername(eventTarget: any): void {
     let username = eventTarget.value;
-    //Only update if changed
-    if (username != this.userInfo.username) {
+    //Only update if changed & valid
+    if (username != this.userInfo.username && this.userForm.get('username').valid) {
       const updateUserDto = new UpdateUserDto();
       updateUserDto.username = username;
 
@@ -169,5 +200,82 @@ export class MyAccountComponent implements OnInit {
         },
       ),
     );
+  }
+
+  //Update igUsername
+  updateigUsername(eventTarget: any): void {
+    let igUsername = eventTarget.value;
+    //Only update if changed & valid
+    if (igUsername != this.accountSettingsInfo.igUsername && this.accountSettingForm.get('igUsername').valid) {
+      const accountSettingsDto = new UpdateAccountSettingsDto();
+      accountSettingsDto.igUsername = igUsername;
+
+      this.subscription.add(
+        this.accountSettingsService.updateAccountSetting(accountSettingsDto, this.accountSettingsInfo._id).subscribe(
+          accountSettings => {
+            //Set accountSettingsInfo to new accountSettings
+            this.accountSettingsInfo = accountSettings;
+            //Add visual info to the user
+            this.igUsernameUpdated = true;
+          },
+          () => {
+            //Error handling
+            const field = this.translateService.instant('form.igUsername');
+            this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
+          },
+        ),
+      );
+    }
+  }
+
+  //Update serverName
+  updateServerName(serverName: string): void {
+    //Only update if changed
+    //No validation on serverName since it's a single select. Cannot remove if already 1 selected
+    if (serverName != this.accountSettingsInfo.serverName) {
+      const accountSettingsDto = new UpdateAccountSettingsDto();
+      accountSettingsDto.serverName = serverName;
+
+      this.subscription.add(
+        this.accountSettingsService.updateAccountSetting(accountSettingsDto, this.accountSettingsInfo._id).subscribe(
+          accountSettings => {
+            //Set accountSettingsInfo to new accountSettings
+            this.accountSettingsInfo = accountSettings;
+            //Add visual info to the user
+            this.serverNameUpdated = true;
+          },
+          () => {
+            //Error handling
+            const field = this.translateService.instant('form.serverName');
+            this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
+          },
+        ),
+      );
+    }
+  }
+
+  //Update mountTypes
+  updateMountTypes(mountTypes: MountTypeEnum[]): void {
+    //Only update if changed & valid
+    if (mountTypes != this.accountSettingsInfo.mountTypes && this.accountSettingForm.get('mountTypes').valid) {
+      const accountSettingsDto = new UpdateAccountSettingsDto();
+      accountSettingsDto.mountTypes = mountTypes;
+
+      this.subscription.add(
+        this.accountSettingsService.updateAccountSetting(accountSettingsDto, this.accountSettingsInfo._id).subscribe(
+          accountSettings => {
+            //Set accountSettingsInfo to new accountSettings
+            this.accountSettingsInfo = accountSettings;
+            //Add visual info to the user
+            this.mountTypesUpdated = true;
+          },
+          () => {
+            //Error handling
+            const field = this.translateService.instant('form.mountTypes');
+            this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
+          },
+        ),
+      );
+    }
   }
 }

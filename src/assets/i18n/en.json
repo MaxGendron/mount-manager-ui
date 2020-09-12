@@ -9,7 +9,8 @@
     "accountExist": "Email address or username is already taken, please try again",
     "emailExist": "The specified email adress already exist",
     "usernameExist": "The specified username already exist",
-    "unexpectedUpdate": "An unexpected error occured when updating \"{{field}}\", please try again"
+    "unexpectedUpdate": "An unexpected error occured when updating \"{{field}}\", please try again",
+    "updateEmpty": "Cannot update this field with empty value"
   },
   "button": {
     "login": "Login",
@@ -24,7 +25,10 @@
     "usernameOrEmail": "Username or email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "mountTypes": "Mount Types"
+    "mountTypes": "Mount Types",
+    "igUsername": "In game Username",
+    "serverName": "Server name",
+    "optional": "Optional"
   },
   "login": {
     "title": "Login",
@@ -43,5 +47,10 @@
     "showPassword": "Show password fields",
     "hidePassword": "Hide password fields",
     "accountSettings": "Account Settings"
+  },
+  "mountTypeEnum": {
+    "Dragodinde": "Dragoturkey",
+    "Volkorne": "Rhineetle",
+    "Muldo": "Seemyool"
   }
 }
