@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AccountSettingsService } from './account-settings/account-settings.service';
+import { AccountSettingsService } from './accounts-settings/accounts-settings.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import ValidatorUtil, { PasswordErrorStateMatcher } from '../utils/validator-util';
 import { UserService } from '../users/user.service';
 import { UserResponseDto } from '../users/models/dtos/responses/user.response.dto';
 import { UpdateUserDto } from '../users/models/dtos/update-user.dto';
+import { AccountSettingsDto } from './accounts-settings/models/dtos/account-settings.dto';
 
 @Component({
   selector: 'app-my-account',
@@ -21,7 +22,10 @@ export class MyAccountComponent implements OnInit {
 
   passwordMatcher = new PasswordErrorStateMatcher();
   userForm: FormGroup;
+  accountSettingForm: FormGroup;
+
   userInfo: UserResponseDto;
+  accountSettingsInfo: AccountSettingsDto;
 
   usernameUpdated = false;
   emailUpdated = false;
@@ -43,6 +47,7 @@ export class MyAccountComponent implements OnInit {
     this.userInfo = await this.userService.getUserByUserId().toPromise();
     //Get the accountsSettings
 
+
     //Initialize the user form
     this.userForm = this.fb.group({
       username: [this.userInfo.username],
@@ -55,12 +60,19 @@ export class MyAccountComponent implements OnInit {
         { validators: ValidatorUtil.matchPasswords },
       ),
     });
+    //Initialize the accountSettings form
+    this.accountSettingForm = this.fb.group({
+      igUsername: [''],
+      server: [''],
+      mountTypes : ['']
+    })
 
     //Listen on value changes to reset error message
     this.userForm.valueChanges.subscribe(() => {
       this.error = '';
       this.usernameUpdated = false;
       this.emailUpdated = false;
+      this.passwordUpdated = false;
     });
   }
 

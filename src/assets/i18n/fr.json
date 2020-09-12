@@ -41,6 +41,7 @@
     "accountInfo": "Information du compte",
     "updated": "{{field}} actualisé!",
     "showPassword": "Afficher les champs de mot de passe",
-    "hidePassword": "Cacher les champs de mot de passe"
+    "hidePassword": "Cacher les champs de mot de passe",
+    "accountSettings": "Paramètres du compte"
   }
 }

@@ -41,6 +41,7 @@
     "accountInfo": "Account Info",
     "updated": "{{field}} updated!",
     "showPassword": "Show password fields",
-    "hidePassword": "Hide password fields"
+    "hidePassword": "Hide password fields",
+    "accountSettings": "Account Settings"
   }
 }

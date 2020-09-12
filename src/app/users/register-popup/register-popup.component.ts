@@ -8,7 +8,7 @@ import { AuthService } from '../auth.service';
 import ValidatorUtil, { PasswordErrorStateMatcher } from '../../utils/validator-util';
 import { ValidateUserPropertyValueDto } from '../models/dtos/validate-user-property-value.dto';
 import { RegisterDto } from '../models/dtos/register.dto';
-import { MountTypeEnum } from 'src/app/my-account/account-settings/models/enum/mount-type.enum';
+import { MountTypeEnum } from 'src/app/my-account/accounts-settings/models/enum/mount-type.enum';
 import { UserPropertyEnum } from '../models/enum/user-property.enum';
 
 @Component({

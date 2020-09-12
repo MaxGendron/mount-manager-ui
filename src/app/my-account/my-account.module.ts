@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../modules/shared.module';
 import { MyAccountComponent } from './my-account.component';
-import { AccountSettingsService } from './account-settings/account-settings.service';
+import { AccountSettingsService } from './accounts-settings/accounts-settings.service';
 
 @NgModule({
   declarations: [MyAccountComponent],
