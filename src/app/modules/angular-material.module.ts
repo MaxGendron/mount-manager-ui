@@ -9,10 +9,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatDialogModule } from '@angular/material/dialog';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatListModule } from '@angular/material/list';
-import { MatRippleModule } from '@angular/material/core';
-import { MatSelectModule } from '@angular/material/select';
 
 //Modules for all the imports related to angular material
 const angularMaterial = [
@@ -26,10 +22,6 @@ const angularMaterial = [
   MatToolbarModule,
   MatMenuModule,
   MatDialogModule,
-  MatSidenavModule,
-  MatListModule,
-  MatRippleModule,
-  MatSelectModule,
 ];
 
 @NgModule({

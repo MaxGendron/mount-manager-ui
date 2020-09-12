@@ -9,7 +9,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularMaterialModule } from './angular-material.module';
-import { MyAccountComponent } from '../my-account/my-account.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -17,7 +16,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 const appRoutes: Routes = [
   { path: '', component: IndexComponent },
-  { path: 'my-account', component: MyAccountComponent },
   //{ path: 'index', component: IndexComponent, canActivate: [AuthGuard]},
 ];
 

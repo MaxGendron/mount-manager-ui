@@ -8,49 +8,29 @@
     "invalidEmail": "L'adresse courriel n'est pas dans un format valide",
     "accountExist": "L'adresse courriel ou le nom de compte est déjà pris, veuillez réessayer",
     "emailExist": "L'adresse courriel spécifié existe déjà",
-    "usernameExist": "Le nom d'utilisateur spécifié existe déjà",
-    "unexpectedUpdate": "Une erreur inattendue s'est produite en mettant a jour \"{{field}}\", veuillez réessayer",
-    "updateEmpty": "Impossible de mettre à jour ce champ avec aucune valeur"
+    "usernameExist": "Le nom d'utilisateur spécifié existe déjà"
   },
   "button": {
     "login": "Se connecter",
     "logout": "Se déconnecter",
     "register": "S'inscrire",
-    "lang": "English",
-    "changePassword": "Changer le mot de passe"
+    "lang": "English"
   },
   "form": {
     "username": "Nom de compte",
     "email": "Adresse courriel",
     "usernameOrEmail": "Nom de compte ou address courriel",
     "password": "Mot de passe",
-    "confirmPassword": "Confirmation du mot de passe",
-    "mountTypes": "Type de montures dans l'élevage",
-    "igUsername": "Pseudo en jeu",
-    "serverName": "Nom du serveur",
-    "optional": "Optionnel"
+    "confirmPassword": "Confirmation du mot de passe"
   },
   "login": {
     "title": "Connexion",
-    "registerText": "Pas encore de compte avec nous? Inscrivez vous maintenant pour profiter de toute les fonctionnalités!"
+    "register-text": "Pas encore de compte avec nous? Inscrivez vous maintenant pour profiter de toute les fonctionnalités!"
   },
   "navbar": {
     "account": "Mon compte"
   },
   "register": {
     "title": "Inscription"
-  },
-  "myAccount": {
-    "title": "Mon compte",
-    "accountInfo": "Information du compte",
-    "updated": "{{field}} actualisé!",
-    "showPassword": "Afficher les champs de mot de passe",
-    "hidePassword": "Cacher les champs de mot de passe",
-    "accountSettings": "Paramètres du compte"
-  },
-  "mountTypeEnum": {
-    "Dragodinde": "Dragodinde",
-    "Volkorne": "Volkorne",
-    "Muldo": "Muldo"
   }
 }

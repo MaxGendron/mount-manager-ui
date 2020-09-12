@@ -127,7 +127,7 @@
   "schematics": {
     "@schematics/angular:component": {
       "style": "scss",
-      "skipTests": true
+      "spec": false
     }
   }
 }

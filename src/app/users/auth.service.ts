@@ -18,19 +18,18 @@ export class AuthService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): LoggedUserResponseDto {
+  public get currentUserValue() {
     return this.currentUserSubject.value;
   }
 
   //Set the user in the localStorage & currentUser
-  login(user: LoggedUserResponseDto): void {
+  login(user) {
     localStorage.setItem('currentUser', JSON.stringify(user));
     this.currentUserSubject.next(user);
-    this.router.navigate(['my-account']);
   }
 
   //Remove user from localStorage
-  logout(): void {
+  logout() {
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
     this.router.navigate(['']);

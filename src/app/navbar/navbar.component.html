@@ -1,49 +1,29 @@
 <mat-toolbar color="primary">
-  <button *ngIf="connectedUsername" mat-icon-button id="menu" (click)="sidenav.toggle()">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <a class="pointer outline-none" [routerLink]="['']">
-    Mount Manager
-  </a>
+  <span class="pointer">Mount Manager</span>
   <span class="fill-remaining-space"></span>
-  <span id="switchlang" (click)="switchLang()">
-    {{ 'button.lang' | translate }}
-  </span>
-
-  <ng-container *ngIf="!connectedUsername; then notConnected; else connected"></ng-container>
-
+  <span id="switchlang" (click)="switchLang()">{{
+    'button.lang' | translate
+  }}</span>
+  <ng-container
+    *ngIf="!connectedUsername; then notConnected; else connected"
+  ></ng-container>
   <ng-template #notConnected>
     <div class="accent login-container" (click)="openLoginPopup()">
       <span>{{ 'button.login' | translate }}</span>
     </div>
   </ng-template>
-
   <ng-template #connected>
     <div [matMenuTriggerFor]="accountMenu" class="login-container">
-      <span>{{ connectedUsername }}<mat-icon>account_circle</mat-icon></span>
+      <span>{{ connectedUsername }}<i class="far fa-user-circle"></i></span>
       <mat-menu #accountMenu="matMenu" xPosition="before" class="navbar-menu">
-        <a mat-menu-item (click)="logout()">
-          {{ 'button.logout' | translate }}
-        </a>
+        <!-- Make the routerlink redirecting to my account -->
+        <span mat-menu-item [routerLink]="['']">{{
+          'navbar.account' | translate
+        }}</span>
+        <span mat-menu-item (click)="logout()">{{
+          'button.logout' | translate
+        }}</span>
       </mat-menu>
     </div>
   </ng-template>
 </mat-toolbar>
-
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side">
-    <div *ngIf="connectedUsername">
-      <mat-list>
-        <mat-list-item matRipple [routerLink]="['my-account']" [matRippleColor]="color" (click)="sidenav.close()">
-          <mat-icon>account_circle</mat-icon>
-          <span>{{ 'navbar.account' | translate }}</span>
-        </mat-list-item>
-        <mat-divider></mat-divider>
-      </mat-list>
-    </div>
-  </mat-sidenav>
-
-  <mat-sidenav-content (click)="sidenav.close()">
-    <router-outlet></router-outlet>
-  </mat-sidenav-content>
-</mat-sidenav-container>

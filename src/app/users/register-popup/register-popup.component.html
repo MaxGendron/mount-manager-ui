@@ -14,13 +14,14 @@
         matInput
       />
       <mat-error *ngIf="registerForm.get('username').hasError('required')">
-        {{ 'error.required' | translate: { input: 'form.username' | translate } }}
+        {{
+          'error.required' | translate: { input: 'form.username' | translate }
+        }}
       </mat-error>
       <mat-error *ngIf="registerForm.get('username').hasError('exist')">
         {{ 'error.usernameExist' | translate }}
       </mat-error>
     </mat-form-field>
-
     <mat-form-field appearance="standard" class="col-lg-12">
       <mat-label>{{ 'form.email' | translate }}</mat-label>
       <input
@@ -41,11 +42,16 @@
         {{ 'error.emailExist' | translate }}
       </mat-error>
     </mat-form-field>
-
     <div formGroupName="passwords">
       <mat-form-field appearance="standard" class="col-lg-12">
         <mat-label>{{ 'form.password' | translate }}</mat-label>
-        <input formControlName="password" type="password" name="password" required matInput />
+        <input
+          formControlName="password"
+          type="password"
+          name="password"
+          required
+          matInput
+        />
         <mat-error
           *ngIf="
             registerForm
@@ -54,16 +60,17 @@
               .hasError('required')
           "
         >
-          {{ 'error.required' | translate: { input: 'form.password' | translate } }}
+          {{
+            'error.required' | translate: { input: 'form.password' | translate }
+          }}
         </mat-error>
       </mat-form-field>
-
       <mat-form-field appearance="standard" class="col-lg-12">
         <mat-label>{{ 'form.confirmPassword' | translate }}</mat-label>
         <input
           [errorStateMatcher]="passwordMatcher"
           formControlName="confirmPassword"
-          type="password"
+          type="confirmPassword"
           name="confirmPassword"
           matInput
         />
@@ -72,27 +79,20 @@
         </mat-error>
       </mat-form-field>
     </div>
-
-    <mat-form-field appearance="standard" class="col-lg-12">
-      <mat-label>{{ 'form.mountTypes' | translate }}</mat-label>
-      <mat-select formControlName="mountTypes" name="mountTypes" multiple required>
-        <mat-option *ngFor="let mountType of keys(mountTypes)" [value]="mountTypes[mountType]">
-          {{ 'mountTypeEnum.' + mountType | translate }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="registerForm.get('mountTypes').hasError('required')">
-        {{ 'error.required' | translate: { input: 'form.mountTypes' | translate } }}
-      </mat-error>
-    </mat-form-field>
   </div>
-
   <div class="margin-bottom-16 error-div">
-    <span *ngIf="error" class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
+    <span *ngIf="error" class="warning">
+      <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
+    </span>
   </div>
-
   <div mat-dialog-actions align="end">
-    <button type="submit" color="accent" mat-raised-button [disabled]="isDisabled()">
-      {{ 'button.register' | translate }}
+    <button
+      type="submit"
+      color="accent"
+      mat-raised-button
+      [disabled]="isDisabled()"
+    >
+      {{ 'button.login' | translate }}
       <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
     </button>
   </div>

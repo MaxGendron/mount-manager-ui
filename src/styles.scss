@@ -9,15 +9,19 @@
 
 html,
 body {
-  margin: 0 !important;
+  height: 100%;
+}
+
+.full {
+  height: 100vh;
 }
 
 .margin-bottom-16 {
-  margin-bottom: 16px !important;
+  margin-bottom: 16px;
 }
 
 .margin-top-16 {
-  margin-top: 16px !important;
+  margin-top: 16px;
 }
 
 button .fa-spin {
@@ -60,20 +64,7 @@ button .fa-spin {
   }
 }
 
-.success {
-  color: $success;
-
-  &-light {
-    color: $success-light;
-  }
-
-  &-dark {
-    color: $success-dark;
-  }
-}
-
 button {
-  outline: none !important;
   &:hover:enabled {
     background-color: $accent-light;
   }
@@ -83,18 +74,10 @@ button {
   cursor: pointer;
 }
 
-.outline-none {
-  outline: none;
-}
-
 .padding-top-16 {
-  padding-top: 16px !important;
+  padding-top: 16px;
 }
 
 .error-div {
   height: 20px;
-}
-
-.small {
-  font-size: 12px;
 }
