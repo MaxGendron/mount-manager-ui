@@ -25,7 +25,7 @@
     "usernameOrEmail": "Nom de compte ou address courriel",
     "password": "Mot de passe",
     "confirmPassword": "Confirmation du mot de passe",
-    "mountTypes": "Type de montures",
+    "mountTypes": "Type de montures dans l'élevage",
     "igUsername": "Pseudo en jeu",
     "serverName": "Nom du serveur",
     "optional": "Optionnel"
