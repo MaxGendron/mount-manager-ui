@@ -17,7 +17,7 @@ export class MyAccountComponent implements OnInit {
   private subscription: Subscription = new Subscription();
   error: string;
   loading = false;
-  showPassword = true;
+  showPassword = false;
 
   passwordMatcher = new PasswordErrorStateMatcher();
   userForm: FormGroup;
