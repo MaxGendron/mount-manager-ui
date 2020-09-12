@@ -15,7 +15,8 @@
     "login": "Se connecter",
     "logout": "Se déconnecter",
     "register": "S'inscrire",
-    "lang": "English"
+    "lang": "English",
+    "changePassword": "Changer le mot de passe"
   },
   "form": {
     "username": "Nom de compte",
@@ -27,12 +28,19 @@
   },
   "login": {
     "title": "Connexion",
-    "register-text": "Pas encore de compte avec nous? Inscrivez vous maintenant pour profiter de toute les fonctionnalités!"
+    "registerText": "Pas encore de compte avec nous? Inscrivez vous maintenant pour profiter de toute les fonctionnalités!"
   },
   "navbar": {
     "account": "Mon compte"
   },
   "register": {
     "title": "Inscription"
+  },
+  "myAccount": {
+    "title": "Mon compte",
+    "accountInfo": "Information du compte",
+    "updated": "{{field}} actualisé!",
+    "showPassword": "Afficher les champs de mot de passe",
+    "hidePassword": "Cacher les champs de mot de passe"
   }
 }

@@ -8,27 +8,24 @@
     <mat-divider></mat-divider>
     <mat-card-content>
       <div *ngIf="error" class="margin-top-16">
-        <span class="warning">
-          <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }}
-        </span>
+        <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
       </div>
 
       <h2 class="section-title">{{ 'myAccount.accountInfo' | translate }}</h2>
 
-      <form *ngIf="userForm" [formGroup]="userForm">
+      <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="updatePassword()">
         <div class="row">
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.username' | translate }}</mat-label>
             <input
-              (keydown.enter)="updateUsername($event.target.value)"
+              (keydown.enter)="updateUsername($event.target)"
               formControlName="username"
               type="text"
               name="username"
               matInput
             />
-            <mat-hint *ngIf="usernameUpdated" class="success">{{
-              'myAccount.updated'
-                | translate: { field: 'form.username' | translate }
+            <mat-hint *ngIf="usernameUpdated" class="success small">{{
+              'myAccount.updated' | translate: { field: 'form.username' | translate }
             }}</mat-hint>
             <mat-error *ngIf="userForm.get('username').hasError('exist')">
               {{ 'error.usernameExist' | translate }}
@@ -38,15 +35,14 @@
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.email' | translate }}</mat-label>
             <input
-              (keydown.enter)="updateEmail($event.target.value)"
+              (keydown.enter)="updateEmail($event.target)"
               formControlName="email"
               type="email"
               name="email"
               matInput
             />
-            <mat-hint *ngIf="emailUpdated" class="success">{{
-              'myAccount.updated'
-                | translate: { field: 'form.email' | translate }
+            <mat-hint *ngIf="emailUpdated" class="success small">{{
+              'myAccount.updated' | translate: { field: 'form.email' | translate }
             }}</mat-hint>
             <mat-error *ngIf="userForm.get('email').hasError('pattern')">
               {{ 'error.invalidEmail' | translate }}
@@ -57,44 +53,51 @@
           </mat-form-field>
         </div>
 
-        <!-- <div formGroupName="passwords" class="row">
-          <mat-form-field appearance="standard" class="col-lg-6">
-            <mat-label>{{ 'form.password' | translate }}</mat-label>
-            <input
-              formControlName="password"
-              type="password"
-              name="password"
-              required
-              matInput
-            />
-            <mat-error
-              *ngIf="
-              accountForm
-                  .get('passwords')
-                  .get('password')
-                  .hasError('required')
-              "
-            >
-              {{
-                'error.required' | translate: { input: 'form.password' | translate }
-              }}
-            </mat-error>
-          </mat-form-field>
-    
-          <mat-form-field appearance="standard" class="col-lg-6">
-            <mat-label>{{ 'form.confirmPassword' | translate }}</mat-label>
-            <input
-              [errorStateMatcher]="passwordMatcher"
-              formControlName="confirmPassword"
-              type="confirmPassword"
-              name="confirmPassword"
-              matInput
-            />
-            <mat-error *ngIf="accountForm.get('passwords').hasError('notSame')">
-              {{ 'error.matchPassword' | translate }}
-            </mat-error>
-          </mat-form-field>
-        </div> -->
+        <span id="show-password" (click)="togglePassword()">
+          {{ (showPassword ? 'myAccount.hidePassword'  : 'myAccount.showPassword') | translate }}
+        </span>
+
+        <div *ngIf="showPassword" formGroupName="passwords">
+          <div class="row">
+            <mat-form-field appearance="standard" class="col-lg-6">
+              <mat-label>{{ 'form.password' | translate }}</mat-label>
+              <input formControlName="password" type="password" name="password" matInput />
+              <mat-hint *ngIf="passwordUpdated" class="success small">{{
+                'myAccount.updated' | translate: { field: 'form.password' | translate }
+              }}</mat-hint>
+              <mat-error
+                *ngIf="
+                  userForm
+                    .get('passwords')
+                    .get('password')
+                    .hasError('required')
+                "
+              >
+                {{ 'error.required' | translate: { input: 'form.password' | translate } }}
+              </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="standard" class="col-lg-6">
+              <mat-label>{{ 'form.confirmPassword' | translate }}</mat-label>
+              <input
+                [errorStateMatcher]="passwordMatcher"
+                formControlName="confirmPassword"
+                type="confirmPassword"
+                name="confirmPassword"
+                matInput
+              />
+              <mat-error *ngIf="userForm.get('passwords').hasError('notSame')">
+                {{ 'error.matchPassword' | translate }}
+              </mat-error>
+            </mat-form-field>
+          </div>
+          <div align="right">
+            <button type="submit" color="accent" mat-raised-button [disabled]="isPasswordButtonDisabled()">
+              {{ 'button.changePassword' | translate }}
+              <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
+            </button>
+          </div>
+        </div>
       </form>
     </mat-card-content>
   </mat-card>

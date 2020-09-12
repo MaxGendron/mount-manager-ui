@@ -19,11 +19,15 @@ export class MyAccountComponent implements OnInit {
   private subscription: Subscription = new Subscription();
   error: string;
   loading = false;
+  showPassword = true;
+
   passwordMatcher = new PasswordErrorStateMatcher();
   userForm: FormGroup;
   userInfo: UserResponseDto;
+
   usernameUpdated = false;
   emailUpdated = false;
+  passwordUpdated = false;
 
   constructor(
     private translateService: TranslateService,
@@ -65,12 +69,17 @@ export class MyAccountComponent implements OnInit {
     });
   }
 
-  isDisabled(): boolean {
-    return !this.userForm.valid || this.loading;
+  isPasswordButtonDisabled(): boolean {
+    return !this.userForm.get('passwords').valid || this.loading;
+  }
+
+  togglePassword() : void {
+    this.showPassword = !this.showPassword;
   }
 
   //Update username
-  updateUsername(username: string) {
+  updateUsername(eventTarget: any): void {
+    let username = eventTarget.value;
     //Only update if changed
     if (username != this.userInfo.username) {
       const updateUserDto = new UpdateUserDto();
@@ -99,10 +108,12 @@ export class MyAccountComponent implements OnInit {
         ),
       );
     }
+    eventTarget.blur();
   }
 
   //Update email
-  updateEmail(email: string) {
+  updateEmail(eventTarget: any): void {
+    let email = eventTarget.value;
     //Only update if changed & if email is valid
     if (email != this.userInfo.email && this.userForm.get('email').valid) {
       const updateUserDto = new UpdateUserDto();
@@ -133,5 +144,33 @@ export class MyAccountComponent implements OnInit {
         ),
       );
     }
+    eventTarget.blur();
+  }
+
+  //Update password
+  updatePassword() : void {
+    //Since this call is done from a button, we treat it like a "real api call"
+    //so we don't check if changed or not
+    this.loading = true;
+    const updateUserDto = new UpdateUserDto();
+    updateUserDto.password = this.userForm.get('passwords').get('password').value;
+
+    this.subscription.add(
+      this.userService.updateUser(updateUserDto, this.userInfo._id).subscribe(
+        () => {
+          this.passwordUpdated = true;
+        },
+        () => {
+          const field = this.translateService.instant('form.password');
+          this.error = this.translateService.instant(
+            'error.unexpectedUpdate',
+            { field: field },
+          );
+        },
+        () => {
+          this.loading = false;
+        }
+      )
+    );
   }
 }

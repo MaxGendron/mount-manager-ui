@@ -15,7 +15,8 @@
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
-    "lang": "Français"
+    "lang": "Français",
+    "changePassword": "Change password"
   },
   "form": {
     "username": "Username",
@@ -27,7 +28,7 @@
   },
   "login": {
     "title": "Login",
-    "register-text": "Don't have an account with us yet? Register now to have access to all the features!"
+    "registerText": "Don't have an account with us yet? Register now to have access to all the features!"
   },
   "navbar": {
     "account": "My account"
@@ -38,6 +39,8 @@
   "myAccount": {
     "title": "My Account",
     "accountInfo": "Account Info",
-    "updated": "{{field}} updated!"
+    "updated": "{{field}} updated!",
+    "showPassword": "Show password fields",
+    "hidePassword": "Hide password fields"
   }
 }
