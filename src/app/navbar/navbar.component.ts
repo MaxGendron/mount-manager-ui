@@ -14,11 +14,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   connectedUsername: string;
   private subscription: Subscription = new Subscription();
   color: string;
-  constructor(
-    public authService: AuthService,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-  ) {}
+  constructor(public authService: AuthService, public dialog: MatDialog, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.subscription.add(

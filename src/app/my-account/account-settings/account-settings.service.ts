@@ -11,19 +11,12 @@ export class AccountSettingsService {
   constructor(private http: HttpClient) {}
 
   getAccountSettingByUserId(): Observable<AccountSettingDto> {
-    return this.http.get<AccountSettingDto>(
-      environment.webApiEndPoint + this.acountSettingsEndpoint + 'find/user-id',
-    );
+    return this.http.get<AccountSettingDto>(environment.webApiEndPoint + this.acountSettingsEndpoint + 'find/user-id');
   }
 
-  updateAccountSetting(
-    accountSettingDto: AccountSettingDto,
-    accountSettingsId: string,
-  ): Observable<AccountSettingDto> {
+  updateAccountSetting(accountSettingDto: AccountSettingDto, accountSettingsId: string): Observable<AccountSettingDto> {
     return this.http.post<AccountSettingDto>(
-      environment.webApiEndPoint +
-        this.acountSettingsEndpoint +
-        accountSettingsId,
+      environment.webApiEndPoint + this.acountSettingsEndpoint + accountSettingsId,
       accountSettingDto,
     );
   }

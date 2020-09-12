@@ -54,7 +54,7 @@
         </div>
 
         <span id="show-password" (click)="togglePassword()">
-          {{ (showPassword ? 'myAccount.hidePassword'  : 'myAccount.showPassword') | translate }}
+          {{ (showPassword ? 'myAccount.hidePassword' : 'myAccount.showPassword') | translate }}
         </span>
 
         <div *ngIf="showPassword" formGroupName="passwords">

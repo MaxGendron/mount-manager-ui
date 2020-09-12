@@ -3,9 +3,7 @@ import { Subscription } from 'rxjs';
 import { AccountSettingsService } from './account-settings/account-settings.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import ValidatorUtil, {
-  PasswordErrorStateMatcher,
-} from '../utils/validator-util';
+import ValidatorUtil, { PasswordErrorStateMatcher } from '../utils/validator-util';
 import { UserService } from '../users/user.service';
 import { UserResponseDto } from '../users/models/dtos/responses/user.response.dto';
 import { UpdateUserDto } from '../users/models/dtos/update-user.dto';
@@ -48,10 +46,7 @@ export class MyAccountComponent implements OnInit {
     //Initialize the user form
     this.userForm = this.fb.group({
       username: [this.userInfo.username],
-      email: [
-        this.userInfo.email,
-        Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i),
-      ],
+      email: [this.userInfo.email, Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i)],
       passwords: this.fb.group(
         {
           password: ['', Validators.required],
@@ -73,7 +68,7 @@ export class MyAccountComponent implements OnInit {
     return !this.userForm.get('passwords').valid || this.loading;
   }
 
-  togglePassword() : void {
+  togglePassword(): void {
     this.showPassword = !this.showPassword;
   }
 
@@ -99,10 +94,7 @@ export class MyAccountComponent implements OnInit {
               this.userForm.get('username').setErrors({ exist: true });
             } else {
               const field = this.translateService.instant('form.username');
-              this.error = this.translateService.instant(
-                'error.unexpectedUpdate',
-                { field: field },
-              );
+              this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
             }
           },
         ),
@@ -135,10 +127,7 @@ export class MyAccountComponent implements OnInit {
               this.userForm.get('email').setErrors({ exist: true });
             } else {
               const field = this.translateService.instant('form.email');
-              this.error = this.translateService.instant(
-                'error.unexpectedUpdate',
-                { field: field },
-              );
+              this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
             }
           },
         ),
@@ -148,7 +137,7 @@ export class MyAccountComponent implements OnInit {
   }
 
   //Update password
-  updatePassword() : void {
+  updatePassword(): void {
     //Since this call is done from a button, we treat it like a "real api call"
     //so we don't check if changed or not
     this.loading = true;
@@ -162,15 +151,12 @@ export class MyAccountComponent implements OnInit {
         },
         () => {
           const field = this.translateService.instant('form.password');
-          this.error = this.translateService.instant(
-            'error.unexpectedUpdate',
-            { field: field },
-          );
+          this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
         },
         () => {
           this.loading = false;
-        }
-      )
+        },
+      ),
     );
   }
 }

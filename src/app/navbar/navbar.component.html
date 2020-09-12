@@ -1,10 +1,5 @@
 <mat-toolbar color="primary">
-  <button
-    *ngIf="connectedUsername"
-    mat-icon-button
-    id="menu"
-    (click)="sidenav.toggle()"
-  >
+  <button *ngIf="connectedUsername" mat-icon-button id="menu" (click)="sidenav.toggle()">
     <mat-icon>menu</mat-icon>
   </button>
   <a class="pointer outline-none" [routerLink]="['']">
@@ -15,9 +10,7 @@
     {{ 'button.lang' | translate }}
   </span>
 
-  <ng-container
-    *ngIf="!connectedUsername; then notConnected; else connected"
-  ></ng-container>
+  <ng-container *ngIf="!connectedUsername; then notConnected; else connected"></ng-container>
 
   <ng-template #notConnected>
     <div class="accent login-container" (click)="openLoginPopup()">
@@ -41,12 +34,7 @@
   <mat-sidenav #sidenav mode="side">
     <div *ngIf="connectedUsername">
       <mat-list>
-        <mat-list-item
-          matRipple
-          [routerLink]="['my-account']"
-          [matRippleColor]="color"
-          (click)="sidenav.close()"
-        >
+        <mat-list-item matRipple [routerLink]="['my-account']" [matRippleColor]="color" (click)="sidenav.close()">
           <mat-icon>account_circle</mat-icon>
           <span>{{ 'navbar.account' | translate }}</span>
         </mat-list-item>

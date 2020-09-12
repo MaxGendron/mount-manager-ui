@@ -17,22 +17,14 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   loginUser(loginDto: LoginDto): Observable<LoggedUserResponseDto> {
-    return this.http.post<LoggedUserResponseDto>(
-      `${this.usersEndpoint}login`,
-      loginDto,
-    );
+    return this.http.post<LoggedUserResponseDto>(`${this.usersEndpoint}login`, loginDto);
   }
 
   registerUser(registerDto: RegisterDto): Observable<LoggedUserResponseDto> {
-    return this.http.post<LoggedUserResponseDto>(
-      this.usersEndpoint,
-      registerDto,
-    );
+    return this.http.post<LoggedUserResponseDto>(this.usersEndpoint, registerDto);
   }
 
-  validatePropertyValue(
-    validateUserPropertyValueDto: ValidateUserPropertyValueDto,
-  ): Observable<ExistReponseDto> {
+  validatePropertyValue(validateUserPropertyValueDto: ValidateUserPropertyValueDto): Observable<ExistReponseDto> {
     const data = {
       property: validateUserPropertyValueDto.property,
       value: validateUserPropertyValueDto.value,
@@ -46,13 +38,7 @@ export class UserService {
     return this.http.get<UserResponseDto>(`${this.usersEndpoint}find/user-id`);
   }
 
-  updateUser(
-    updateUserDto: UpdateUserDto,
-    userId: string,
-  ): Observable<UserResponseDto> {
-    return this.http.put<UserResponseDto>(
-      `${this.usersEndpoint}${userId}`,
-      updateUserDto,
-    );
+  updateUser(updateUserDto: UpdateUserDto, userId: string): Observable<UserResponseDto> {
+    return this.http.put<UserResponseDto>(`${this.usersEndpoint}${userId}`, updateUserDto);
   }
 }
