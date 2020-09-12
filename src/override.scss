@@ -3,21 +3,31 @@
 .navbar-menu {
   background-color: $primary;
   border: 1px solid $primary-dark;
-  width: 150px !important;
+  width: 145px !important;
 
   .mat-menu-content {
     padding: 0 !important;
 
-    span {
+    a {
       text-align: center !important;
-
-      &:first-child {
-        border-bottom: 1px solid $primary-dark;
-      }
+      text-decoration: none;
+      color: #ffffff;
     }
   }
 }
 
 .mat-dialog-container[id='login-popup'] {
   padding: 0 !important;
+}
+
+.mat-list-item-content {
+  justify-content: center;
+}
+
+.mat-menu-panel {
+  min-height: 0 !important;
+}
+
+.mat-card-header-text {
+  margin: 0 !important;
 }

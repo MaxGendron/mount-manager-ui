@@ -8,29 +8,49 @@
     "invalidEmail": "Email isn't in a valid format",
     "accountExist": "Email address or username is already taken, please try again",
     "emailExist": "The specified email adress already exist",
-    "usernameExist": "The specified username already exist"
+    "usernameExist": "The specified username already exist",
+    "unexpectedUpdate": "An unexpected error occured when updating \"{{field}}\", please try again",
+    "updateEmpty": "Cannot update this field with empty value"
   },
   "button": {
     "login": "Login",
     "logout": "Logout",
     "register": "Register",
-    "lang": "Français"
+    "lang": "Français",
+    "changePassword": "Change password"
   },
   "form": {
     "username": "Username",
     "email": "Email",
     "usernameOrEmail": "Username or email",
     "password": "Password",
-    "confirmPassword": "Confirm Password"
+    "confirmPassword": "Confirm Password",
+    "mountTypes": "Mount Types in the breeding",
+    "igUsername": "In game Username",
+    "serverName": "Server name",
+    "optional": "Optional"
   },
   "login": {
     "title": "Login",
-    "register-text": "Don't have an account with us yet? Register now to have access to all the features!"
+    "registerText": "Don't have an account with us yet? Register now to have access to all the features!"
   },
   "navbar": {
     "account": "My account"
   },
   "register": {
     "title": "Register"
+  },
+  "myAccount": {
+    "title": "My Account",
+    "accountInfo": "Account Info",
+    "updated": "{{field}} updated!",
+    "showPassword": "Show password fields",
+    "hidePassword": "Hide password fields",
+    "accountSettings": "Account Settings"
+  },
+  "mountTypeEnum": {
+    "Dragodinde": "Dragoturkey",
+    "Volkorne": "Rhineetle",
+    "Muldo": "Seemyool"
   }
 }
