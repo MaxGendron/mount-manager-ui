@@ -77,8 +77,8 @@
       <mat-label>{{ 'form.mountTypes' | translate }}</mat-label>
       <mat-select formControlName="mountTypes" name="mountTypes" multiple required>
         <mat-option *ngFor="let mountType of keys(mountTypes)" [value]="mountTypes[mountType]">
-          {{ ("mountTypeEnum." + mountType) | translate}}
-      </mat-option>
+          {{ 'mountTypeEnum.' + mountType | translate }}
+        </mat-option>
       </mat-select>
       <mat-error *ngIf="registerForm.get('mountTypes').hasError('required')">
         {{ 'error.required' | translate: { input: 'form.mountTypes' | translate } }}

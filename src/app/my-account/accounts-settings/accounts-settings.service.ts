@@ -15,7 +15,10 @@ export class AccountSettingsService {
     return this.http.get<AccountSettingsDto>(`${this.acountSettingsEndpoint}find/user-id`);
   }
 
-  updateAccountSetting(updateAccountSettingDto: UpdateAccountSettingsDto, accountSettingsId: string): Observable<AccountSettingsDto> {
+  updateAccountSetting(
+    updateAccountSettingDto: UpdateAccountSettingsDto,
+    accountSettingsId: string,
+  ): Observable<AccountSettingsDto> {
     return this.http.put<AccountSettingsDto>(
       `${this.acountSettingsEndpoint}${accountSettingsId}`,
       updateAccountSettingDto,

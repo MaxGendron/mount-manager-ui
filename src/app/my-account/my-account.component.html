@@ -151,7 +151,7 @@
             <mat-label>{{ 'form.mountTypes' | translate }}</mat-label>
             <mat-select formControlName="mountTypes" name="mountTypes" multiple required>
               <mat-option *ngFor="let mountType of keys(mountTypes)" [value]="mountTypes[mountType]">
-                {{ ("mountTypeEnum." + mountType) | translate}}
+                {{ 'mountTypeEnum.' + mountType | translate }}
               </mat-option>
             </mat-select>
             <mat-hint *ngIf="mountTypesUpdated" class="success small">{{

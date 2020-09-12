@@ -44,7 +44,7 @@ export class MyAccountComponent implements OnInit {
   constructor(
     private translateService: TranslateService,
     private accountSettingsService: AccountSettingsService,
-    private serverService: ServerService, 
+    private serverService: ServerService,
     private userService: UserService,
     private fb: FormBuilder,
   ) {}
@@ -66,7 +66,7 @@ export class MyAccountComponent implements OnInit {
       username: [this.userInfo.username, Validators.required],
       email: [
         this.userInfo.email,
-        Validators.compose([Validators.required, Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i)])
+        Validators.compose([Validators.required, Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i)]),
       ],
       passwords: this.fb.group(
         {
@@ -81,8 +81,8 @@ export class MyAccountComponent implements OnInit {
     this.accountSettingForm = this.fb.group({
       igUsername: [this.accountSettingsInfo.igUsername, Validators.required],
       serverName: [this.accountSettingsInfo.serverName, Validators.required],
-      mountTypes: [this.accountSettingsInfo.mountTypes, Validators.required]
-    })
+      mountTypes: [this.accountSettingsInfo.mountTypes, Validators.required],
+    });
 
     //Listen on value changes to reset error & success message
     this.userForm.valueChanges.subscribe(() => {
@@ -96,15 +96,15 @@ export class MyAccountComponent implements OnInit {
       this.igUsernameUpdated = false;
       this.serverNameUpdated = false;
       this.mountTypesUpdated = false;
-    })
+    });
 
-    //Listen on value changes on the selects to call the update 
+    //Listen on value changes on the selects to call the update
     this.accountSettingForm.get('serverName').valueChanges.subscribe(serverName => {
       this.updateServerName(serverName);
-    })
+    });
     this.accountSettingForm.get('mountTypes').valueChanges.subscribe(mountTypes => {
       this.updateMountTypes(mountTypes);
-    })
+    });
   }
 
   isPasswordButtonDisabled(): boolean {
