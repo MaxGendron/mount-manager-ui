@@ -13,7 +13,7 @@
 
       <h2 class="section-title">{{ 'myAccount.accountInfo' | translate }}</h2>
 
-      <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="updatePassword()">
+      <form [formGroup]="userForm" (ngSubmit)="updatePassword()">
         <div class="row">
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.username' | translate }}</mat-label>

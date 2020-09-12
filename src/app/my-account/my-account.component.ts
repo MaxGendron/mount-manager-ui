@@ -148,12 +148,11 @@ export class MyAccountComponent implements OnInit {
       this.userService.updateUser(updateUserDto, this.userInfo._id).subscribe(
         () => {
           this.passwordUpdated = true;
+          this.loading = false;
         },
         () => {
           const field = this.translateService.instant('form.password');
           this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
-        },
-        () => {
           this.loading = false;
         },
       ),
