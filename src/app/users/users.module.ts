@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from './user.service';
 import { LoginDialogComponent } from './login-dialog/login-dialog.component';
 import { RegisterPopupComponent } from './register-popup/register-popup.component';
-import { SharedModule } from '../modules/shared.module';
+import { SharedModule } from '../common/modules/shared.module';
 
 @NgModule({
   declarations: [LoginDialogComponent, RegisterPopupComponent],

@@ -5,7 +5,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { UserService } from '../user.service';
 import { AuthService } from '../auth.service';
-import ValidatorUtil, { PasswordErrorStateMatcher } from '../../utils/validator-util';
+import ValidatorUtil, { PasswordErrorStateMatcher } from '../../common/utils/validator-util';
 import { ValidateUserPropertyValueDto } from '../models/dtos/validate-user-property-value.dto';
 import { RegisterDto } from '../models/dtos/register.dto';
 import { MountTypeEnum } from 'src/app/my-account/accounts-settings/models/enum/mount-type.enum';

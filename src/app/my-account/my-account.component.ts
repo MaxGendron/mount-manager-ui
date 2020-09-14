@@ -3,7 +3,7 @@ import { Subscription } from 'rxjs';
 import { AccountSettingsService } from './accounts-settings/accounts-settings.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
-import ValidatorUtil, { PasswordErrorStateMatcher } from '../utils/validator-util';
+import ValidatorUtil, { PasswordErrorStateMatcher } from '../common/utils/validator-util';
 import { UserService } from '../users/user.service';
 import { UserResponseDto } from '../users/models/dtos/responses/user.response.dto';
 import { UpdateUserDto } from '../users/models/dtos/update-user.dto';
