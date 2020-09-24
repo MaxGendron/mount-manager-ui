@@ -11,7 +11,7 @@ import { AccountSettingsResponseDto } from './accounts-settings/models/dtos/resp
 import { UpdateAccountSettingsDto } from './accounts-settings/models/dtos/update-account-settings.dto';
 import { ServerResponseDto } from './servers/models/dtos/responses/server.response.dto';
 import { ServerService } from './servers/server.service';
-import { MountTypeEnum } from '../mounts/models/enum/mount-type.enum';
+import { MountTypeEnum } from 'src/app/mounts/models/enum/mount-type.enum';
 
 @Component({
   selector: 'app-my-account',
