@@ -1,4 +1,5 @@
-import { MountTypeEnum } from '../../enum/mount-type.enum';
+import { MountTypeEnum } from 'src/app/mounts/models/enum/mount-type.enum';
+
 
 export interface AccountSettingsDto {
   _id: string;

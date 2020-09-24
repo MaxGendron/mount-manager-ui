@@ -1,4 +1,4 @@
-import { MountTypeEnum } from 'src/app/my-account/accounts-settings/models/enum/mount-type.enum';
+import { MountTypeEnum } from 'src/app/mounts/models/enum/mount-type.enum';
 
 export class RegisterDto {
   constructor(
