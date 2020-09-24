@@ -79,8 +79,8 @@ export class MyAccountComponent implements OnInit {
 
     //Initialize the accountSettings form
     this.accountSettingForm = this.fb.group({
-      igUsername: [this.accountSettingsInfo.igUsername, Validators.required],
-      serverName: [this.accountSettingsInfo.serverName, Validators.required],
+      igUsername: [this.accountSettingsInfo.igUsername],
+      serverName: [this.accountSettingsInfo.serverName],
       mountTypes: [this.accountSettingsInfo.mountTypes, Validators.required],
     });
 
@@ -119,7 +119,7 @@ export class MyAccountComponent implements OnInit {
   updateUsername(eventTarget: any): void {
     let username = eventTarget.value;
     //Only update if changed & valid
-    if (username != this.userInfo.username && this.userForm.get('username').valid) {
+    if (username !== this.userInfo.username && this.userForm.get('username').valid) {
       const updateUserDto = new UpdateUserDto();
       updateUserDto.username = username;
 
@@ -150,7 +150,7 @@ export class MyAccountComponent implements OnInit {
   updateEmail(eventTarget: any): void {
     let email = eventTarget.value;
     //Only update if changed & if email is valid
-    if (email != this.userInfo.email && this.userForm.get('email').valid) {
+    if (email !== this.userInfo.email && this.userForm.get('email').valid) {
       const updateUserDto = new UpdateUserDto();
       updateUserDto.email = email;
 
@@ -203,10 +203,10 @@ export class MyAccountComponent implements OnInit {
   }
 
   //Update igUsername
-  updateigUsername(eventTarget: any): void {
+  updateIgUsername(eventTarget: any): void {
     let igUsername = eventTarget.value;
     //Only update if changed & valid
-    if (igUsername != this.accountSettingsInfo.igUsername && this.accountSettingForm.get('igUsername').valid) {
+    if (igUsername !== this.accountSettingsInfo.igUsername) {
       const accountSettingsDto = new UpdateAccountSettingsDto();
       accountSettingsDto.igUsername = igUsername;
 
@@ -226,15 +226,15 @@ export class MyAccountComponent implements OnInit {
         ),
       );
     }
+    eventTarget.blur();
   }
 
   //Update serverName
   updateServerName(serverName: string): void {
     //Only update if changed
-    //No validation on serverName since it's a single select. Cannot remove if already 1 selected
-    if (serverName != this.accountSettingsInfo.serverName) {
+    if (serverName !== this.accountSettingsInfo.serverName) {
       const accountSettingsDto = new UpdateAccountSettingsDto();
-      accountSettingsDto.serverName = serverName;
+      accountSettingsDto.serverName = serverName ?? '';
 
       this.subscription.add(
         this.accountSettingsService.updateAccountSetting(accountSettingsDto, this.accountSettingsInfo._id).subscribe(
@@ -257,7 +257,7 @@ export class MyAccountComponent implements OnInit {
   //Update mountTypes
   updateMountTypes(mountTypes: MountTypeEnum[]): void {
     //Only update if changed & valid
-    if (mountTypes != this.accountSettingsInfo.mountTypes && this.accountSettingForm.get('mountTypes').valid) {
+    if (mountTypes !== this.accountSettingsInfo.mountTypes && this.accountSettingForm.get('mountTypes').valid) {
       const accountSettingsDto = new UpdateAccountSettingsDto();
       accountSettingsDto.mountTypes = mountTypes;
 

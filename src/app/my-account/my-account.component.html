@@ -19,7 +19,8 @@
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.username' | translate }}</mat-label>
             <input
-              (keydown.enter)="updateUsername($event.target)"
+              (blur)="updateUsername($event.target)"
+              (keydown.enter)="$event.target.blur()"
               formControlName="username"
               type="text"
               name="username"
@@ -40,7 +41,8 @@
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.email' | translate }}</mat-label>
             <input
-              (keydown.enter)="updateEmail($event.target)"
+              (blur)="updateEmail($event.target)"
+              (keydown.enter)="$event.target.blur()"
               formControlName="email"
               type="email"
               name="email"
@@ -117,25 +119,23 @@
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.igUsername' | translate }} ({{ 'form.optional' | translate }})</mat-label>
             <input
-              (keydown.enter)="updateigUsername($event.target)"
+              (blur)="updateIgUsername($event.target)"
+              (keydown.enter)="$event.target.blur()"
               formControlName="igUsername"
               type="text"
               name="igUsername"
               matInput
-              required
             />
             <mat-hint *ngIf="igUsernameUpdated" class="success small">{{
               'myAccount.updated' | translate: { field: 'form.igUsername' | translate }
             }}</mat-hint>
-            <mat-error *ngIf="accountSettingForm.get('igUsername').hasError('required')">
-              {{ 'error.updateEmpty' | translate }}
-            </mat-error>
           </mat-form-field>
 
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.serverName' | translate }} ({{ 'form.optional' | translate }})</mat-label>
             <!--Call update on select-->
-            <mat-select formControlName="serverName" name="serverName" required>
+            <mat-select formControlName="serverName" name="serverName">
+              <mat-option>- - -</mat-option>
               <mat-option *ngFor="let server of servers" [value]="server.serverName">{{
                 server.serverName
               }}</mat-option>
