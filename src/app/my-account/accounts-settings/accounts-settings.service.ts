@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { AccountSettingsDto } from './models/dtos/responses/account-settings.dto';
+import { AccountSettingsResponseDto } from './models/dtos/responses/account-settings.response.dto';
 import { UpdateAccountSettingsDto } from './models/dtos/update-account-settings.dto';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -11,15 +11,15 @@ export class AccountSettingsService {
 
   constructor(private http: HttpClient) {}
 
-  getAccountSettingByUserId(): Observable<AccountSettingsDto> {
-    return this.http.get<AccountSettingsDto>(`${this.acountSettingsEndpoint}find/user-id`);
+  getAccountSettingByUserId(): Observable<AccountSettingsResponseDto> {
+    return this.http.get<AccountSettingsResponseDto>(`${this.acountSettingsEndpoint}find/user-id`);
   }
 
   updateAccountSetting(
     updateAccountSettingDto: UpdateAccountSettingsDto,
     accountSettingsId: string,
-  ): Observable<AccountSettingsDto> {
-    return this.http.put<AccountSettingsDto>(
+  ): Observable<AccountSettingsResponseDto> {
+    return this.http.put<AccountSettingsResponseDto>(
       `${this.acountSettingsEndpoint}${accountSettingsId}`,
       updateAccountSettingDto,
     );

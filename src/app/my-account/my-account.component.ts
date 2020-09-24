@@ -7,9 +7,9 @@ import ValidatorUtil, { PasswordErrorStateMatcher } from '../common/utils/valida
 import { UserService } from '../users/user.service';
 import { UserResponseDto } from '../users/models/dtos/responses/user.response.dto';
 import { UpdateUserDto } from '../users/models/dtos/update-user.dto';
-import { AccountSettingsDto } from './accounts-settings/models/dtos/responses/account-settings.dto';
+import { AccountSettingsResponseDto } from './accounts-settings/models/dtos/responses/account-settings.response.dto';
 import { UpdateAccountSettingsDto } from './accounts-settings/models/dtos/update-account-settings.dto';
-import { ServerDto } from './servers/models/dtos/responses/server.dto';
+import { ServerResponseDto } from './servers/models/dtos/responses/server.response.dto';
 import { ServerService } from './servers/server.service';
 import { MountTypeEnum } from '../mounts/models/enum/mount-type.enum';
 
@@ -31,8 +31,8 @@ export class MyAccountComponent implements OnInit {
   accountSettingForm: FormGroup;
 
   userInfo: UserResponseDto;
-  accountSettingsInfo: AccountSettingsDto;
-  servers: ServerDto[];
+  accountSettingsInfo: AccountSettingsResponseDto;
+  servers: ServerResponseDto[];
 
   usernameUpdated = false;
   emailUpdated = false;

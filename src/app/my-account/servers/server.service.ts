@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { ServerDto } from './models/dtos/responses/server.dto';
+import { ServerResponseDto } from './models/dtos/responses/server.response.dto';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
@@ -12,11 +12,11 @@ export class ServerService {
 
   constructor(private http: HttpClient) {}
 
-  getServers(): Observable<ServerDto[]> {
-    return this.http.get<ServerDto[]>(this.serversEndpoint);
+  getServers(): Observable<ServerResponseDto[]> {
+    return this.http.get<ServerResponseDto[]>(this.serversEndpoint);
   }
 
   getServerById(serverId: string) {
-    return this.http.get<ServerDto>(`${this.serversEndpoint}${serverId}`);
+    return this.http.get<ServerResponseDto>(`${this.serversEndpoint}${serverId}`);
   }
 }
