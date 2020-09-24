@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { UserService } from '../user.service';
+import { UsersService } from '../users.service';
 import { AuthService } from '../auth.service';
 import { Validators, FormBuilder } from '@angular/forms';
 import { RegisterPopupComponent } from '../register-popup/register-popup.component';
@@ -26,7 +26,7 @@ export class LoginDialogComponent implements OnDestroy, OnInit {
   constructor(
     public dialogRef: MatDialogRef<LoginDialogComponent>,
     private translateService: TranslateService,
-    private userService: UserService,
+    private userService: UsersService,
     private authService: AuthService,
     private fb: FormBuilder,
     public dialog: MatDialog,

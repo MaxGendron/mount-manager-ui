@@ -7,7 +7,7 @@ import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class ServerService {
+export class ServersService {
   private serversEndpoint = `${environment.webApiEndPoint}servers/`;
 
   constructor(private http: HttpClient) {}

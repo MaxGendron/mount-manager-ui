@@ -3,7 +3,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { UserService } from '../user.service';
+import { UsersService } from '../users.service';
 import { AuthService } from '../auth.service';
 import ValidatorUtil, { PasswordErrorStateMatcher } from '../../common/utils/validator-util';
 import { ValidateUserPropertyValueDto } from '../models/dtos/validate-user-property-value.dto';
@@ -43,7 +43,7 @@ export class RegisterPopupComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<RegisterPopupComponent>,
     private translateService: TranslateService,
-    private userService: UserService,
+    private userService: UsersService,
     private authService: AuthService,
     private fb: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data,

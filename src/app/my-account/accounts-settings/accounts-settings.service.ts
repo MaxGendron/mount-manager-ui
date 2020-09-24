@@ -6,7 +6,7 @@ import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class AccountSettingsService {
+export class AccountsSettingsService {
   private acountSettingsEndpoint = `${environment.webApiEndPoint}accounts-settings/`;
 
   constructor(private http: HttpClient) {}

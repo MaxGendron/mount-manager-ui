@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AccountSettingsService } from './accounts-settings/accounts-settings.service';
+import { AccountsSettingsService } from './accounts-settings/accounts-settings.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import ValidatorUtil, { PasswordErrorStateMatcher } from '../common/utils/validator-util';
-import { UserService } from '../users/user.service';
+import { UsersService } from '../users/users.service';
 import { UserResponseDto } from '../users/models/dtos/responses/user.response.dto';
 import { UpdateUserDto } from '../users/models/dtos/update-user.dto';
 import { AccountSettingsResponseDto } from './accounts-settings/models/dtos/responses/account-settings.response.dto';
 import { UpdateAccountSettingsDto } from './accounts-settings/models/dtos/update-account-settings.dto';
 import { ServerResponseDto } from './servers/models/dtos/responses/server.response.dto';
-import { ServerService } from './servers/server.service';
+import { ServersService } from './servers/servers.service';
 import { MountTypeEnum } from 'src/app/mounts/models/enum/mount-type.enum';
 
 @Component({
@@ -43,9 +43,9 @@ export class MyAccountComponent implements OnInit {
 
   constructor(
     private translateService: TranslateService,
-    private accountSettingsService: AccountSettingsService,
-    private serverService: ServerService,
-    private userService: UserService,
+    private accountSettingsService: AccountsSettingsService,
+    private serverService: ServersService,
+    private userService: UsersService,
     private fb: FormBuilder,
   ) {}
 

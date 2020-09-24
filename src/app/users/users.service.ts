@@ -11,7 +11,7 @@ import { UpdateUserDto } from './models/dtos/update-user.dto';
 import { Observable } from 'rxjs';
 
 @Injectable()
-export class UserService {
+export class UsersService {
   private usersEndpoint = `${environment.webApiEndPoint}users/`;
 
   constructor(private http: HttpClient) {}
