@@ -1,4 +1,4 @@
-import { MountTypeEnum } from 'src/app/mounts/models/enum/mount-type.enum';
+import { MountTypeEnum } from '../../../../models/enum/mount-type.enum';
 
 export interface MountColorResponseDto {
   _id: string;
