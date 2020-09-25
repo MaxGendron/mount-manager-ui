@@ -14,7 +14,7 @@
       <h2 class="section-title">{{ 'myAccount.accountInfo' | translate }}</h2>
 
       <!--NgIf needed because we initialize on init instead on constructor-->
-      <form *ngIf="userForm" [formGroup]="userForm" (ngSubmit)="updatePassword()">
+      <form [formGroup]="userForm" (ngSubmit)="updatePassword()">
         <div class="row">
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.username' | translate }}</mat-label>
@@ -114,7 +114,7 @@
       <h2 class="section-title">{{ 'myAccount.accountSettings' | translate }}</h2>
 
       <!--NgIf needed because we initialize on init instead on constructor-->
-      <form *ngIf="accountSettingForm" [formGroup]="accountSettingForm">
+      <form [formGroup]="accountSettingForm">
         <div class="row">
           <mat-form-field appearance="standard" class="col-lg-6">
             <mat-label>{{ 'form.igUsername' | translate }} ({{ 'form.optional' | translate }})</mat-label>

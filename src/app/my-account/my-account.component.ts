@@ -47,25 +47,12 @@ export class MyAccountComponent implements OnInit {
     private serverService: ServersService,
     private userService: UsersService,
     private fb: FormBuilder,
-  ) {}
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  async ngOnInit(): Promise<void> {
-    //Get the connected user
-    this.userInfo = await this.userService.getUserByUserId().toPromise();
-    //Get the accountsSettings
-    this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
-    //Get the servers
-    this.servers = await this.serverService.getServers().toPromise();
-
+  ) {
     //Initialize the user form
     this.userForm = this.fb.group({
-      username: [this.userInfo.username, Validators.required],
+      username: ['', Validators.required],
       email: [
-        this.userInfo.email,
+        '',
         Validators.compose([Validators.required, Validators.pattern(/[A-Z0-9._%+-]+@(?:[A-Z0-9-]+\.)+[A-Z]{2,}/i)]),
       ],
       passwords: this.fb.group(
@@ -79,9 +66,30 @@ export class MyAccountComponent implements OnInit {
 
     //Initialize the accountSettings form
     this.accountSettingForm = this.fb.group({
-      igUsername: [this.accountSettingsInfo.igUsername],
-      serverName: [this.accountSettingsInfo.serverName],
-      mountTypes: [this.accountSettingsInfo.mountTypes, Validators.required],
+      igUsername: [''],
+      serverName: [''],
+      mountTypes: ['', Validators.required],
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  async ngOnInit(): Promise<void> {
+    //Get the connected user
+    this.userInfo = await this.userService.getUserByUserId().toPromise();
+    //Get the accountsSettings
+    this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
+    //Get the servers
+    this.servers = await this.serverService.getServers().toPromise();
+
+    //Set value to both forms
+    this.userForm.patchValue({ username: this.userInfo.username, email: this.userInfo.email });
+    this.accountSettingForm.patchValue({
+      igUsername: this.accountSettingsInfo.igUsername,
+      serverName: this.accountSettingsInfo.serverName,
+      mountTypes: this.accountSettingsInfo.mountTypes,
     });
 
     //Listen on value changes to reset error & success message
