@@ -1,3 +1,5 @@
+import { AuthGuard } from './../../users/auth.guard';
+import { MyMountsComponent } from './../../mounts/my-mounts/my-mounts.component';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { CommonModule } from '@angular/common';
@@ -17,8 +19,8 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 const appRoutes: Routes = [
   { path: '', component: IndexComponent },
-  { path: 'my-account', component: MyAccountComponent },
-  //{ path: 'index', component: IndexComponent, canActivate: [AuthGuard]},
+  { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard] },
+  { path: 'my-mounts', component: MyMountsComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({
