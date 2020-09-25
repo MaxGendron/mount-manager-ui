@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { MountTypeEnum } from '../models/enum/mount-type.enum';
-import { MountColorResponseDto } from './models/dtos/responses/mount-color.response.dto'
+import { MountColorResponseDto } from './models/dtos/responses/mount-color.response.dto';
 
 @Injectable()
 export class MountColorsService {

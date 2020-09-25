@@ -3,7 +3,7 @@ import { MountsService } from './mounts.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedModule } from '../common/modules/shared.module';
-import { MyMountsComponent } from './my-mounts/my-mounts.component'
+import { MyMountsComponent } from './my-mounts/my-mounts.component';
 
 @NgModule({
   declarations: [MyMountsComponent],

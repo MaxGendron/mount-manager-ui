@@ -1,5 +1,5 @@
-import { MountGenderEnum } from '../../enum/mount-gender.enum'
-import { MountTypeEnum } from '../../enum/mount-type.enum'
+import { MountGenderEnum } from '../../enum/mount-gender.enum';
+import { MountTypeEnum } from '../../enum/mount-type.enum';
 
 export interface MountResponseDto {
   _id: string;

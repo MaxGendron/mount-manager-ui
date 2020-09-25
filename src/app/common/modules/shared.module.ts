@@ -20,7 +20,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 const appRoutes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard] },
-  { path: 'my-mounts', component: MyMountsComponent, canActivate: [AuthGuard]},
+  { path: 'my-mounts', component: MyMountsComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
