@@ -35,7 +35,8 @@
     "registerText": "Don't have an account with us yet? Register now to have access to all the features!"
   },
   "navbar": {
-    "account": "My account"
+    "account": "My account",
+    "mounts": "My mounts"
   },
   "register": {
     "title": "Register"

@@ -35,7 +35,8 @@
     "registerText": "Pas encore de compte avec nous? Inscrivez vous maintenant pour profiter de toute les fonctionnalités!"
   },
   "navbar": {
-    "account": "Mon compte"
+    "account": "Mon compte",
+    "mounts": "Mes montures"
   },
   "register": {
     "title": "Inscription"

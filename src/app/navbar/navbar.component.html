@@ -30,13 +30,18 @@
   </ng-template>
 </mat-toolbar>
 
-<mat-sidenav-container>
-  <mat-sidenav #sidenav mode="side">
+<mat-sidenav-container hasBackdrop="false">
+  <mat-sidenav #sidenav mode="over">
     <div *ngIf="connectedUsername">
       <mat-list>
         <mat-list-item matRipple [routerLink]="['my-account']" [matRippleColor]="color" (click)="sidenav.close()">
           <mat-icon>account_circle</mat-icon>
           <span>{{ 'navbar.account' | translate }}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
+        <mat-list-item matRipple [routerLink]="['my-mounts']" [matRippleColor]="color" (click)="sidenav.close()">
+          <mat-icon>pets</mat-icon>
+          <span>{{ 'navbar.mounts' | translate }}</span>
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
