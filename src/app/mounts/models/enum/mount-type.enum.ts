@@ -1,5 +1,5 @@
 export enum MountTypeEnum {
-  Dragodinde = 'dragodinde',
-  Muldo = 'muldo',
-  Volkorne = 'volkorne',
+  Dragodinde = 'Dragodinde',
+  Muldo = 'Muldo',
+  Volkorne = 'Volkorne',
 }
