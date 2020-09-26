@@ -20,7 +20,7 @@ export class MountsService {
   }
 
   updateMount(updateMountDto: UpdateMountDto, mountId: string): Observable<MountResponseDto> {
-    return this.http.put<MountResponseDto>(`${this.mountsEndpoint}/${mountId}`, updateMountDto);
+    return this.http.put<MountResponseDto>(`${this.mountsEndpoint}${mountId}`, updateMountDto);
   }
 
   deleteMount(mountId: string): Observable<any> {
@@ -33,11 +33,11 @@ export class MountsService {
 
   //UserId from the Auth Token
   getMountForUserId(): Observable<MountResponseDto[]> {
-    return this.http.get<MountResponseDto[]>(`${this.mountsEndpoint}/find/user-id`);
+    return this.http.get<MountResponseDto[]>(`${this.mountsEndpoint}find/user-id`);
   }
 
   //UserId from the Auth Token
   genderCountByTypeForUserId(): Observable<MountGenderCountResponseDto[]> {
-    return this.http.get<MountGenderCountResponseDto[]>(`${this.mountsEndpoint}/stats/gender-count`);
+    return this.http.get<MountGenderCountResponseDto[]>(`${this.mountsEndpoint}stats/gender-count`);
   }
 }
