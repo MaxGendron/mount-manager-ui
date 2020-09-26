@@ -46,10 +46,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
 
   //Only have 2 lang
   switchLang(): void {
-    if (this.translateService.getDefaultLang() === 'fr') {
-      this.translateService.setDefaultLang('en');
+    if (this.translateService.currentLang === 'fr') {
+      this.translateService.use('en');
     } else {
-      this.translateService.setDefaultLang('fr');
+      this.translateService.use('fr');
     }
   }
 }
