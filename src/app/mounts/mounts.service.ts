@@ -1,3 +1,4 @@
+import { MountGenderCountResponseDto } from './models/dtos/responses/mount-gender-count.response.dto';
 import { MountResponseDto } from './models/dtos/responses/mounts.response.dto';
 import { CreateMountDto } from './models/dtos/create-mount.dto';
 import { UpdateMountDto } from './models/dtos/update-mount.dto';
@@ -18,25 +19,25 @@ export class MountsService {
     return this.http.post<MountResponseDto>(`${this.mountsEndpoint}`, createMountDto);
   }
 
-  updateMount(updateMountDto: UpdateMountDto, mountId: string) {
+  updateMount(updateMountDto: UpdateMountDto, mountId: string): Observable<MountResponseDto> {
     return this.http.put<MountResponseDto>(`${this.mountsEndpoint}/${mountId}`, updateMountDto);
   }
 
-  deleteMount(mountId: string) {
-    return this.http.delete<MountResponseDto>(`${this.mountsEndpoint}/${mountId}`);
+  deleteMount(mountId: string): Observable<any> {
+    return this.http.delete<any>(`${this.mountsEndpoint}/${mountId}`);
   }
 
-  getMountById(mountId: string) {
+  getMountById(mountId: string): Observable<MountResponseDto> {
     return this.http.get<MountResponseDto>(`${this.mountsEndpoint}/${mountId}`);
   }
 
   //UserId from the Auth Token
-  getMountForUserId() {
-    return this.http.get<MountResponseDto>(`${this.mountsEndpoint}/find/user-id`);
+  getMountForUserId(): Observable<MountResponseDto[]> {
+    return this.http.get<MountResponseDto[]>(`${this.mountsEndpoint}/find/user-id`);
   }
 
   //UserId from the Auth Token
-  genderCountByTypeForUserId() {
-    return this.http.get<MountResponseDto>(`${this.mountsEndpoint}/stats/gender-count`);
+  genderCountByTypeForUserId(): Observable<MountGenderCountResponseDto[]> {
+    return this.http.get<MountGenderCountResponseDto[]>(`${this.mountsEndpoint}/stats/gender-count`);
   }
 }
