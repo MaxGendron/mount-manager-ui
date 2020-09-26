@@ -48,8 +48,10 @@ export class NavbarComponent implements OnInit, OnDestroy {
   switchLang(): void {
     if (this.translateService.currentLang === 'fr') {
       this.translateService.use('en');
+      localStorage.setItem('currentLang', JSON.stringify('en'));
     } else {
       this.translateService.use('fr');
+      localStorage.setItem('currentLang', JSON.stringify('fr'));
     }
   }
 }

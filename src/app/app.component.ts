@@ -7,7 +7,12 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  constructor(private translate: TranslateService) {
+  constructor(translate: TranslateService) {
+    let currentLang = JSON.parse(localStorage.getItem('currentLang')) ?? 'en';
+    console.log(currentLang);
+    localStorage.setItem('currentLang', JSON.stringify(currentLang));
+    
+    translate.use(currentLang)
     translate.setDefaultLang('en');
   }
 }
