@@ -17,7 +17,8 @@
     "logout": "Se déconnecter",
     "register": "S'inscrire",
     "lang": "English",
-    "changePassword": "Changer le mot de passe"
+    "changePassword": "Changer le mot de passe",
+    "addMount": "Ajouter une monture"
   },
   "form": {
     "username": "Nom de compte",
@@ -53,5 +54,8 @@
     "Dragodinde": "Dragodinde",
     "Volkorne": "Volkorne",
     "Muldo": "Muldo"
+  },
+  "myMounts": {
+    "title": "Mes montures"
   }
 }

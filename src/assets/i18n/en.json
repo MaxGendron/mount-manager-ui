@@ -17,7 +17,8 @@
     "logout": "Logout",
     "register": "Register",
     "lang": "Français",
-    "changePassword": "Change password"
+    "changePassword": "Change password",
+    "addMount": "Add a mount"
   },
   "form": {
     "username": "Username",
@@ -53,5 +54,8 @@
     "Dragodinde": "Dragoturkey",
     "Volkorne": "Rhineetle",
     "Muldo": "Seemyool"
+  },
+  "myMounts": {
+    "title": "My mounts"
   }
 }
