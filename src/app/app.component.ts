@@ -9,7 +9,6 @@ import { TranslateService } from '@ngx-translate/core';
 export class AppComponent {
   constructor(translate: TranslateService) {
     let currentLang = JSON.parse(localStorage.getItem('currentLang')) ?? 'en';
-    console.log(currentLang);
     localStorage.setItem('currentLang', JSON.stringify(currentLang));
     
     translate.use(currentLang)
