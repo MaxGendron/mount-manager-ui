@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountsSettingsService } from './accounts-settings/accounts-settings.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -18,7 +18,7 @@ import { MountTypeEnum } from 'src/app/mounts/models/enum/mount-type.enum';
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss'],
 })
-export class MyAccountComponent implements OnInit {
+export class MyAccountComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   error: string;
   loading = false;
