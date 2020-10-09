@@ -1,9 +1,9 @@
+import { MountColorGroupedByResponseDto } from './models/dtos/responses/mount-color-grouped-by.response.dto';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { MountTypeEnum } from '../models/enum/mount-type.enum';
-import { MountColorResponseDto } from './models/dtos/responses/mount-color.response.dto';
 
 @Injectable()
 export class MountColorsService {
@@ -11,7 +11,7 @@ export class MountColorsService {
 
   constructor(private http: HttpClient) {}
 
-  getMountColorsByMountType(mountType: MountTypeEnum): Observable<MountColorResponseDto[]> {
-    return this.http.get<MountColorResponseDto[]>(`${this.mountsColorEndpoint}find/type/${mountType}`);
+  getMountColorsGroupedByMountType(): Observable<MountColorGroupedByResponseDto[]> {
+    return this.http.get<MountColorGroupedByResponseDto[]>(`${this.mountsColorEndpoint}group/type`);
   }
 }
