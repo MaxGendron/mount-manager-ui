@@ -11,7 +11,7 @@ export class MountColorsService {
 
   constructor(private http: HttpClient) {}
 
-  getMountColorsByMountType(mountType: MountTypeEnum): Observable<MountColorResponseDto> {
-    return this.http.get<MountColorResponseDto>(`${this.mountsColorEndpoint}find/type/${mountType}`);
+  getMountColorsByMountType(mountType: MountTypeEnum): Observable<MountColorResponseDto[]> {
+    return this.http.get<MountColorResponseDto[]>(`${this.mountsColorEndpoint}find/type/${mountType}`);
   }
 }
