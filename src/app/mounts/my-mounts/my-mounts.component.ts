@@ -1,6 +1,6 @@
 import { MountGenderEnum } from './../models/enum/mount-gender.enum';
 import { MountsService } from './../mounts.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
@@ -10,7 +10,7 @@ import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
   templateUrl: './my-mounts.component.html',
   styleUrls: ['./my-mounts.component.scss'],
 })
-export class MyMountsComponent implements OnInit {
+export class MyMountsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   currentLang: string;
   error: string;
@@ -27,6 +27,10 @@ export class MyMountsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.mounts = await this.mountsService.getMountForUserId().toPromise();
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   editMount(mountId: string): void {
