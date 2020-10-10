@@ -3,10 +3,10 @@ import { MountTypeEnum } from './../../../../models/enum/mount-type.enum';
 
 export interface MountColorGroupedByResponseDto {
   type: MountTypeEnum;
-  colors: MountColor[];
+  colors: MountColorDto[];
 }
 
-export interface MountColor {
+export interface MountColorDto {
   _id: string;
   color: ColorLocalize;
   mountType: MountTypeEnum;
