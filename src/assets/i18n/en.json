@@ -18,7 +18,9 @@
     "register": "Register",
     "lang": "Français",
     "changePassword": "Change password",
-    "addMount": "Add a mount"
+    "addMount": "Add a mount",
+    "create": "Create",
+    "edit": "Edit"
   },
   "form": {
     "username": "Username",
@@ -29,7 +31,11 @@
     "mountTypes": "Mount Types in the breeding",
     "igUsername": "In game Username",
     "serverName": "Server name",
-    "optional": "Optional"
+    "optional": "Optional",
+    "name": "Name",
+    "gender": "Gender",
+    "mountType": "Mount type",
+    "color": "Color"
   },
   "login": {
     "title": "Login",
@@ -55,7 +61,15 @@
     "Volkorne": "Rhineetle",
     "Muldo": "Seemyool"
   },
+  "mountGenderEnum": {
+    "Female": "Female",
+    "Male": "Male"
+  },
   "myMounts": {
     "title": "My mounts"
+  },
+  "addOrUpdateMount": {
+    "titleUpdate": "Update {{name}}",
+    "titleCreate": "Create a new mount"
   }
 }

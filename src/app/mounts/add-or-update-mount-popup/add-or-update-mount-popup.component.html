@@ -1,0 +1,68 @@
+<form [formGroup]="mountForm" (ngSubmit)="submit()">
+  <h1 mat-dialog-title class="primary font-weight-bold">
+    {{ title }}
+  </h1>
+  <div mat-dialog-content class="row">
+    <mat-form-field appearance="standard" class="col-lg-6">
+      <mat-label>{{ 'form.name' | translate }}</mat-label>
+      <input
+        formControlName="name"
+        type="text"
+        name="name"
+        required
+        matInput
+        maxlength="16"
+      />
+      <mat-error *ngIf="mountForm.get('name').hasError('required')">
+        {{ 'error.required' | translate: { input: 'form.username' | translate } }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="col-lg-6">
+      <mat-label>{{ 'form.gender' | translate }}</mat-label>
+      <mat-select formControlName="gender" name="gender" required>
+        <mat-option *ngFor="let gender of keys(genders)" [value]="genders[gender]">
+          {{ 'mountGenderEnum.' + gender | translate }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="mountForm.get('gender').hasError('required')">
+        {{ 'error.required' | translate: { input: 'form.mountType' | translate } }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="col-lg-6">
+      <mat-label>{{ 'form.mountType' | translate }}</mat-label>
+      <mat-select formControlName="type" name="type" required>
+        <mat-option *ngFor="let type of types" [value]="type">
+          {{ 'mountTypeEnum.' + type | translate }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="mountForm.get('type').hasError('required')">
+        {{ 'error.required' | translate: { input: 'form.mountType' | translate } }}
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field appearance="standard" class="col-lg-6" *ngIf="mountForm.get('type').value">
+      <mat-label>{{ 'form.color' | translate }}</mat-label>
+      <mat-select formControlName="color" name="color" required>
+        <mat-option *ngFor="let colorLocalize of currentColors" [value]="colorLocalize[currentLang]">
+          {{ colorLocalize[currentLang] }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="mountForm.get('color').hasError('required')">
+        {{ 'error.required' | translate: { input: 'form.color' | translate } }}
+      </mat-error>
+    </mat-form-field>
+  </div>
+  
+  <div *ngIf="error">
+    <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
+  </div>
+
+  <div mat-dialog-actions align="end">
+    <button type="submit" color="accent" mat-raised-button [disabled]="isDisabled()">
+      {{ buttonText }}
+      <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
+    </button>
+  </div>
+</form>

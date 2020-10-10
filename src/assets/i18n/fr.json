@@ -18,7 +18,9 @@
     "register": "S'inscrire",
     "lang": "English",
     "changePassword": "Changer le mot de passe",
-    "addMount": "Ajouter une monture"
+    "addMount": "Ajouter une monture",
+    "create": "Ajouter",
+    "edit": "Modifier"
   },
   "form": {
     "username": "Nom de compte",
@@ -29,7 +31,11 @@
     "mountTypes": "Type de montures dans l'élevage",
     "igUsername": "Pseudo en jeu",
     "serverName": "Nom du serveur",
-    "optional": "Optionnel"
+    "optional": "Optionnel",
+    "name": "Nom",
+    "gender": "Genre",
+    "mountType": "Type de monture",
+    "color": "Couleur"
   },
   "login": {
     "title": "Connexion",
@@ -55,7 +61,15 @@
     "Volkorne": "Volkorne",
     "Muldo": "Muldo"
   },
+  "mountGenderEnum": {
+    "Female": "Femelle",
+    "Male": "Male"
+  },
   "myMounts": {
     "title": "Mes montures"
+  },
+  "addOrUpdateMount": {
+    "titleUpdate": "Modifier {{name}}",
+    "titleCreate": "Ajouter une nouvelle monture"
   }
 }

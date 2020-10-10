@@ -5,12 +5,12 @@
         <h1 id="card-title">{{ 'myMounts.title' | translate }}</h1>
       </mat-card-title>
       <div id="add-button">
-        <button color="accent" mat-raised-button (click)="addMount()">{{ 'button.addMount' | translate}}</button>
+        <button color="accent" mat-raised-button (click)="openPopup()">{{ 'button.addMount' | translate}}</button>
       </div>
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <div *ngIf="error" class="margin-top-16 error-div">
+      <div *ngIf="error" class="margin-top-16">
         <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
       </div>
       <div>
@@ -24,7 +24,7 @@
               <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
               <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
               <div class="item-actions">
-                <mat-icon class="edit" (click)="editMount(mount._id)">create</mat-icon>
+                <mat-icon class="edit" (click)="openPopup(mount)">create</mat-icon>
                 <mat-icon class="delete" (click)="deleteMount(mount._id)">delete</mat-icon>
               </div>
               <!--Only have 2 lang, TODO when more lang added-->

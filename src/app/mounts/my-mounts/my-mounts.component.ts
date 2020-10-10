@@ -4,6 +4,8 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
 
 @Component({
   selector: 'app-my-mounts',
@@ -19,10 +21,11 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   
   constructor(
     private translateService: TranslateService,
-    private mountsService: MountsService
+    private mountsService: MountsService,
+    public dialog: MatDialog
   ) {
     this.currentLang = translateService.currentLang;
-    translateService.onLangChange.subscribe((e : LangChangeEvent) => this.currentLang = e.lang)
+    translateService.onLangChange.subscribe((e : LangChangeEvent) => this.currentLang = e.lang);
   }
 
   async ngOnInit(): Promise<void> {
@@ -33,12 +36,33 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  editMount(mountId: string): void {
-    //open popup for edit
+  openPopup(mount?: MountResponseDto): void {
+    //open popup for add or edit
+    const dialogRef = this.dialog.open(AddOrUpdateMountPopupComponent, {
+      id: 'mount-popup',
+      width: '600px',
+      data: {
+        mount: mount
+      },
+      autoFocus: false,
+    });
+
+    this.listenOnPopupClose(dialogRef);
   }
 
-  addMount(): void {
-    //open popup for add
+  listenOnPopupClose(dialogRef: MatDialogRef<AddOrUpdateMountPopupComponent>): void {
+    dialogRef.afterClosed().subscribe((mountResponse: MountResponseDto) => {
+      if (mountResponse) {
+        let index = this.mounts.findIndex(m => m._id === mountResponse._id);
+        //If mount exist, update it otherwise append it.
+        //It will always append at the end even if the user has filters, that's the desired behavior. (when creating)
+        if (index != -1) {
+          this.mounts[index] = mountResponse;
+        } else {
+          this.mounts.push(mountResponse);
+        }
+      }
+    })
   }
 
   deleteMount(mountId: string): void {
