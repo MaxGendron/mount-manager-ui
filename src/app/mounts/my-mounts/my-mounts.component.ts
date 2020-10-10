@@ -7,7 +7,7 @@ import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
-import Swal from 'sweetalert2/src/sweetalert2.js'
+import Swal from 'sweetalert2/src/sweetalert2.js';
 
 @Component({
   selector: 'app-my-mounts',
@@ -21,14 +21,14 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   mounts: MountResponseDto[] = new Array();
   mountGenderEnum = MountGenderEnum;
   mountGenderCounts: MountGenderCountResponseDto[];
-  
+
   constructor(
     private translateService: TranslateService,
     private mountsService: MountsService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
   ) {
     this.currentLang = translateService.currentLang;
-    translateService.onLangChange.subscribe((e : LangChangeEvent) => this.currentLang = e.lang);
+    translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
   }
 
   async ngOnInit(): Promise<void> {
@@ -46,7 +46,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       id: 'mount-popup',
       width: '600px',
       data: {
-        mount: mount
+        mount: mount,
       },
       autoFocus: false,
     });
@@ -68,7 +68,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         //Refresh stats
         this.setMountGenderCounts();
       }
-    })
+    });
   }
 
   confirmDelete(mountId: string): void {
@@ -77,22 +77,27 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       showDenyButton: true,
       confirmButtonText: this.translateService.instant('button.delete'),
       denyButtonText: this.translateService.instant('button.dontDelete'),
-    }).then((result) => {
+    }).then(result => {
       if (result.isConfirmed) {
-        this.deleteMount(mountId)
+        this.deleteMount(mountId);
       }
-    })
+    });
   }
 
   deleteMount(mountId: string): void {
-    this.subscription.add(this.mountsService.deleteMount(mountId).subscribe(() => {
-      //Remove mount from the lists
-      this.mounts = this.mounts.filter(m => m._id !== mountId);
-      //Refresh stats
-      this.setMountGenderCounts();
-    }, () => {
-      this.error = this.translateService.instant('error.unexpected');
-    }));
+    this.subscription.add(
+      this.mountsService.deleteMount(mountId).subscribe(
+        () => {
+          //Remove mount from the lists
+          this.mounts = this.mounts.filter(m => m._id !== mountId);
+          //Refresh stats
+          this.setMountGenderCounts();
+        },
+        () => {
+          this.error = this.translateService.instant('error.unexpected');
+        },
+      ),
+    );
   }
 
   private async setMountGenderCounts() {
