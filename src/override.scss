@@ -31,3 +31,15 @@
 .mat-card-header-text {
   margin: 0 !important;
 }
+
+.swal2-styled.swal2-confirm:hover {
+  background-color: rgba($color: #3085d6, $alpha: 0.7) !important;
+}
+
+.swal2-styled.swal2-deny:hover {
+  background-color: rgba($color: #dd6b55, $alpha: 0.7) !important;
+}
+
+.swal2-popup {
+  background-color: #303030 !important;
+}

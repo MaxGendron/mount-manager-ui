@@ -1,3 +1,4 @@
+import Swal from 'sweetalert2/src/sweetalert2.js'
 import { MountGenderEnum } from './../models/enum/mount-gender.enum';
 import { MountsService } from './../mounts.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -61,6 +62,19 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         } else {
           this.mounts.push(mountResponse);
         }
+      }
+    })
+  }
+
+  confirmDelete(mountId: string): void {
+    Swal.fire({
+      title: this.translateService.instant('myMounts.deleteConfirmation'),
+      showDenyButton: true,
+      confirmButtonText: this.translateService.instant('button.delete'),
+      denyButtonText: this.translateService.instant('button.dontDelete'),
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.deleteMount(mountId)
       }
     })
   }

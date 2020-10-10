@@ -20,7 +20,9 @@
     "changePassword": "Changer le mot de passe",
     "addMount": "Ajouter une monture",
     "create": "Ajouter",
-    "edit": "Modifier"
+    "edit": "Modifier",
+    "delete": "Supprimer",
+    "dontDelete": "Ne pas supprimer"
   },
   "form": {
     "username": "Nom de compte",
@@ -66,7 +68,8 @@
     "Male": "Male"
   },
   "myMounts": {
-    "title": "Mes montures"
+    "title": "Mes montures",
+    "deleteConfirmation": "Voulez-vous supprimer cette monture?"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Modifier {{name}}",

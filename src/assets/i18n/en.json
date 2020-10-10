@@ -20,7 +20,9 @@
     "changePassword": "Change password",
     "addMount": "Add a mount",
     "create": "Create",
-    "edit": "Edit"
+    "edit": "Edit",
+    "delete": "Delete",
+    "dontDelete": "Don't delete"
   },
   "form": {
     "username": "Username",
@@ -66,7 +68,8 @@
     "Male": "Male"
   },
   "myMounts": {
-    "title": "My mounts"
+    "title": "My mounts",
+    "deleteConfirmation": "Do you want to delete that mount?"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",

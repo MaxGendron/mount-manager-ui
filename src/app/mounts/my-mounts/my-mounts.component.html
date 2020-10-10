@@ -25,7 +25,7 @@
               <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
               <div class="item-actions">
                 <mat-icon class="edit" (click)="openPopup(mount)">create</mat-icon>
-                <mat-icon class="delete" (click)="deleteMount(mount._id)">delete</mat-icon>
+                <mat-icon class="delete" (click)="confirmDelete(mount._id)">delete</mat-icon>
               </div>
               <!--Only have 2 lang, TODO when more lang added-->
               <span class="color-type">
