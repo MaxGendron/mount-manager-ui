@@ -1,4 +1,4 @@
-import Swal from 'sweetalert2/src/sweetalert2.js'
+import { MountGenderCountResponseDto } from './../models/dtos/responses/mount-gender-count.response.dto';
 import { MountGenderEnum } from './../models/enum/mount-gender.enum';
 import { MountsService } from './../mounts.service';
 import { Component, OnDestroy, OnInit } from '@angular/core';
@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
+import Swal from 'sweetalert2/src/sweetalert2.js'
 
 @Component({
   selector: 'app-my-mounts',
@@ -19,6 +20,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   error: string;
   mounts: MountResponseDto[] = new Array();
   mountGenderEnum = MountGenderEnum;
+  mountGenderCounts: MountGenderCountResponseDto[];
   
   constructor(
     private translateService: TranslateService,
@@ -31,6 +33,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     this.mounts = await this.mountsService.getMountForUserId().toPromise();
+    this.setMountGenderCounts();
   }
 
   ngOnDestroy(): void {
@@ -62,6 +65,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         } else {
           this.mounts.push(mountResponse);
         }
+        //Refresh stats
+        this.setMountGenderCounts();
       }
     })
   }
@@ -83,8 +88,14 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.subscription.add(this.mountsService.deleteMount(mountId).subscribe(() => {
       //Remove mount from the lists
       this.mounts = this.mounts.filter(m => m._id !== mountId);
+      //Refresh stats
+      this.setMountGenderCounts();
     }, () => {
       this.error = this.translateService.instant('error.unexpected');
     }));
+  }
+
+  private async setMountGenderCounts() {
+    this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
   }
 }

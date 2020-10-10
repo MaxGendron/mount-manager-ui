@@ -1,12 +1,9 @@
 @import '~@angular/material/theming';
 @import '../../../main_theme.scss';
 
-#main-content {
+#card {
   margin: auto;
   width: 50%;
-}
-
-#card {
   margin-top: 32px;
   padding: 16px 0!important;
 }
@@ -15,7 +12,7 @@
   padding-left: 16px;
 }
 
-#card-title {
+.card-title {
   font-weight: 600;
   color: $primary;
   margin-bottom: 0;
@@ -75,6 +72,23 @@
       color: $warning-light;
     }
   }
+}
+
+#stats {
+  right: 75%;
+  position: absolute;
+  top: 32px;
+  margin-right: 32px;
+  padding: 0;
+}
+
+#stats-title {
+  padding: 8px 16px 0 8px;
+}
+
+.mat-subheader {
+  padding-bottom: 0 !important;
+  height: 24px !important;
 }
 
 //Override color for gender icon

@@ -69,7 +69,8 @@
   },
   "myMounts": {
     "title": "Mes montures",
-    "deleteConfirmation": "Voulez-vous supprimer cette monture?"
+    "deleteConfirmation": "Voulez-vous supprimer cette monture?",
+    "statsTitle": "Statistiques"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Modifier {{name}}",

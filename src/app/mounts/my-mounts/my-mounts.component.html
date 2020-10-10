@@ -1,43 +1,64 @@
-<div id="main-content">
-  <mat-card id="card">
-    <mat-card-header id="card-header">
-      <mat-card-title>
-        <h1 id="card-title">{{ 'myMounts.title' | translate }}</h1>
-      </mat-card-title>
-      <div id="add-button">
-        <button color="accent" mat-raised-button (click)="openPopup()">{{ 'button.addMount' | translate}}</button>
-      </div>
-    </mat-card-header>
-    <mat-divider></mat-divider>
-    <mat-card-content>
-      <div *ngIf="error" class="margin-top-16">
-        <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
-      </div>
-      <div>
-        <div *ngFor="let mount of mounts">
-          <div class="d-flex">
-            <div class="img">
-              <img width="75" height="75" src='{{"../../../assets/images/" + mount.type + "/" + mount.color.fr + ".png"}}'/>
-            </div>
-            <div class="info flex-grow-1">
-              <h3 class="name">{{mount.name}}</h3>
-              <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
-              <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
-              <div class="item-actions">
-                <mat-icon class="edit" (click)="openPopup(mount)">create</mat-icon>
-                <mat-icon class="delete" (click)="confirmDelete(mount._id)">delete</mat-icon>
-              </div>
-              <!--Only have 2 lang, TODO when more lang added-->
-              <span class="color-type">
-                <span *ngIf="currentLang === 'en'">{{mount.color.en}}</span>
-                {{ 'mountTypeEnum.' + mount.type | translate }}
-                <span *ngIf="currentLang === 'fr'">{{mount.color.fr}}</span>
-              </span>
-            </div>
+<mat-card id="card">
+  <mat-card-header id="card-header">
+    <mat-card-title>
+      <h1 class="card-title">{{ 'myMounts.title' | translate }}</h1>
+    </mat-card-title>
+    <div id="add-button">
+      <button color="accent" mat-raised-button (click)="openPopup()">{{ 'button.addMount' | translate}}</button>
+    </div>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <div *ngIf="error" class="margin-top-16">
+      <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
+    </div>
+    <div>
+      <div *ngFor="let mount of mounts">
+        <div class="d-flex">
+          <div class="img">
+            <img width="75" height="75" src='{{"../../../assets/images/" + mount.type + "/" + mount.color.fr + ".png"}}'/>
           </div>
-          <mat-divider></mat-divider>
+          <div class="info flex-grow-1">
+            <h3 class="name">{{mount.name}}</h3>
+            <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
+            <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
+            <div class="item-actions">
+              <mat-icon class="edit" (click)="openPopup(mount)">create</mat-icon>
+              <mat-icon class="delete" (click)="confirmDelete(mount._id)">delete</mat-icon>
+            </div>
+            <!--Only have 2 lang, TODO when more lang added-->
+            <span class="color-type">
+              <span *ngIf="currentLang === 'en'">{{mount.color.en}}</span>
+              {{ 'mountTypeEnum.' + mount.type | translate }}
+              <span *ngIf="currentLang === 'fr'">{{mount.color.fr}}</span>
+            </span>
+          </div>
         </div>
+        <mat-divider></mat-divider>
       </div>
-    </mat-card-content>
-  </mat-card>
-</div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card id="stats">
+  <mat-card-header>
+    <mat-card-title id="stats-title">
+      <h1 class="card-title">{{ 'myMounts.statsTitle' | translate }}</h1>
+    </mat-card-title>
+  </mat-card-header>
+  <mat-divider></mat-divider>
+  <mat-card-content>
+    <mat-list *ngFor="let genderCount of mountGenderCounts">
+      <div mat-subheader>{{genderCount.type}}</div>
+      <mat-list-item>
+        <i mat-list-icon class="fas fa-venus gender-icon"></i>
+        <div mat-line><span>&nbsp;{{genderCount.female}}</span></div>
+      </mat-list-item>
+      <mat-list-item>
+        <i mat-list-icon class="fas fa-mars gender-icon"></i>
+        <div mat-line><span>&nbsp;{{genderCount.male}}</span></div>
+      </mat-list-item>
+      <mat-divider></mat-divider>
+    </mat-list>
+  </mat-card-content>
+</mat-card>

@@ -69,7 +69,8 @@
   },
   "myMounts": {
     "title": "My mounts",
-    "deleteConfirmation": "Do you want to delete that mount?"
+    "deleteConfirmation": "Do you want to delete that mount?",
+    "statsTitle": "Statistics"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",
