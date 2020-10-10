@@ -21,8 +21,8 @@
       </mat-form-field>
     </div>
 
-    <div class="margin-bottom-16 error-div">
-      <span *ngIf="error" class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
+    <div *ngIf="error">
+      <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
     </div>
 
     <div mat-dialog-actions align="end">
