@@ -77,12 +77,16 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    //Get the connected user
-    this.userInfo = await this.userService.getUserByUserId().toPromise();
-    //Get the accountsSettings
-    this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
-    //Get the servers
-    this.servers = await this.serverService.getServers().toPromise();
+    try {
+      //Get the connected user
+      this.userInfo = await this.userService.getUserByUserId().toPromise();
+      //Get the accountsSettings
+      this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
+      //Get the servers
+      this.servers = await this.serverService.getServers().toPromise();
+    } catch (e) {
+      this.error = this.translateService.instant('error.unexpected');
+    }
 
     //Set value to both forms
     this.userForm.patchValue({ username: this.userInfo.username, email: this.userInfo.email });

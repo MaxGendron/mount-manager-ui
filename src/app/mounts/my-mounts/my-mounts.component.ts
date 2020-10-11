@@ -32,7 +32,11 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.mounts = await this.mountsService.getMountForUserId().toPromise();
+    try {
+      this.mounts = await this.mountsService.getMountForUserId().toPromise();
+    } catch (e) {
+      this.error = this.translateService.instant('error.unexpected');
+    }
     this.setMountGenderCounts();
   }
 
@@ -101,6 +105,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   }
 
   private async setMountGenderCounts() {
-    this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
+    try {
+      this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
+    } catch (e) {
+      this.error = this.translateService.instant('error.unexpected');
+    }
   }
 }

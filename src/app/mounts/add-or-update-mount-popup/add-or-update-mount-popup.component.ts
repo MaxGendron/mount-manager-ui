@@ -67,8 +67,12 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise()).mountTypes;
-    this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
+    try {
+      this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
+      this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
+    } catch (e) {
+      this.error = this.translateService.instant('error.unexpected');
+    }
 
     const type = this.mountForm.get('type').value;
     if (type) {
@@ -157,5 +161,6 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
   private setCurrentColors(type: string): void {
     this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors.map(c => c.color);
+    console.log(this.currentColors);
   }
 }
