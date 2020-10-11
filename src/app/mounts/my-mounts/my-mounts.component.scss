@@ -87,8 +87,11 @@
 }
 
 .mat-subheader {
-  padding-bottom: 0 !important;
   height: 24px !important;
+}
+
+mat-list-item {
+  height: 32px!important;
 }
 
 //Override color for gender icon
