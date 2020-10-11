@@ -2,7 +2,6 @@ import { UpdateMountDto } from './../models/dtos/update-mount.dto';
 import { MountsService } from './../mounts.service';
 import { CreateMountDto } from './../models/dtos/create-mount.dto';
 import { ColorLocalize } from './../mount-colors/models/color-localize';
-import { MountColorsService } from './../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from './../../my-account/accounts-settings/accounts-settings.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -37,7 +36,6 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private mountsService: MountsService,
     private accountsSettingsService: AccountsSettingsService,
-    private mountColorsService: MountColorsService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddOrUpdateMountPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -45,6 +43,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
     this.currentLang = translateService.currentLang;
     translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
 
+    this.groupedColorDtos = data.colors;
     if (data.mount) {
       this.baseMount = data.mount;
       this.title = translateService.instant('addOrUpdateMount.titleUpdate', { name: data.mount.name });
@@ -69,7 +68,6 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     try {
       this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
-      this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
     } catch (e) {
       this.error = this.translateService.instant('error.unexpected');
     }

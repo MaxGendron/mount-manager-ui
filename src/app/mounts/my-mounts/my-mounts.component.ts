@@ -8,6 +8,8 @@ import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
 import Swal from 'sweetalert2/src/sweetalert2.js';
+import { MountColorGroupedByResponseDto } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
+import { MountColorsService } from '../mount-colors/mount-colors.service';
 
 @Component({
   selector: 'app-my-mounts',
@@ -21,10 +23,12 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   mounts: MountResponseDto[] = new Array();
   mountGenderEnum = MountGenderEnum;
   mountGenderCounts: MountGenderCountResponseDto[];
+  groupedColorDtos: MountColorGroupedByResponseDto[];
 
   constructor(
     private translateService: TranslateService,
     private mountsService: MountsService,
+    private mountColorsService: MountColorsService,
     public dialog: MatDialog,
   ) {
     this.currentLang = translateService.currentLang;
@@ -34,6 +38,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     try {
       this.mounts = await this.mountsService.getMountForUserId().toPromise();
+      this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
     } catch (e) {
       this.error = this.translateService.instant('error.unexpected');
     }
@@ -51,6 +56,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       width: '600px',
       data: {
         mount: mount,
+        colors: this.groupedColorDtos
       },
       autoFocus: false,
     });
