@@ -79,19 +79,26 @@
   position: absolute;
   top: 32px;
   margin-right: 32px;
-  padding: 0;
-}
-
-#stats-title {
-  padding: 8px 16px 0 8px;
+  padding-bottom: 0;
+  width: 200px;
 }
 
 .mat-subheader {
   height: 24px !important;
+  padding-left: 0;
 }
 
 mat-list-item {
-  height: 32px!important;
+  height: 30px!important;
+}
+
+//Tried using :last-child selector, didn't work
+#last-item {
+  margin-bottom: 8px;
+}
+
+.title {
+  padding-top: 8px;
 }
 
 //Override color for gender icon

@@ -70,7 +70,7 @@
   "myMounts": {
     "title": "My mounts",
     "deleteConfirmation": "Do you want to delete that mount?",
-    "statsTitle": "Statistics"
+    "numberMount": "Number of mounts"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",

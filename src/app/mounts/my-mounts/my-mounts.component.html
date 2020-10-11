@@ -46,8 +46,8 @@
 
 <mat-card id="stats">
   <mat-card-header>
-    <mat-card-title id="stats-title">
-      <h1 class="card-title">{{ 'myMounts.statsTitle' | translate }}</h1>
+    <mat-card-title>
+      <h1 class="card-title">{{ 'myMounts.numberMount' | translate }}</h1>
     </mat-card-title>
   </mat-card-header>
   <mat-divider></mat-divider>
@@ -60,7 +60,7 @@
           <span>&nbsp;{{ genderCount.female }}</span>
         </div>
       </mat-list-item>
-      <mat-list-item>
+      <mat-list-item id="last-item">
         <i mat-list-icon class="fas fa-mars gender-icon"></i>
         <div mat-line>
           <span>&nbsp;{{ genderCount.male }}</span>
