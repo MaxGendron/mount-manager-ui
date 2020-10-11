@@ -87,6 +87,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       showDenyButton: true,
       confirmButtonText: this.translateService.instant('button.delete'),
       denyButtonText: this.translateService.instant('button.dontDelete'),
+      reverseButtons: true
     }).then(result => {
       if (result.isConfirmed) {
         this.deleteMount(mountId);

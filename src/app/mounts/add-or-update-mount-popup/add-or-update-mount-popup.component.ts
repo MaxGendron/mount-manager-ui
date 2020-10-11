@@ -1,7 +1,7 @@
+import { MountColorDto } from './../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
 import { UpdateMountDto } from './../models/dtos/update-mount.dto';
 import { MountsService } from './../mounts.service';
 import { CreateMountDto } from './../models/dtos/create-mount.dto';
-import { ColorLocalize } from './../mount-colors/models/color-localize';
 import { AccountsSettingsService } from './../../my-account/accounts-settings/accounts-settings.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
@@ -28,7 +28,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   baseMount: MountResponseDto;
   types: string[];
   groupedColorDtos: MountColorGroupedByResponseDto[];
-  currentColors: ColorLocalize[];
+  currentColors: MountColorDto[];
   genders = MountGenderEnum;
   keys = Object.keys;
 
@@ -43,7 +43,9 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
     this.currentLang = translateService.currentLang;
     translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
 
+    //Set colors
     this.groupedColorDtos = data.colors;
+    //Set mount infos
     if (data.mount) {
       this.baseMount = data.mount;
       this.title = translateService.instant('addOrUpdateMount.titleUpdate', { name: data.mount.name });
@@ -53,11 +55,12 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       this.buttonText = translateService.instant('button.create');
     }
 
+    //Set form value
     this.mountForm = this.fb.group({
       name: [data.mount?.name, Validators.required],
       gender: [data.mount?.gender, Validators.required],
       type: [data.mount?.type, Validators.required],
-      color: [data.mount?.color[this.currentLang], Validators.required],
+      colorId: [data.mount?.colorId, Validators.required],
     });
   }
 
@@ -84,7 +87,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
     //Listen on value changes on type to reset value of color and reset currentColors
     this.mountForm.get('type').valueChanges.subscribe(type => {
-      this.mountForm.get('color').setValue('');
+      this.mountForm.get('colorId').setValue('');
       this.setCurrentColors(type);
     });
   }
@@ -97,21 +100,17 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
     this.loading = true;
     const baseMount = this.baseMount;
     const mountFormValue = this.mountForm.value;
-    //Find colorId based on color value
-    const colorId = this.groupedColorDtos
-      .find(c => c.type === mountFormValue.type)
-      .colors.find(c => c.color[this.currentLang] === mountFormValue.color)._id;
 
     //if baseMount => update, otherwise create
     if (baseMount) {
-      const baseMountColorId = this.groupedColorDtos
-        .find(c => c.type === baseMount.type)
-        .colors.find(c => c.color[this.currentLang] === baseMount.color[this.currentLang])._id;
+      console.log('update')
+      console.log(mountFormValue.colorId)
+      console.log(baseMount.colorId)
       const updateMountDto = new UpdateMountDto();
       //Only set field if they have been updated
       updateMountDto.name = mountFormValue.name === baseMount.name ? null : mountFormValue.name;
       updateMountDto.gender = mountFormValue.gender === baseMount.gender ? null : mountFormValue.gender;
-      updateMountDto.colorId = colorId === baseMountColorId ? null : colorId;
+      updateMountDto.colorId = mountFormValue.colorId === baseMount.colorId ? null : mountFormValue.colorId;
 
       //Only send update if something is updated
       if (updateMountDto.name || updateMountDto.gender || updateMountDto.colorId) {
@@ -133,7 +132,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       const createMountDto = new CreateMountDto();
       createMountDto.name = mountFormValue.name;
       createMountDto.gender = mountFormValue.gender;
-      createMountDto.colorId = colorId;
+      createMountDto.colorId = mountFormValue.colorId;
       this.subscription.add(
         this.mountsService.createMount(createMountDto).subscribe(
           mount => {
@@ -158,7 +157,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   }
 
   private setCurrentColors(type: string): void {
-    this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors.map(c => c.color);
+    this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors;
     console.log(this.currentColors);
   }
 }

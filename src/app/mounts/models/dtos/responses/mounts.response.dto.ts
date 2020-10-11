@@ -8,5 +8,6 @@ export interface MountResponseDto {
   gender: MountGenderEnum;
   color: ColorLocalize;
   userId: string;
+  colorId: string;
   type: MountTypeEnum;
 }
