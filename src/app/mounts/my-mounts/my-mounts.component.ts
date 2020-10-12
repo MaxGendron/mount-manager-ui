@@ -12,7 +12,10 @@ import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
 import Swal from 'sweetalert2/src/sweetalert2.js';
-import { MountColorDto, MountColorGroupedByResponseDto } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
+import {
+  MountColorDto,
+  MountColorGroupedByResponseDto,
+} from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
 import { MountColorsService } from '../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/accounts-settings.service';
 
@@ -58,7 +61,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       type: [''],
       colorId: [''],
       sortField: [MountSortFieldEnum.Name],
-      sortOrder: [SortOrderEnum.Asc]
+      sortOrder: [SortOrderEnum.Asc],
     });
   }
 
@@ -73,8 +76,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.setMountGenderCounts();
 
     //Set form value
-    this.filtersForm.patchValue({
-    });
+    this.filtersForm.patchValue({});
 
     //Listen on value changes on type to reset value of color and reset currentColors
     this.filtersForm.get('type').valueChanges.subscribe(type => {
@@ -99,7 +101,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       data: {
         mount: mount,
         colors: this.groupedColorDtos,
-        types: this.types
+        types: this.types,
       },
       autoFocus: false,
     });
@@ -130,7 +132,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       showDenyButton: true,
       confirmButtonText: this.translateService.instant('button.delete'),
       denyButtonText: this.translateService.instant('button.dontDelete'),
-      reverseButtons: true
+      reverseButtons: true,
     }).then(result => {
       if (result.isConfirmed) {
         this.deleteMount(mountId);
@@ -156,7 +158,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   submit() {
     const filtersFormValue = this.filtersForm.value;
-    let searchMountDto = new SearchMountDto;
+    let searchMountDto = new SearchMountDto();
 
     if (filtersFormValue.name) {
       searchMountDto.name = filtersFormValue.name;
@@ -178,12 +180,15 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     }
 
     this.subscription.add(
-      this.mountsService.getMountForUserId(searchMountDto).subscribe(mounts => {
-        this.mounts = mounts;
-      }, () => {
-        this.error = this.translateService.instant('error.unexpected');
-      })
-    )
+      this.mountsService.getMountForUserId(searchMountDto).subscribe(
+        mounts => {
+          this.mounts = mounts;
+        },
+        () => {
+          this.error = this.translateService.instant('error.unexpected');
+        },
+      ),
+    );
   }
 
   private async setMountGenderCounts() {

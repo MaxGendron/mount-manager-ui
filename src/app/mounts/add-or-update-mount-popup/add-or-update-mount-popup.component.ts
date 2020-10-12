@@ -101,9 +101,6 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
     //if baseMount => update, otherwise create
     if (baseMount) {
-      console.log('update')
-      console.log(mountFormValue.colorId)
-      console.log(baseMount.colorId)
       const updateMountDto = new UpdateMountDto();
       //Only set field if they have been updated
       updateMountDto.name = mountFormValue.name === baseMount.name ? null : mountFormValue.name;

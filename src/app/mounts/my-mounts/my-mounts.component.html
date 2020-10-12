@@ -19,7 +19,7 @@
           <mat-label>{{ 'form.name' | translate }}</mat-label>
           <input formControlName="name" type="text" name="name" matInput maxlength="16" />
         </mat-form-field>
-    
+
         <mat-form-field appearance="standard" class="col-lg-6">
           <mat-label>{{ 'form.gender' | translate }}</mat-label>
           <mat-select formControlName="gender" name="gender">
@@ -37,8 +37,8 @@
             </mat-option>
           </mat-select>
         </mat-form-field>
-    
-        <mat-form-field appearance="standard" class="col-lg-6">
+
+        <mat-form-field appearance="standard" class="col-lg-6" *ngIf="filtersForm.get('type').value">
           <mat-label>{{ 'form.color' | translate }}</mat-label>
           <mat-select formControlName="colorId" name="colorId">
             <mat-option *ngFor="let c of currentColors" [value]="c._id">
@@ -47,8 +47,7 @@
           </mat-select>
         </mat-form-field>
 
-        <div class="col-lg-12">
-        </div>
+        <div class="col-lg-12"></div>
       </div>
 
       <div class="col-lg-3 row">
