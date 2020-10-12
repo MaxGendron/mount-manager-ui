@@ -22,7 +22,8 @@
     "create": "Create",
     "edit": "Edit",
     "delete": "Delete",
-    "dontDelete": "Don't delete"
+    "dontDelete": "Don't delete",
+    "filter": "Filter"
   },
   "form": {
     "username": "Username",
@@ -37,7 +38,9 @@
     "name": "Name",
     "gender": "Gender",
     "mountType": "Mount type",
-    "color": "Color"
+    "color": "Color",
+    "sortField": "Sort by",
+    "sortOrder": "Sort order"
   },
   "login": {
     "title": "Login",
@@ -66,6 +69,15 @@
   "mountGenderEnum": {
     "Female": "Female",
     "Male": "Male"
+  },
+  "sortOrderEnum": {
+    "Asc": "Ascending",
+    "Desc": "Descending"
+  },
+  "mountSortFieldEnum": {
+    "Name": "Name",
+    "Gender": "Gender",
+    "Type": "Mount type"
   },
   "myMounts": {
     "title": "My mounts",

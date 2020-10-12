@@ -21,21 +21,22 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   error: string;
   loading = false;
+  currentLang: string;
+  keys = Object.keys;
+
   title: string;
   buttonText: string;
-  mountForm: FormGroup;
-  currentLang: string;
-  baseMount: MountResponseDto;
   types: string[];
+  mountForm: FormGroup;
+
+  genders = MountGenderEnum;
+  baseMount: MountResponseDto;
   groupedColorDtos: MountColorGroupedByResponseDto[];
   currentColors: MountColorDto[];
-  genders = MountGenderEnum;
-  keys = Object.keys;
 
   constructor(
     private translateService: TranslateService,
     private mountsService: MountsService,
-    private accountsSettingsService: AccountsSettingsService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddOrUpdateMountPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data,
@@ -45,6 +46,9 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
     //Set colors
     this.groupedColorDtos = data.colors;
+    //Set types
+    this.types = data.types;
+
     //Set mount infos
     if (data.mount) {
       this.baseMount = data.mount;
@@ -69,12 +73,6 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit(): Promise<void> {
-    try {
-      this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
-    } catch (e) {
-      this.error = this.translateService.instant('error.unexpected');
-    }
-
     const type = this.mountForm.get('type').value;
     if (type) {
       this.setCurrentColors(type);
@@ -158,6 +156,5 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
   private setCurrentColors(type: string): void {
     this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors;
-    console.log(this.currentColors);
   }
 }

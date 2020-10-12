@@ -113,3 +113,32 @@ mat-list-item {
 .warning {
   padding: 0 16px;
 }
+
+.row {
+  margin-left: 0!important;
+  margin-right: 0!important;
+}
+
+#filters {
+  > div:first-child {
+    padding-left: 0;
+    padding-right: 0;
+
+    mat-form-field:nth-child(even) {
+      border-right: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    > div:last-child {
+      height: 44px;
+    }
+  }
+
+  > div:last-child {
+    padding-left: 0;
+    padding-right: 0;
+
+    > div:last-child {
+      padding-bottom: 8px;
+    }
+  }
+}

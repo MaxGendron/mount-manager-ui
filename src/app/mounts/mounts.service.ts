@@ -1,3 +1,4 @@
+import { SearchMountDto } from './models/dtos/search-mount.dto';
 import { MountGenderCountResponseDto } from './models/dtos/responses/mount-gender-count.response.dto';
 import { MountResponseDto } from './models/dtos/responses/mounts.response.dto';
 import { CreateMountDto } from './models/dtos/create-mount.dto';
@@ -32,8 +33,11 @@ export class MountsService {
   }
 
   //UserId from the Auth Token
-  getMountForUserId(): Observable<MountResponseDto[]> {
-    return this.http.get<MountResponseDto[]>(`${this.mountsEndpoint}find/user-id`);
+  //Can pass a search request if needed
+  getMountForUserId(searchMountDto?: SearchMountDto): Observable<MountResponseDto[]> {
+    return this.http.get<MountResponseDto[]>(`${this.mountsEndpoint}find/user-id`, {
+      params: searchMountDto === undefined ? {} : JSON.parse(JSON.stringify(searchMountDto)),
+    });
   }
 
   //UserId from the Auth Token

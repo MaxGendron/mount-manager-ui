@@ -22,7 +22,8 @@
     "create": "Ajouter",
     "edit": "Modifier",
     "delete": "Supprimer",
-    "dontDelete": "Ne pas supprimer"
+    "dontDelete": "Ne pas supprimer",
+    "filter": "Filtrer"
   },
   "form": {
     "username": "Nom de compte",
@@ -37,7 +38,9 @@
     "name": "Nom",
     "gender": "Genre",
     "mountType": "Type de monture",
-    "color": "Couleur"
+    "color": "Couleur",
+    "sortField": "Trier par",
+    "sortOrder": "Ordre de tri"
   },
   "login": {
     "title": "Connexion",
@@ -66,6 +69,15 @@
   "mountGenderEnum": {
     "Female": "Femelle",
     "Male": "Male"
+  },
+  "sortOrderEnum": {
+    "Asc": "Ascending",
+    "Desc": "Descending"
+  },
+  "mountSortFieldEnum": {
+    "Name": "Nom",
+    "Gender": "Genre",
+    "Type": "Type de monture"
   },
   "myMounts": {
     "title": "Mes montures",
