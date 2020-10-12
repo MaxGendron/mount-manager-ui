@@ -25,12 +25,8 @@ export class UsersService {
   }
 
   validatePropertyValue(validateUserPropertyValueDto: ValidateUserPropertyValueDto): Observable<ExistReponseDto> {
-    const data = {
-      property: validateUserPropertyValueDto.property,
-      value: validateUserPropertyValueDto.value,
-    };
     return this.http.get<ExistReponseDto>(`${this.usersEndpoint}validate`, {
-      params: data,
+      params: JSON.parse(JSON.stringify(validateUserPropertyValueDto)),
     });
   }
 
