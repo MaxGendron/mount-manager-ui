@@ -75,9 +75,6 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     }
     this.setMountGenderCounts();
 
-    //Set form value
-    this.filtersForm.patchValue({});
-
     //Listen on value changes on type to reset value of color and reset currentColors
     this.filtersForm.get('type').valueChanges.subscribe(type => {
       this.filtersForm.get('colorId').setValue('');
@@ -157,6 +154,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   }
 
   submit() {
+    this.loading = true;
     const filtersFormValue = this.filtersForm.value;
     let searchMountDto = new SearchMountDto();
 
@@ -183,9 +181,11 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       this.mountsService.getMountForUserId(searchMountDto).subscribe(
         mounts => {
           this.mounts = mounts;
+          this.loading = false;
         },
         () => {
           this.error = this.translateService.instant('error.unexpected');
+          this.loading = false;
         },
       ),
     );
