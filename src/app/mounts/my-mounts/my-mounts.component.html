@@ -23,6 +23,7 @@
         <mat-form-field appearance="standard" class="col-lg-6">
           <mat-label>{{ 'form.gender' | translate }}</mat-label>
           <mat-select formControlName="gender" name="gender">
+            <mat-option>- - -</mat-option>
             <mat-option *ngFor="let gender of keys(mountGenderEnum)" [value]="mountGenderEnum[gender]">
               {{ 'mountGenderEnum.' + gender | translate }}
             </mat-option>
@@ -32,6 +33,7 @@
         <mat-form-field appearance="standard" class="col-lg-6">
           <mat-label>{{ 'form.mountType' | translate }}</mat-label>
           <mat-select formControlName="type" name="type">
+            <mat-option>- - -</mat-option>
             <mat-option *ngFor="let type of types" [value]="type">
               {{ 'mountTypeEnum.' + type | translate }}
             </mat-option>
@@ -41,6 +43,7 @@
         <mat-form-field appearance="standard" class="col-lg-6" *ngIf="filtersForm.get('type').value">
           <mat-label>{{ 'form.color' | translate }}</mat-label>
           <mat-select formControlName="colorId" name="colorId">
+            <mat-option>- - -</mat-option>
             <mat-option *ngFor="let c of currentColors" [value]="c._id">
               {{ c.color[currentLang] }}
             </mat-option>
