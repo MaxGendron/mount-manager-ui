@@ -1,0 +1,144 @@
+@import '~@angular/material/theming';
+@import '../../../main_theme.scss';
+
+#card {
+  margin: auto;
+  width: 50%;
+  margin-top: 32px;
+  padding: 16px 0 !important;
+}
+
+#card-header {
+  padding-left: 16px;
+}
+
+.card-title {
+  font-weight: 600;
+  color: $primary;
+  margin-bottom: 0;
+}
+
+#add-button {
+  position: absolute;
+  right: 8px;
+}
+
+.img {
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.gender-icon {
+  font-size: x-large;
+}
+
+.info {
+  padding-left: 8px;
+  padding-top: 8px;
+  position: relative;
+}
+
+.name {
+  margin: 0;
+}
+
+.color-type {
+  position: absolute;
+  bottom: 4px;
+  right: 8px;
+  font-size: 16px;
+}
+
+.item-actions {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  .edit {
+    margin-right: 4px;
+
+    &:hover {
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .delete {
+    color: $warning;
+
+    &:hover {
+      color: $warning-light;
+    }
+  }
+}
+
+#stats {
+  right: 75%;
+  position: absolute;
+  top: 32px;
+  margin-right: 32px;
+  padding-bottom: 0;
+  width: 200px;
+}
+
+.mat-subheader {
+  height: 24px !important;
+  padding-left: 0;
+}
+
+mat-list-item {
+  height: 30px !important;
+}
+
+//Tried using :last-child selector, didn't work
+#last-item {
+  margin-bottom: 8px;
+}
+
+.title {
+  padding-top: 8px;
+}
+
+//Override color for gender icon
+.fa-venus {
+  color: mat-color($mat-pink, 300);
+}
+
+.fa-mars {
+  color: mat-color($mat-blue, 300);
+}
+
+.warning {
+  padding: 0 16px;
+}
+
+.row {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
+
+#filters {
+  > div:first-child {
+    padding-left: 0;
+    padding-right: 0;
+
+    > div:last-child {
+      height: 44px;
+    }
+  }
+
+  > div:last-child {
+    padding-left: 0;
+    padding-right: 0;
+
+    mat-form-field {
+      border-left: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    > div:last-child {
+      padding-bottom: 8px;
+    }
+  }
+}

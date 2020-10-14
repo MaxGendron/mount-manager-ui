@@ -3,21 +3,44 @@
 .navbar-menu {
   background-color: $primary;
   border: 1px solid $primary-dark;
-  width: 150px !important;
+  width: 145px !important;
 
   .mat-menu-content {
     padding: 0 !important;
 
-    span {
+    a {
       text-align: center !important;
-
-      &:first-child {
-        border-bottom: 1px solid $primary-dark;
-      }
+      text-decoration: none;
+      color: #ffffff;
     }
   }
 }
 
 .mat-dialog-container[id='login-popup'] {
   padding: 0 !important;
+}
+
+.mat-list-item-content {
+  justify-content: center;
+  padding: 0 !important;
+}
+
+.mat-menu-panel {
+  min-height: 0 !important;
+}
+
+.mat-card-header-text {
+  margin: 0 !important;
+}
+
+.swal2-styled.swal2-confirm:hover {
+  background-color: rgba($color: #3085d6, $alpha: 0.7) !important;
+}
+
+.swal2-styled.swal2-deny:hover {
+  background-color: rgba($color: #dd6b55, $alpha: 0.7) !important;
+}
+
+.swal2-popup {
+  background-color: #303030 !important;
 }

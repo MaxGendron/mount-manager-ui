@@ -13,17 +13,13 @@ import { TranslateService } from '@ngx-translate/core';
 export class NavbarComponent implements OnInit, OnDestroy {
   connectedUsername: string;
   private subscription: Subscription = new Subscription();
-
-  constructor(
-    public authService: AuthService,
-    public dialog: MatDialog,
-    private translateService: TranslateService,
-  ) {}
+  color: string;
+  constructor(public authService: AuthService, public dialog: MatDialog, private translateService: TranslateService) {}
 
   ngOnInit(): void {
     this.subscription.add(
-      this.authService.currentUser.subscribe(u => {
-        if (this.authService.currentUserValue != null) {
+      this.authService.currentUser.subscribe(() => {
+        if (this.authService.currentUserValue !== null) {
           this.connectedUsername = this.authService.currentUserValue.username;
         } else {
           this.connectedUsername = null;
@@ -49,11 +45,14 @@ export class NavbarComponent implements OnInit, OnDestroy {
   }
 
   //Only have 2 lang
-  switchLang() {
-    if (this.translateService.getDefaultLang() === 'fr') {
-      this.translateService.setDefaultLang('en');
+  //TODO when more lang added
+  switchLang(): void {
+    if (this.translateService.currentLang === 'fr') {
+      this.translateService.use('en');
+      localStorage.setItem('currentLang', JSON.stringify('en'));
     } else {
-      this.translateService.setDefaultLang('fr');
+      this.translateService.use('fr');
+      localStorage.setItem('currentLang', JSON.stringify('fr'));
     }
   }
 }

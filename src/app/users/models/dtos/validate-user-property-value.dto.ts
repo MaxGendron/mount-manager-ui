@@ -1,7 +1,4 @@
-export enum UserPropertyEnum {
-  Username = 'username',
-  Email = 'email',
-}
+import { UserPropertyEnum } from '../enum/user-property.enum';
 
 export class ValidateUserPropertyValueDto {
   constructor(public property: UserPropertyEnum, public value: string) {}

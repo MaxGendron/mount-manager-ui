@@ -3,6 +3,7 @@
 $main-app-primary: mat-palette($mat-indigo, 500, 200, 800);
 $main-app-accent: mat-palette($mat-amber, 500, 200, 800);
 $main-app-warning: mat-palette($mat-red, 500, 200, 800);
+$main-app-success: mat-palette($mat-green, 500, 200, 800);
 
 $theme: mat-dark-theme($main-app-primary, $main-app-accent, $main-app-warning);
 
@@ -17,3 +18,7 @@ $accent-dark: mat-color($main-app-accent, 800) !important;
 $warning: mat-color($main-app-warning, 500) !important;
 $warning-light: mat-color($main-app-warning, 200) !important;
 $warning-dark: mat-color($main-app-warning, 800) !important;
+
+$success: mat-color($main-app-success, 500) !important;
+$success-light: mat-color($main-app-success, 200) !important;
+$success-dark: mat-color($main-app-success, 800) !important;
