@@ -28,10 +28,6 @@ export class MountsService {
     return this.http.delete<any>(`${this.mountsEndpoint}${mountId}`);
   }
 
-  getMountById(mountId: string): Observable<MountResponseDto> {
-    return this.http.get<MountResponseDto>(`${this.mountsEndpoint}${mountId}`);
-  }
-
   //UserId from the Auth Token
   //Can pass a search request if needed
   getMountForUserId(searchMountDto?: SearchMountDto): Observable<MountResponseDto[]> {
