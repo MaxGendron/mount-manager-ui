@@ -78,7 +78,9 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     //Listen on value changes on type to reset value of color and reset currentColors
     this.filtersForm.get('type').valueChanges.subscribe(type => {
       this.filtersForm.get('colorId').setValue('');
-      this.setCurrentColors(type);
+      if (type) {
+        this.setCurrentColors(type);
+      }
     });
   }
 
