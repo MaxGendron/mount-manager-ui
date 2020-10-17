@@ -1,14 +1,15 @@
 @import '~@angular/material/theming';
 @import '../../../main_theme.scss';
 
-#card {
-  margin: auto;
-  width: 50%;
+#main-content {
   margin-top: 32px;
+}
+
+#mounts {
   padding: 16px 0 !important;
 }
 
-#card-header {
+#mounts-header {
   padding-left: 16px;
 }
 
@@ -74,15 +75,6 @@
   }
 }
 
-#stats {
-  right: 75%;
-  position: absolute;
-  top: 32px;
-  margin-right: 32px;
-  padding-bottom: 0;
-  width: 200px;
-}
-
 .mat-subheader {
   height: 24px !important;
   padding-left: 0;
@@ -119,7 +111,7 @@ mat-list-item {
   margin-right: 0 !important;
 }
 
-#filters {
+#mounts-filters {
   > div:first-child {
     padding-left: 0;
     padding-right: 0;
