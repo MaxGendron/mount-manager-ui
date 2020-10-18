@@ -40,7 +40,10 @@
     "mountType": "Mount type",
     "color": "Color",
     "sortField": "Sort by",
-    "sortOrder": "Sort order"
+    "sortOrder": "Sort order",
+    "fatherName": "Nom du père",
+    "motherName": "Nom de la mère",
+    "childName": "Nom de l'enfant"
   },
   "login": {
     "title": "Login",

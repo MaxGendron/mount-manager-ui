@@ -1,3 +1,4 @@
+import { SearchCouplingDto } from './../couplings/models/dtos/search-coupling.dto';
 import { CouplingResponseDto } from './../couplings/models/dtos/responses/coupling.response.dto';
 import { CouplingsService } from './../couplings/couplings.service';
 import { SearchMountDto } from './../models/dtos/search-mount.dto';
@@ -29,7 +30,8 @@ import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/ac
 export class MyMountsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   currentLang: string;
-  loading = false;
+  mountLoading = false;
+  couplingLoading = false;
   mountError: string;
   couplingError: string;
   globalError: string;
@@ -103,8 +105,12 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  isDisabled(): boolean {
-    return this.loading;
+  isMountButtonDisabled(): boolean {
+    return this.mountLoading;
+  }
+
+  isCouplingButtonDisabled(): boolean {
+    return this.couplingLoading;
   }
 
   openMountPopup(mount?: MountResponseDto): void {
@@ -171,7 +177,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   }
 
   filterMounts() {
-    this.loading = true;
+    this.mountLoading = true;
     const filtersFormValue = this.mountsFiltersForm.value;
     let searchMountDto = new SearchMountDto();
 
@@ -198,18 +204,43 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       this.mountsService.getMountForUserId(searchMountDto).subscribe(
         mounts => {
           this.mounts = mounts;
-          this.loading = false;
+          this.mountLoading = false;
         },
         () => {
           this.mountError = this.translateService.instant('error.unexpected');
-          this.loading = false;
+          this.mountLoading = false;
         },
       ),
     );
   }
 
   filterCouplings() {
+    this.couplingLoading = true;
+    const filtersFormValue = this.couplingsFiltersForm.value;
+    let searchCouplingDto = new SearchCouplingDto();
 
+    if (filtersFormValue.fatherName) {
+      searchCouplingDto.fatherName = filtersFormValue.fatherName;
+    }
+    if (filtersFormValue.motherName) {
+      searchCouplingDto.motherName = filtersFormValue.motherName;
+    }
+    if (filtersFormValue.childName) {
+      searchCouplingDto.childName = filtersFormValue.childName;
+    }
+
+    this.subscription.add(
+      this.couplingsService.getCouplingsForUserId(searchCouplingDto).subscribe(
+        couplings => {
+          this.couplings = couplings;
+          this.couplingLoading = false;
+        },
+        () => {
+          this.couplingError = this.translateService.instant('error.unexpected');
+          this.couplingLoading = false;
+        }
+      )
+    )
   }
 
   private async setMountGenderCounts() {
