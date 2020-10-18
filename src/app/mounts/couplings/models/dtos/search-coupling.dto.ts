@@ -1,5 +1,5 @@
 export class SearchCouplingDto {
-  dadName?: string;
-  momName?: string;
+  fatherName?: string;
+  motherName?: string;
   childName?: string;
 }

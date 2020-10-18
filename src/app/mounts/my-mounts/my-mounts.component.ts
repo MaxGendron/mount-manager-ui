@@ -73,8 +73,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
     //Initialize the couplingsFiltersForm form
     this.couplingsFiltersForm = this.fb.group({
-      dadName: [''],
-      momName: [''],
+      fatherName: [''],
+      motherName: [''],
       childName: ['']
     });
   }
@@ -209,7 +209,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   }
 
   filterCouplings() {
-    
+
   }
 
   private async setMountGenderCounts() {

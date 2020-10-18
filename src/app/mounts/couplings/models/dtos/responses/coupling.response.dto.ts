@@ -2,8 +2,8 @@ import { MountResponseDto } from './../../../../models/dtos/responses/mounts.res
 
 export interface CouplingResponseDto {
   _id: string;
-  dad: MountResponseDto;
-  mom: MountResponseDto;
+  father: MountResponseDto;
+  mother: MountResponseDto;
   childName: string;
   userId: string;
 }
