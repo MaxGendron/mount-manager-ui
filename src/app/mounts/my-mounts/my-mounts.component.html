@@ -1,3 +1,7 @@
+<div *ngIf="globalError" class="mt-3">
+  <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ globalError }} </span>
+</div>
+
 <div class="row" id="main-content">
 
   <div class="col-lg-2">
@@ -17,7 +21,7 @@
               <span>&nbsp;{{ genderCount.female }}</span>
             </div>
           </mat-list-item>
-          <mat-list-item id="last-item">
+          <mat-list-item class="mb-2">
             <i mat-list-icon class="fas fa-mars gender-icon"></i>
             <div mat-line>
               <span>&nbsp;{{ genderCount.male }}</span>
@@ -31,7 +35,7 @@
 
   <div class="col-lg-5">
     <mat-card id="mounts">
-      <mat-card-header id="mounts-header">
+      <mat-card-header class="header">
         <mat-card-title>
           <h1 class="card-title">{{ 'myMounts.title' | translate }}</h1>
         </mat-card-title>
@@ -41,8 +45,8 @@
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
-        <div *ngIf="error" class="margin-top-16">
-          <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
+        <div *ngIf="mountError" class="mt-3">
+          <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ mountError }} </span>
         </div>
     
         <form id="mounts-filters" class="row" [formGroup]="mountsFiltersForm" (ngSubmit)="filterMounts()">
@@ -104,12 +108,86 @@
               </mat-select>
             </mat-form-field>
     
-            <div class="col-lg-12" align="end">
+            <div class="col-lg-12 mb-2" align="end">
               <button type="submit" color="accent" mat-raised-button [disabled]="isDisabled()">
                 {{ 'button.filter' | translate }}
                 <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
               </button>
             </div>
+          </div>
+        </form>
+        <mat-divider></mat-divider>
+    
+        <div>
+          <div *ngFor="let mount of mounts">
+            <div class="d-flex">
+              <div class="img">
+                <img
+                  width="75"
+                  height="75"
+                  src="{{ '../../../assets/images/' + mount.type + '/' + mount.color.fr + '.png' }}"
+                />
+              </div>
+              <div class="info flex-grow-1">
+                <h3 class="m-0">{{ mount.name }}</h3>
+                <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
+                <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
+                <div class="item-actions">
+                  <mat-icon class="edit" (click)="openMountPopup(mount)">create</mat-icon>
+                  <mat-icon class="delete" (click)="confirmDelete(mount._id)">delete</mat-icon>
+                </div>
+                <!--Only have 2 lang, TODO when more lang added-->
+                <span class="color-type">
+                  <span *ngIf="currentLang === 'en'">{{ mount.color.en }}</span>
+                  {{ 'mountTypeEnum.' + mount.type | translate }}
+                  <span *ngIf="currentLang === 'fr'">{{ mount.color.fr }}</span>
+                </span>
+              </div>
+            </div>
+            <mat-divider></mat-divider>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+
+  <div class="col-lg-5">
+    <mat-card id="couplings">
+      <mat-card-header class="header">
+        <mat-card-title>
+          <h1 class="card-title">{{ 'myMounts.couplingTitle' | translate }}</h1>
+        </mat-card-title>
+        <div id="add-button">
+          <button color="accent" mat-raised-button (click)="openMountPopup()">{{ 'button.addMount' | translate }}</button>
+        </div>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content>
+        <div *ngIf="couplingError" class="mt-3">
+          <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ couplingError }} </span>
+        </div>
+    
+        <form class="row" [formGroup]="couplingsFiltersForm" (ngSubmit)="filterCouplings()">
+          <mat-form-field appearance="standard" class="col-lg-4">
+            <mat-label>{{ 'form.name' | translate }}</mat-label>
+            <input formControlName="name" type="text" name="name" matInput maxlength="16" />
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" class="col-lg-4">
+            <mat-label>{{ 'form.name' | translate }}</mat-label>
+            <input formControlName="name" type="text" name="name" matInput maxlength="16" />
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" class="col-lg-4">
+            <mat-label>{{ 'form.name' | translate }}</mat-label>
+            <input formControlName="name" type="text" name="name" matInput maxlength="16" />
+          </mat-form-field>
+  
+          <div class="col-lg-12 pb-2" align="end">
+            <button type="submit" color="accent" mat-raised-button [disabled]="isDisabled()">
+              {{ 'button.filter' | translate }}
+              <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i>
+            </button>
           </div>
         </form>
         <mat-divider></mat-divider>
@@ -144,12 +222,6 @@
           </div>
         </div>
       </mat-card-content>
-    </mat-card>
-  </div>
-
-  <div class="col-lg-5">
-    <mat-card>
-    
     </mat-card>
   </div>
 </div>

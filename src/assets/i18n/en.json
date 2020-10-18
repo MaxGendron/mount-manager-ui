@@ -82,7 +82,8 @@
   "myMounts": {
     "title": "My mounts",
     "deleteConfirmation": "Do you want to delete that mount?",
-    "numberMount": "Number of mounts"
+    "numberMount": "Number of mounts",
+    "couplingTitle": "My couplings"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",

@@ -9,7 +9,7 @@
   padding: 16px 0 !important;
 }
 
-#mounts-header {
+.header {
   padding-left: 16px;
 }
 
@@ -36,10 +36,6 @@
   padding-left: 8px;
   padding-top: 8px;
   position: relative;
-}
-
-.name {
-  margin: 0;
 }
 
 .color-type {
@@ -84,15 +80,6 @@ mat-list-item {
   height: 30px !important;
 }
 
-//Tried using :last-child selector, didn't work
-#last-item {
-  margin-bottom: 8px;
-}
-
-.title {
-  padding-top: 8px;
-}
-
 //Override color for gender icon
 .fa-venus {
   color: mat-color($mat-pink, 300);
@@ -128,9 +115,9 @@ mat-list-item {
     mat-form-field {
       border-left: 1px solid rgba(255, 255, 255, 0.12);
     }
-
-    > div:last-child {
-      padding-bottom: 8px;
-    }
   }
+}
+
+#couplings {
+  padding: 16px 0 !important;
 }

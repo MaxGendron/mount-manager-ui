@@ -30,10 +30,13 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   currentLang: string;
   loading = false;
-  error: string;
+  mountError: string;
+  couplingError: string;
+  globalError: string;
   keys = Object.keys;
 
   mountsFiltersForm: FormGroup;
+  couplingsFiltersForm: FormGroup;
   types: string[];
 
   mountGenderEnum = MountGenderEnum;
@@ -67,6 +70,13 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       sortField: [MountSortFieldEnum.Name],
       sortOrder: [SortOrderEnum.Asc],
     });
+
+    //Initialize the couplingsFiltersForm form
+    this.couplingsFiltersForm = this.fb.group({
+      dadName: [''],
+      momName: [''],
+      childName: ['']
+    });
   }
 
   async ngOnInit(): Promise<void> {
@@ -76,7 +86,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
       this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
     } catch (e) {
-      this.error = this.translateService.instant('error.unexpected');
+      this.globalError = this.translateService.instant('error.unexpected');
     }
     this.setMountGenderCounts();
 
@@ -154,7 +164,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.setMountGenderCounts();
         },
         () => {
-          this.error = this.translateService.instant('error.unexpected');
+          this.mountError = this.translateService.instant('error.unexpected');
         },
       ),
     );
@@ -191,18 +201,22 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.loading = false;
         },
         () => {
-          this.error = this.translateService.instant('error.unexpected');
+          this.mountError = this.translateService.instant('error.unexpected');
           this.loading = false;
         },
       ),
     );
   }
 
+  filterCouplings() {
+    
+  }
+
   private async setMountGenderCounts() {
     try {
       this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
     } catch (e) {
-      this.error = this.translateService.instant('error.unexpected');
+      this.globalError = this.translateService.instant('error.unexpected');
     }
   }
 
