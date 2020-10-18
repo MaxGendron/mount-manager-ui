@@ -14,7 +14,7 @@ export class CouplingsService {
 
   //UserId from the Auth Token
   //Can pass a search request if needed
-  getCouplingsForUserId(searchCouplingDto: SearchCouplingDto): Observable<SearchCouplingDto[]> {
+  getCouplingsForUserId(searchCouplingDto?: SearchCouplingDto): Observable<CouplingResponseDto[]> {
     return this.http.get<CouplingResponseDto[]>(`${this.couplingEndpoint}find/user-id`, {
       params: searchCouplingDto === undefined ? {} : JSON.parse(JSON.stringify(searchCouplingDto)),
     });

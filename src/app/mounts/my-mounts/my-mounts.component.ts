@@ -1,3 +1,5 @@
+import { CouplingResponseDto } from './../couplings/models/dtos/responses/coupling.response.dto';
+import { CouplingsService } from './../couplings/couplings.service';
 import { SearchMountDto } from './../models/dtos/search-mount.dto';
 import { MountSortFieldEnum } from './../models/enum/mount-sort-field.enum';
 import { SortOrderEnum } from './../../common/enum/sort-order.enum';
@@ -42,13 +44,14 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   currentColors: MountColorDto[];
   mountGenderCounts: MountGenderCountResponseDto[];
   groupedColorDtos: MountColorGroupedByResponseDto[];
-  couplings: MountResponseDto[] = new Array();
+  couplings: CouplingResponseDto[] = new Array();
 
   constructor(
     private translateService: TranslateService,
     private mountsService: MountsService,
     private mountColorsService: MountColorsService,
     private accountsSettingsService: AccountsSettingsService,
+    private couplingsService: CouplingsService,
     private fb: FormBuilder,
     public dialog: MatDialog,
   ) {
@@ -69,6 +72,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   async ngOnInit(): Promise<void> {
     try {
       this.mounts = await this.mountsService.getMountForUserId().toPromise();
+      this.couplings = await this.couplingsService.getCouplingsForUserId().toPromise();
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
       this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
     } catch (e) {
