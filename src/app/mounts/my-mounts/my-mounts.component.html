@@ -4,7 +4,7 @@
 
 <div class="row" id="main-content">
 
-  <div class="col-lg-2">
+  <div class="col-xl-2">
     <mat-card>
       <mat-card-header>
         <mat-card-title>
@@ -33,7 +33,7 @@
     </mat-card>
   </div>
 
-  <div class="col-lg-5">
+  <div class="col-xl-4">
     <mat-card id="mounts">
       <mat-card-header class="header">
         <mat-card-title>
@@ -151,15 +151,12 @@
     </mat-card>
   </div>
 
-  <div class="col-lg-5">
+  <div class="col-xl-6">
     <mat-card id="couplings">
       <mat-card-header class="header">
         <mat-card-title>
           <h1 class="card-title">{{ 'myMounts.couplingTitle' | translate }}</h1>
         </mat-card-title>
-        <div id="add-button">
-          <button color="accent" mat-raised-button (click)="openMountPopup()">{{ 'button.addMount' | translate }}</button>
-        </div>
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content>
@@ -194,9 +191,45 @@
     
         <div>
           <div *ngFor="let coupling of couplings">
-            {{coupling.father.name}}
-            {{coupling.mother.name}}
-            {{coupling.childName}}
+            <div class="row">
+              <div class="d-flex col-md-4" style="padding: 0!important; border-right: 1px solid rgba(255, 255, 255, 0.12);">
+                <div class="img">
+                  <img
+                    width="75"
+                    height="75"
+                    src="{{ '../../../assets/images/' + coupling.mother.type + '/' + coupling.mother.color.fr + '.png' }}"
+                  />
+                </div>
+                <div class="info">
+                  <h3 class="m-0 long-name">{{ coupling.mother.name }}</h3>
+                  <h3 class="m-0 medium-name">{{ coupling.mother.name.substring(0, 12) }}<span *ngIf="coupling.mother.name.length > 12">...</span></h3>
+                  <h3 class="m-0 short-name">{{ coupling.mother.name.substring(0, 8) }}<span *ngIf="coupling.mother.name.length > 9">...</span></h3>
+                  <i *ngIf="coupling.mother.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
+                  <i *ngIf="coupling.mother.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
+                </div>
+              </div>
+              <div class="d-flex col-md-4" style="padding: 0!important; border-right: 1px solid rgba(255, 255, 255, 0.12);">
+                <div class="img">
+                  <img
+                    width="75"
+                    height="75"
+                    src="{{ '../../../assets/images/' + coupling.father.type + '/' + coupling.father.color.fr + '.png' }}"
+                  />
+                </div>
+                <div class="info">
+                  <h3 class="m-0 long-name">{{ coupling.father.name }}</h3>
+                  <h3 class="m-0 medium-name">{{ coupling.father.name.substring(0, 12) }}<span *ngIf="coupling.father.name.length > 12">...</span></h3>
+                  <h3 class="m-0 short-name">{{ coupling.father.name.substring(0, 8) }}<span *ngIf="coupling.father.name.length > 9">...</span></h3>
+                  <i *ngIf="coupling.father.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
+                  <i *ngIf="coupling.father.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
+                </div>
+              </div>
+              <div class="col-md-2" style="padding: 0!important;">
+                <div class="info">
+                  <h3 class="m-0">{{ coupling.childName }}</h3>
+                </div>
+              </div>
+            </div>
             <mat-divider></mat-divider>
           </div>
         </div>

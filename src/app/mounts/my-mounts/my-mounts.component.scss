@@ -3,6 +3,12 @@
 
 #main-content {
   margin-top: 32px;
+
+  > div {
+    @media screen and (max-width: 1200px) {
+      margin-bottom: 16px;
+    }
+  }
 }
 
 #mounts {
@@ -120,4 +126,25 @@ mat-list-item {
 
 #couplings {
   padding: 16px 0 !important;
+}
+
+.long-name {
+  @media screen and (max-width: 1600px) {
+    display: none;
+  }
+}
+
+.medium-name {
+  @media screen and (min-width: 1601px) {
+    display: none;
+  }
+  @media screen and (max-width: 1399px) {
+    display: none;
+  }
+}
+
+.short-name {
+  @media screen and (min-width: 1400px) {
+    display: none;
+  }
 }
