@@ -31,7 +31,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   error: string;
   keys = Object.keys;
 
-  filtersForm: FormGroup;
+  mountsFiltersForm: FormGroup;
   types: string[];
 
   mountGenderEnum = MountGenderEnum;
@@ -42,6 +42,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   currentColors: MountColorDto[];
   mountGenderCounts: MountGenderCountResponseDto[];
   groupedColorDtos: MountColorGroupedByResponseDto[];
+  couplings: MountResponseDto[] = new Array();
 
   constructor(
     private translateService: TranslateService,
@@ -54,8 +55,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.currentLang = translateService.currentLang;
     translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
 
-    //Initialize the accountSettings form
-    this.filtersForm = this.fb.group({
+    //Initialize the mountsFilters form
+    this.mountsFiltersForm = this.fb.group({
       name: [''],
       gender: [''],
       type: [''],
@@ -76,8 +77,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.setMountGenderCounts();
 
     //Listen on value changes on type to reset value of color and reset currentColors
-    this.filtersForm.get('type').valueChanges.subscribe(type => {
-      this.filtersForm.get('colorId').setValue('');
+    this.mountsFiltersForm.get('type').valueChanges.subscribe(type => {
+      this.mountsFiltersForm.get('colorId').setValue('');
       if (type) {
         this.setCurrentColors(type);
       }
@@ -92,7 +93,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     return this.loading;
   }
 
-  openPopup(mount?: MountResponseDto): void {
+  openMountPopup(mount?: MountResponseDto): void {
     //open popup for add or edit
     const dialogRef = this.dialog.open(AddOrUpdateMountPopupComponent, {
       id: 'mount-popup',
@@ -105,10 +106,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
 
-    this.listenOnPopupClose(dialogRef);
+    this.listenOnMountPopupClose(dialogRef);
   }
 
-  listenOnPopupClose(dialogRef: MatDialogRef<AddOrUpdateMountPopupComponent>): void {
+  listenOnMountPopupClose(dialogRef: MatDialogRef<AddOrUpdateMountPopupComponent>): void {
     dialogRef.afterClosed().subscribe((mountResponse: MountResponseDto) => {
       if (mountResponse) {
         let index = this.mounts.findIndex(m => m._id === mountResponse._id);
@@ -155,9 +156,9 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     );
   }
 
-  submit() {
+  filterMounts() {
     this.loading = true;
-    const filtersFormValue = this.filtersForm.value;
+    const filtersFormValue = this.mountsFiltersForm.value;
     let searchMountDto = new SearchMountDto();
 
     if (filtersFormValue.name) {

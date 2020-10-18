@@ -36,7 +36,7 @@
           <h1 class="card-title">{{ 'myMounts.title' | translate }}</h1>
         </mat-card-title>
         <div id="add-button">
-          <button color="accent" mat-raised-button (click)="openPopup()">{{ 'button.addMount' | translate }}</button>
+          <button color="accent" mat-raised-button (click)="openMountPopup()">{{ 'button.addMount' | translate }}</button>
         </div>
       </mat-card-header>
       <mat-divider></mat-divider>
@@ -45,7 +45,7 @@
           <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
         </div>
     
-        <form id="mounts-filters" class="row" [formGroup]="filtersForm" (ngSubmit)="submit()">
+        <form id="mounts-filters" class="row" [formGroup]="mountsFiltersForm" (ngSubmit)="filterMounts()">
           <div class="col-lg-9 row">
             <mat-form-field appearance="standard" class="col-lg-6">
               <mat-label>{{ 'form.name' | translate }}</mat-label>
@@ -72,7 +72,7 @@
               </mat-select>
             </mat-form-field>
     
-            <mat-form-field appearance="standard" class="col-lg-6" *ngIf="filtersForm.get('type').value">
+            <mat-form-field appearance="standard" class="col-lg-6" *ngIf="mountsFiltersForm.get('type').value">
               <mat-label>{{ 'form.color' | translate }}</mat-label>
               <mat-select formControlName="colorId" name="colorId">
                 <mat-option>- - -</mat-option>
@@ -129,7 +129,7 @@
                 <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
                 <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
                 <div class="item-actions">
-                  <mat-icon class="edit" (click)="openPopup(mount)">create</mat-icon>
+                  <mat-icon class="edit" (click)="openMountPopup(mount)">create</mat-icon>
                   <mat-icon class="delete" (click)="confirmDelete(mount._id)">delete</mat-icon>
                 </div>
                 <!--Only have 2 lang, TODO when more lang added-->
