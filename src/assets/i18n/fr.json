@@ -10,7 +10,8 @@
     "emailExist": "L'adresse courriel spécifié existe déjà",
     "usernameExist": "Le nom d'utilisateur spécifié existe déjà",
     "unexpectedUpdate": "Une erreur inattendue s'est produite en mettant a jour \"{{field}}\", veuillez réessayer",
-    "updateEmpty": "Impossible de mettre à jour ce champ avec aucune valeur"
+    "updateEmpty": "Impossible de mettre à jour ce champ avec aucune valeur",
+    "unexpectedPleaseRefresh": "Une erreur inattendue s'est produite, veuillez rechargez la page"
   },
   "button": {
     "login": "Se connecter",

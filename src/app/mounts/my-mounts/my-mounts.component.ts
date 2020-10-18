@@ -88,7 +88,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
       this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
     } catch (e) {
-      this.globalError = this.translateService.instant('error.unexpected');
+      this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
     this.setMountGenderCounts();
 
@@ -98,6 +98,14 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       if (type) {
         this.setCurrentColors(type);
       }
+    });
+
+    //Listen on value changes to reset error message
+    this.mountsFiltersForm.valueChanges.subscribe(() => {
+      this.mountError = '';
+    });
+    this.couplingsFiltersForm.valueChanges.subscribe(() => {
+      this.couplingError = '';
     });
   }
 
@@ -247,7 +255,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     try {
       this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
     } catch (e) {
-      this.globalError = this.translateService.instant('error.unexpected');
+      this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
   }
 

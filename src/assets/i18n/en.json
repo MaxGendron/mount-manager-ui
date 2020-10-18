@@ -10,7 +10,8 @@
     "emailExist": "The specified email adress already exist",
     "usernameExist": "The specified username already exist",
     "unexpectedUpdate": "An unexpected error occured when updating \"{{field}}\", please try again",
-    "updateEmpty": "Cannot update this field with empty value"
+    "updateEmpty": "Cannot update this field with empty value",
+    "unexpectedPleaseRefresh": "An unexpected error occured, please refresh the page"
   },
   "button": {
     "login": "Login",
