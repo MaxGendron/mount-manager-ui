@@ -22,6 +22,11 @@ import {
 import { MountColorsService } from '../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/accounts-settings.service';
 
+export enum DeleteTypeEnum {
+  Mount,
+  Coupling
+}
+
 @Component({
   selector: 'app-my-mounts',
   templateUrl: './my-mounts.component.html',
@@ -44,6 +49,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   mountGenderEnum = MountGenderEnum;
   mountSortFieldEnum = MountSortFieldEnum;
   sortOrderEnum = SortOrderEnum;
+  deleteTypeEnum = DeleteTypeEnum;
 
   mounts: MountResponseDto[] = new Array();
   currentColors: MountColorDto[];
@@ -154,16 +160,17 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmDelete(mountId: string): void {
+  confirmDelete(id: string, deleteType: DeleteTypeEnum): void {
     Swal.fire({
-      title: this.translateService.instant('myMounts.deleteConfirmation'),
+      title: deleteType === DeleteTypeEnum.Mount ? this.translateService.instant('myMounts.mountDeleteConfirmation') :
+        this.translateService.instant('myMounts.couplingDeleteConfirmation'),
       showDenyButton: true,
       confirmButtonText: this.translateService.instant('button.delete'),
       denyButtonText: this.translateService.instant('button.dontDelete'),
       reverseButtons: true,
     }).then(result => {
       if (result.isConfirmed) {
-        this.deleteMount(mountId);
+        deleteType === DeleteTypeEnum.Mount ? this.deleteMount(id) : this.deleteCoupling(id);
       }
     });
   }
@@ -176,6 +183,20 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.mounts = this.mounts.filter(m => m._id !== mountId);
           //Refresh stats
           this.setMountGenderCounts();
+        },
+        () => {
+          this.mountError = this.translateService.instant('error.unexpected');
+        },
+      ),
+    );
+  }
+
+  deleteCoupling(couplingId: string): void {
+    this.subscription.add(
+      this.couplingsService.deleteCoupling(couplingId).subscribe(
+        () => {
+          //Remove mount from the lists
+          this.couplings = this.couplings.filter(m => m._id !== couplingId);
         },
         () => {
           this.mountError = this.translateService.instant('error.unexpected');

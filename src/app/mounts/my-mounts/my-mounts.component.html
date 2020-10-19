@@ -134,7 +134,7 @@
                 <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
                 <div class="item-actions">
                   <mat-icon class="edit" (click)="openMountPopup(mount)">create</mat-icon>
-                  <mat-icon class="delete" (click)="confirmDelete(mount._id)">delete</mat-icon>
+                  <mat-icon class="delete" (click)="confirmDelete(mount._id, deleteTypeEnum.Mount)">delete</mat-icon>
                 </div>
                 <!--Only have 2 lang, TODO when more lang added-->
                 <span class="color-type">
@@ -224,9 +224,12 @@
                   <i *ngIf="coupling.father.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
                 </div>
               </div>
-              <div class="col-md-2" style="padding: 0!important;">
+              <div class="col-md-4" style="padding: 0!important;">
                 <div class="info">
                   <h3 class="m-0">{{ coupling.childName }}</h3>
+                  <div class="item-actions">
+                    <mat-icon class="delete" (click)="confirmDelete(coupling._id, deleteTypeEnum.Coupling)">delete</mat-icon>
+                  </div>
                 </div>
               </div>
             </div>
