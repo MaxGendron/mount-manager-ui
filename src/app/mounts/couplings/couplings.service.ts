@@ -20,7 +20,7 @@ export class CouplingsService {
     });
   }
 
-  createCoupling(createCouplingDto: CreateCouplingDto): Observable<SearchCouplingDto> {
+  createCoupling(createCouplingDto: CreateCouplingDto): Observable<CouplingResponseDto> {
     return this.http.post<CouplingResponseDto>(`${this.couplingEndpoint}`, createCouplingDto);
   }
 
