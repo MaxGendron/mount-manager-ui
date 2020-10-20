@@ -88,7 +88,8 @@
     "mountDeleteConfirmation": "Voulez-vous supprimer cette monture?",
     "couplingDeleteConfirmation": "Voulez-vous supprimer cet accouplement?",
     "numberMount": "Nombre de montures",
-    "couplingTitle": "Mes accouplements"
+    "couplingTitle": "Mes accouplements",
+    "breedingTooltip": "Accoupler cette monture"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Modifier {{name}}",

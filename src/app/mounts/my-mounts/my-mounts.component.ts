@@ -1,3 +1,4 @@
+import { CreateCouplingDto } from './../couplings/models/dtos/create-coupling.dto';
 import { SearchCouplingDto } from './../couplings/models/dtos/search-coupling.dto';
 import { CouplingResponseDto } from './../couplings/models/dtos/responses/coupling.response.dto';
 import { CouplingsService } from './../couplings/couplings.service';
@@ -24,7 +25,7 @@ import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/ac
 
 export enum DeleteTypeEnum {
   Mount,
-  Coupling
+  Coupling,
 }
 
 @Component({
@@ -35,12 +36,15 @@ export enum DeleteTypeEnum {
 export class MyMountsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   currentLang: string;
+  keys = Object.keys;
   mountLoading = false;
   couplingLoading = false;
+  createCouplingLoading = false;
   mountError: string;
   couplingError: string;
+  createCouplingError: string;
   globalError: string;
-  keys = Object.keys;
+  breedingTooltip: string;
 
   mountsFiltersForm: FormGroup;
   couplingsFiltersForm: FormGroup;
@@ -56,6 +60,9 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   mountGenderCounts: MountGenderCountResponseDto[];
   groupedColorDtos: MountColorGroupedByResponseDto[];
   couplings: CouplingResponseDto[] = new Array();
+  couplingMother: MountResponseDto;
+  couplingFather: MountResponseDto;
+  couplingChildName: string;
 
   constructor(
     private translateService: TranslateService,
@@ -83,7 +90,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.couplingsFiltersForm = this.fb.group({
       fatherName: [''],
       motherName: [''],
-      childName: ['']
+      childName: [''],
     });
   }
 
@@ -113,6 +120,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.couplingsFiltersForm.valueChanges.subscribe(() => {
       this.couplingError = '';
     });
+
+    this.breedingTooltip = this.translateService.instant('myMounts.breedingTooltip');
   }
 
   ngOnDestroy(): void {
@@ -125,6 +134,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   isCouplingButtonDisabled(): boolean {
     return this.couplingLoading;
+  }
+
+  isCreateCouplingButtonDisabled(): boolean {
+    return this.createCouplingLoading || !this.couplingChildName;
   }
 
   openMountPopup(mount?: MountResponseDto): void {
@@ -162,8 +175,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   confirmDelete(id: string, deleteType: DeleteTypeEnum): void {
     Swal.fire({
-      title: deleteType === DeleteTypeEnum.Mount ? this.translateService.instant('myMounts.mountDeleteConfirmation') :
-        this.translateService.instant('myMounts.couplingDeleteConfirmation'),
+      title:
+        deleteType === DeleteTypeEnum.Mount
+          ? this.translateService.instant('myMounts.mountDeleteConfirmation')
+          : this.translateService.instant('myMounts.couplingDeleteConfirmation'),
       showDenyButton: true,
       confirmButtonText: this.translateService.instant('button.delete'),
       denyButtonText: this.translateService.instant('button.dontDelete'),
@@ -267,9 +282,66 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         () => {
           this.couplingError = this.translateService.instant('error.unexpected');
           this.couplingLoading = false;
+        },
+      ),
+    );
+  }
+
+  addToBreeding(mount: MountResponseDto) {
+    //Reset error message
+    this.createCouplingError = null;
+
+    if (mount.gender === MountGenderEnum.Male) {
+      //If already a father in coupling, show error
+      if (this.couplingFather) {
+        this.createCouplingError = 'ERROR';
+      } else {
+        //If a mother is selected and type is not the same, show error
+        if (this.couplingMother && this.couplingMother.type !== mount.type) {
+          this.createCouplingError = 'ERROR';
+        } else {
+          this.couplingFather = mount;
         }
-      )
-    )
+      }
+    } else {
+      //If already a mother in coupling, show error
+      if (this.couplingMother) {
+        this.createCouplingError = 'ERROR';
+      } else {
+        //If a father is selected and type is not the same, show error
+        if (this.couplingFather && this.couplingFather.type !== mount.type) {
+          this.createCouplingError = 'ERROR';
+        } else {
+          this.couplingMother = mount;
+        }
+      }
+    }
+
+    //If both parents selected, set childName
+    if (this.couplingFather && this.couplingMother) {
+      this.couplingChildName = this.couplingMother.name + this.couplingFather.name;
+    }
+  }
+
+  createCoupling() {
+    this.createCouplingLoading = true;
+    let createCouplingDto = new CreateCouplingDto();
+    createCouplingDto.childName = this.couplingChildName;
+    createCouplingDto.fatherId = this.couplingFather._id;
+    createCouplingDto.motherId = this.couplingMother._id;
+
+    this.subscription.add(
+      this.couplingsService.createCoupling(createCouplingDto).subscribe(
+        coupling => {
+          this.couplings.push(coupling);
+          this.createCouplingLoading = false;
+        },
+        () => {
+          this.createCouplingError = this.translateService.instant('error.unexpected');
+          this.createCouplingLoading = false;
+        },
+      ),
+    );
   }
 
   private async setMountGenderCounts() {

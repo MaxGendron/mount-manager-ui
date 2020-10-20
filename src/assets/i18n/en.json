@@ -88,7 +88,8 @@
     "mountDeleteConfirmation": "Do you want to delete this mount?",
     "couplingDeleteConfirmation": "Do you want to delete this coupling?",
     "numberMount": "Number of mounts",
-    "couplingTitle": "My couplings"
+    "couplingTitle": "My couplings",
+    "breedingTooltip": "Mate this mount"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",
