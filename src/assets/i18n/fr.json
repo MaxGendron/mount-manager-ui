@@ -11,7 +11,9 @@
     "usernameExist": "Le nom d'utilisateur spécifié existe déjà",
     "unexpectedUpdate": "Une erreur inattendue s'est produite en mettant a jour \"{{field}}\", veuillez réessayer",
     "updateEmpty": "Impossible de mettre à jour ce champ avec aucune valeur",
-    "unexpectedPleaseRefresh": "Une erreur inattendue s'est produite, veuillez rechargez la page"
+    "unexpectedPleaseRefresh": "Une erreur inattendue s'est produite, veuillez rechargez la page",
+    "sameGender": "Impossible d'ajouter le même sexe",
+    "notSameType": "Les types de montures ne sont pas les mêmes"
   },
   "button": {
     "login": "Se connecter",
@@ -20,7 +22,7 @@
     "lang": "English",
     "changePassword": "Changer le mot de passe",
     "addMount": "Ajouter une monture",
-    "create": "Ajouter",
+    "create": "Créer",
     "edit": "Modifier",
     "delete": "Supprimer",
     "dontDelete": "Ne pas supprimer",
@@ -37,7 +39,7 @@
     "serverName": "Nom du serveur",
     "optional": "Optionnel",
     "name": "Nom",
-    "gender": "Genre",
+    "gender": "Sexe",
     "mountType": "Type de monture",
     "color": "Couleur",
     "sortField": "Trier par",
@@ -80,7 +82,7 @@
   },
   "mountSortFieldEnum": {
     "Name": "Nom",
-    "Gender": "Genre",
+    "Gender": "Sexe",
     "Type": "Type de monture"
   },
   "myMounts": {
@@ -89,7 +91,8 @@
     "couplingDeleteConfirmation": "Voulez-vous supprimer cet accouplement?",
     "numberMount": "Nombre de montures",
     "couplingTitle": "Mes accouplements",
-    "breedingTooltip": "Accoupler cette monture"
+    "breedingTooltip": "Accoupler cette monture",
+    "createCouplingTitle": "Créer un accouplement"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Modifier {{name}}",

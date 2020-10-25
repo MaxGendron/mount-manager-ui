@@ -136,7 +136,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     return this.couplingLoading;
   }
 
-  isCreateCouplingButtonDisabled(): boolean {
+  isCreateCouplingDisabled(): boolean {
     return this.createCouplingLoading || !this.couplingChildName;
   }
 
@@ -294,11 +294,11 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     if (mount.gender === MountGenderEnum.Male) {
       //If already a father in coupling, show error
       if (this.couplingFather) {
-        this.createCouplingError = 'ERROR';
+        this.createCouplingError = this.translateService.instant('error.sameGender');
       } else {
         //If a mother is selected and type is not the same, show error
         if (this.couplingMother && this.couplingMother.type !== mount.type) {
-          this.createCouplingError = 'ERROR';
+          this.createCouplingError = this.translateService.instant('error.notSameType');
         } else {
           this.couplingFather = mount;
         }
@@ -306,11 +306,11 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     } else {
       //If already a mother in coupling, show error
       if (this.couplingMother) {
-        this.createCouplingError = 'ERROR';
+        this.createCouplingError = this.translateService.instant('error.sameGender');
       } else {
         //If a father is selected and type is not the same, show error
         if (this.couplingFather && this.couplingFather.type !== mount.type) {
-          this.createCouplingError = 'ERROR';
+          this.createCouplingError = this.translateService.instant('error.notSameType');
         } else {
           this.couplingMother = mount;
         }
@@ -335,6 +335,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         coupling => {
           this.couplings.push(coupling);
           this.createCouplingLoading = false;
+          //Reset coupling info
+          this.couplingMother = null;
+          this.couplingFather = null;
+          this.couplingChildName = null;
         },
         () => {
           this.createCouplingError = this.translateService.instant('error.unexpected');
@@ -342,6 +346,20 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         },
       ),
     );
+  }
+
+  deleteCouplingMother() {
+    this.couplingMother = null;
+    this.couplingChildName = this.couplingChildName = null;
+    //Reset error message
+    this.createCouplingError = null;
+  }
+
+  deleteCouplingFather() {
+    this.couplingFather = null;
+    this.couplingChildName = this.couplingChildName = null;
+    //Reset error message
+    this.createCouplingError = null;
   }
 
   private async setMountGenderCounts() {

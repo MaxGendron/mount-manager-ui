@@ -148,3 +148,35 @@ mat-list-item {
     display: none;
   }
 }
+
+#add-coupling-modal {
+  position: absolute;
+  bottom: 0;
+  right: 32px;
+  z-index: 100;
+}
+
+/* treeflex stuffs */
+.tf-ancestor-tree { position: relative; }
+.tf-ancestor-tree > ul { transform: rotateX(180deg); }
+.tf-ancestor-tree li ul { margin-bottom: 1em; }
+
+.tf-height {
+  height: 47px;
+}
+
+.node-text {
+  display: inline-block;
+  transform: rotateX(180deg);
+
+  .delete {
+    color: $warning;
+    cursor: pointer;
+    top: 5px;
+    position: relative;
+
+    &:hover {
+      color: $warning-light;
+    }
+  }
+}

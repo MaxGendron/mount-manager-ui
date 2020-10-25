@@ -268,11 +268,11 @@
     </mat-card>
   </div>
 
-  <div id="add-coupling-modal" style="position: absolute; bottom: 0; right: 0; z-index: 100;">
+  <div id="add-coupling-modal" *ngIf="couplingMother || couplingFather">
     <mat-card>
       <mat-card-header>
         <mat-card-title>
-          <h1 class="card-title">Create a coupling</h1>
+          <h1 class="card-title">{{ 'myMounts.createCouplingTitle' | translate }}</h1>
         </mat-card-title>
       </mat-card-header>
       <mat-divider></mat-divider>
@@ -280,17 +280,45 @@
         <div *ngIf="createCouplingError" class="mt-3">
           <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ createCouplingError }} </span>
         </div>
-        <span *ngIf="couplingFather">{{ couplingFather._id }}<br /></span>
-        <span *ngIf="couplingMother">{{ couplingMother._id }}<br /></span>
-        <span>{{ couplingChildName }}</span>
-        <button
+        <div class="tf-tree tf-ancestor-tree row">
+          <ul class="col-lg-12 row">
+            <li class="col-lg-12 p-0">
+              <span class="tf-nc">
+                <mat-form-field appearance="standard" class="node-text">
+                  <mat-label>{{ 'form.name' | translate }}</mat-label>
+                  <input [disabled]="isCreateCouplingDisabled()" [(ngModel)]="couplingChildName" type="text" name="couplingChildName" matInput maxlength="16" />
+                </mat-form-field>
+              </span>
+              <ul>
+                <li>
+                  <span class="tf-nc tf-height">
+                    <span class="node-text" *ngIf="couplingMother">
+                      {{couplingMother.name}}
+                      <mat-icon class="delete" (click)="deleteCouplingMother()">delete</mat-icon>
+                    </span>
+                  </span>
+                </li>
+                <li>
+                  <span class="tf-nc tf-height">
+                    <span class="node-text" *ngIf="couplingFather">
+                      {{couplingFather.name}}
+                      <mat-icon class="delete" (click)="deleteCouplingFather()">delete</mat-icon>
+                    </span>
+                  </span>
+              </ul>
+            </li>
+          </ul>
+        </div>
+        <div align="end" class="pt-3">
+          <button
           (click)="createCoupling()"
           color="accent"
           mat-raised-button
-          [disabled]="isCreateCouplingButtonDisabled()"
+          [disabled]="isCreateCouplingDisabled()"
         >
-          Create
+          {{ 'button.create' | translate }}
         </button>
+        </div>
       </mat-card-content>
     </mat-card>
   </div>
