@@ -157,9 +157,15 @@ mat-list-item {
 }
 
 /* treeflex stuffs */
-.tf-ancestor-tree { position: relative; }
-.tf-ancestor-tree > ul { transform: rotateX(180deg); }
-.tf-ancestor-tree li ul { margin-bottom: 1em; }
+.tf-ancestor-tree {
+  position: relative;
+}
+.tf-ancestor-tree > ul {
+  transform: rotateX(180deg);
+}
+.tf-ancestor-tree li ul {
+  margin-bottom: 1em;
+}
 
 .tf-height {
   height: 47px;

@@ -286,14 +286,21 @@
               <span class="tf-nc">
                 <mat-form-field appearance="standard" class="node-text">
                   <mat-label>{{ 'form.name' | translate }}</mat-label>
-                  <input [disabled]="isCreateCouplingDisabled()" [(ngModel)]="couplingChildName" type="text" name="couplingChildName" matInput maxlength="16" />
+                  <input
+                    [disabled]="isCreateCouplingDisabled()"
+                    [(ngModel)]="couplingChildName"
+                    type="text"
+                    name="couplingChildName"
+                    matInput
+                    maxlength="16"
+                  />
                 </mat-form-field>
               </span>
               <ul>
                 <li>
                   <span class="tf-nc tf-height">
                     <span class="node-text" *ngIf="couplingMother">
-                      {{couplingMother.name}}
+                      {{ couplingMother.name }}
                       <mat-icon class="delete" (click)="deleteCouplingMother()">delete</mat-icon>
                     </span>
                   </span>
@@ -301,23 +308,19 @@
                 <li>
                   <span class="tf-nc tf-height">
                     <span class="node-text" *ngIf="couplingFather">
-                      {{couplingFather.name}}
+                      {{ couplingFather.name }}
                       <mat-icon class="delete" (click)="deleteCouplingFather()">delete</mat-icon>
                     </span>
                   </span>
+                </li>
               </ul>
             </li>
           </ul>
         </div>
         <div align="end" class="pt-3">
-          <button
-          (click)="createCoupling()"
-          color="accent"
-          mat-raised-button
-          [disabled]="isCreateCouplingDisabled()"
-        >
-          {{ 'button.create' | translate }}
-        </button>
+          <button (click)="createCoupling()" color="accent" mat-raised-button [disabled]="isCreateCouplingDisabled()">
+            {{ 'button.create' | translate }}
+          </button>
         </div>
       </mat-card-content>
     </mat-card>
