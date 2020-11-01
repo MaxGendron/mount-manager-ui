@@ -28,11 +28,12 @@
     "@sweetalert2/theme-dark": "^4.0.0",
     "rxjs": "~6.5.4",
     "sweetalert2": "^10.3.7",
+    "treeflex": "^2.0.1",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^0.1000.7",
+    "@angular-devkit/build-angular": "^0.1002.0",
     "@angular/cli": "~10.0.7",
     "@angular/compiler-cli": "~10.0.11",
     "@angular/language-service": "~10.0.11",

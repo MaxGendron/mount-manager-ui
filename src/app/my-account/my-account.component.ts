@@ -85,7 +85,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       //Get the servers
       this.servers = await this.serverService.getServers().toPromise();
     } catch (e) {
-      this.error = this.translateService.instant('error.unexpected');
+      this.error = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
 
     //Set value to both forms

@@ -1,3 +1,7 @@
+import { CreateCouplingDto } from './../couplings/models/dtos/create-coupling.dto';
+import { SearchCouplingDto } from './../couplings/models/dtos/search-coupling.dto';
+import { CouplingResponseDto } from './../couplings/models/dtos/responses/coupling.response.dto';
+import { CouplingsService } from './../couplings/couplings.service';
 import { SearchMountDto } from './../models/dtos/search-mount.dto';
 import { MountSortFieldEnum } from './../models/enum/mount-sort-field.enum';
 import { SortOrderEnum } from './../../common/enum/sort-order.enum';
@@ -19,6 +23,11 @@ import {
 import { MountColorsService } from '../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/accounts-settings.service';
 
+export enum DeleteTypeEnum {
+  Mount,
+  Coupling,
+}
+
 @Component({
   selector: 'app-my-mounts',
   templateUrl: './my-mounts.component.html',
@@ -27,35 +36,48 @@ import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/ac
 export class MyMountsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   currentLang: string;
-  loading = false;
-  error: string;
   keys = Object.keys;
+  mountLoading = false;
+  couplingLoading = false;
+  createCouplingLoading = false;
+  mountError: string;
+  couplingError: string;
+  createCouplingError: string;
+  globalError: string;
+  breedingTooltip: string;
 
-  filtersForm: FormGroup;
+  mountsFiltersForm: FormGroup;
+  couplingsFiltersForm: FormGroup;
   types: string[];
 
   mountGenderEnum = MountGenderEnum;
   mountSortFieldEnum = MountSortFieldEnum;
   sortOrderEnum = SortOrderEnum;
+  deleteTypeEnum = DeleteTypeEnum;
 
   mounts: MountResponseDto[] = new Array();
   currentColors: MountColorDto[];
   mountGenderCounts: MountGenderCountResponseDto[];
   groupedColorDtos: MountColorGroupedByResponseDto[];
+  couplings: CouplingResponseDto[] = new Array();
+  couplingMother: MountResponseDto;
+  couplingFather: MountResponseDto;
+  couplingChildName: string;
 
   constructor(
     private translateService: TranslateService,
     private mountsService: MountsService,
     private mountColorsService: MountColorsService,
     private accountsSettingsService: AccountsSettingsService,
+    private couplingsService: CouplingsService,
     private fb: FormBuilder,
     public dialog: MatDialog,
   ) {
     this.currentLang = translateService.currentLang;
     translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
 
-    //Initialize the accountSettings form
-    this.filtersForm = this.fb.group({
+    //Initialize the mountsFilters form
+    this.mountsFiltersForm = this.fb.group({
       name: [''],
       gender: [''],
       type: [''],
@@ -63,34 +85,62 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       sortField: [MountSortFieldEnum.Name],
       sortOrder: [SortOrderEnum.Asc],
     });
+
+    //Initialize the couplingsFiltersForm form
+    this.couplingsFiltersForm = this.fb.group({
+      fatherName: [''],
+      motherName: [''],
+      childName: [''],
+    });
   }
 
   async ngOnInit(): Promise<void> {
     try {
       this.mounts = await this.mountsService.getMountForUserId().toPromise();
+      this.couplings = await this.couplingsService.getCouplingsForUserId().toPromise();
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
       this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
     } catch (e) {
-      this.error = this.translateService.instant('error.unexpected');
+      this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
     this.setMountGenderCounts();
 
     //Listen on value changes on type to reset value of color and reset currentColors
-    this.filtersForm.get('type').valueChanges.subscribe(type => {
-      this.filtersForm.get('colorId').setValue('');
-      this.setCurrentColors(type);
+    this.mountsFiltersForm.get('type').valueChanges.subscribe(type => {
+      this.mountsFiltersForm.get('colorId').setValue('');
+      if (type) {
+        this.setCurrentColors(type);
+      }
     });
+
+    //Listen on value changes to reset error message
+    this.mountsFiltersForm.valueChanges.subscribe(() => {
+      this.mountError = '';
+    });
+    this.couplingsFiltersForm.valueChanges.subscribe(() => {
+      this.couplingError = '';
+    });
+
+    this.breedingTooltip = this.translateService.instant('myMounts.breedingTooltip');
   }
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
 
-  isDisabled(): boolean {
-    return this.loading;
+  isMountButtonDisabled(): boolean {
+    return this.mountLoading;
   }
 
-  openPopup(mount?: MountResponseDto): void {
+  isCouplingButtonDisabled(): boolean {
+    return this.couplingLoading;
+  }
+
+  isCreateCouplingDisabled(): boolean {
+    return this.createCouplingLoading || !this.couplingChildName;
+  }
+
+  openMountPopup(mount?: MountResponseDto): void {
     //open popup for add or edit
     const dialogRef = this.dialog.open(AddOrUpdateMountPopupComponent, {
       id: 'mount-popup',
@@ -103,10 +153,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       autoFocus: false,
     });
 
-    this.listenOnPopupClose(dialogRef);
+    this.listenOnMountPopupClose(dialogRef);
   }
 
-  listenOnPopupClose(dialogRef: MatDialogRef<AddOrUpdateMountPopupComponent>): void {
+  listenOnMountPopupClose(dialogRef: MatDialogRef<AddOrUpdateMountPopupComponent>): void {
     dialogRef.afterClosed().subscribe((mountResponse: MountResponseDto) => {
       if (mountResponse) {
         let index = this.mounts.findIndex(m => m._id === mountResponse._id);
@@ -123,16 +173,19 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     });
   }
 
-  confirmDelete(mountId: string): void {
+  confirmDelete(id: string, deleteType: DeleteTypeEnum): void {
     Swal.fire({
-      title: this.translateService.instant('myMounts.deleteConfirmation'),
+      title:
+        deleteType === DeleteTypeEnum.Mount
+          ? this.translateService.instant('myMounts.mountDeleteConfirmation')
+          : this.translateService.instant('myMounts.couplingDeleteConfirmation'),
       showDenyButton: true,
       confirmButtonText: this.translateService.instant('button.delete'),
       denyButtonText: this.translateService.instant('button.dontDelete'),
       reverseButtons: true,
     }).then(result => {
       if (result.isConfirmed) {
-        this.deleteMount(mountId);
+        deleteType === DeleteTypeEnum.Mount ? this.deleteMount(id) : this.deleteCoupling(id);
       }
     });
   }
@@ -147,15 +200,29 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.setMountGenderCounts();
         },
         () => {
-          this.error = this.translateService.instant('error.unexpected');
+          this.mountError = this.translateService.instant('error.unexpected');
         },
       ),
     );
   }
 
-  submit() {
-    this.loading = true;
-    const filtersFormValue = this.filtersForm.value;
+  deleteCoupling(couplingId: string): void {
+    this.subscription.add(
+      this.couplingsService.deleteCoupling(couplingId).subscribe(
+        () => {
+          //Remove mount from the lists
+          this.couplings = this.couplings.filter(m => m._id !== couplingId);
+        },
+        () => {
+          this.mountError = this.translateService.instant('error.unexpected');
+        },
+      ),
+    );
+  }
+
+  filterMounts() {
+    this.mountLoading = true;
+    const filtersFormValue = this.mountsFiltersForm.value;
     let searchMountDto = new SearchMountDto();
 
     if (filtersFormValue.name) {
@@ -181,21 +248,125 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       this.mountsService.getMountForUserId(searchMountDto).subscribe(
         mounts => {
           this.mounts = mounts;
-          this.loading = false;
+          this.mountLoading = false;
         },
         () => {
-          this.error = this.translateService.instant('error.unexpected');
-          this.loading = false;
+          this.mountError = this.translateService.instant('error.unexpected');
+          this.mountLoading = false;
         },
       ),
     );
+  }
+
+  filterCouplings() {
+    this.couplingLoading = true;
+    const filtersFormValue = this.couplingsFiltersForm.value;
+    let searchCouplingDto = new SearchCouplingDto();
+
+    if (filtersFormValue.fatherName) {
+      searchCouplingDto.fatherName = filtersFormValue.fatherName;
+    }
+    if (filtersFormValue.motherName) {
+      searchCouplingDto.motherName = filtersFormValue.motherName;
+    }
+    if (filtersFormValue.childName) {
+      searchCouplingDto.childName = filtersFormValue.childName;
+    }
+
+    this.subscription.add(
+      this.couplingsService.getCouplingsForUserId(searchCouplingDto).subscribe(
+        couplings => {
+          this.couplings = couplings;
+          this.couplingLoading = false;
+        },
+        () => {
+          this.couplingError = this.translateService.instant('error.unexpected');
+          this.couplingLoading = false;
+        },
+      ),
+    );
+  }
+
+  addToBreeding(mount: MountResponseDto) {
+    //Reset error message
+    this.createCouplingError = null;
+
+    if (mount.gender === MountGenderEnum.Male) {
+      //If already a father in coupling, show error
+      if (this.couplingFather) {
+        this.createCouplingError = this.translateService.instant('error.sameGender');
+      } else {
+        //If a mother is selected and type is not the same, show error
+        if (this.couplingMother && this.couplingMother.type !== mount.type) {
+          this.createCouplingError = this.translateService.instant('error.notSameType');
+        } else {
+          this.couplingFather = mount;
+        }
+      }
+    } else {
+      //If already a mother in coupling, show error
+      if (this.couplingMother) {
+        this.createCouplingError = this.translateService.instant('error.sameGender');
+      } else {
+        //If a father is selected and type is not the same, show error
+        if (this.couplingFather && this.couplingFather.type !== mount.type) {
+          this.createCouplingError = this.translateService.instant('error.notSameType');
+        } else {
+          this.couplingMother = mount;
+        }
+      }
+    }
+
+    //If both parents selected, set childName
+    if (this.couplingFather && this.couplingMother) {
+      this.couplingChildName = this.couplingMother.name + this.couplingFather.name;
+    }
+  }
+
+  createCoupling() {
+    this.createCouplingLoading = true;
+    let createCouplingDto = new CreateCouplingDto();
+    createCouplingDto.childName = this.couplingChildName;
+    createCouplingDto.fatherId = this.couplingFather._id;
+    createCouplingDto.motherId = this.couplingMother._id;
+
+    this.subscription.add(
+      this.couplingsService.createCoupling(createCouplingDto).subscribe(
+        coupling => {
+          this.couplings.push(coupling);
+          this.createCouplingLoading = false;
+          //Reset coupling info
+          this.couplingMother = null;
+          this.couplingFather = null;
+          this.couplingChildName = null;
+        },
+        () => {
+          this.createCouplingError = this.translateService.instant('error.unexpected');
+          this.createCouplingLoading = false;
+        },
+      ),
+    );
+  }
+
+  deleteCouplingMother() {
+    this.couplingMother = null;
+    this.couplingChildName = this.couplingChildName = null;
+    //Reset error message
+    this.createCouplingError = null;
+  }
+
+  deleteCouplingFather() {
+    this.couplingFather = null;
+    this.couplingChildName = this.couplingChildName = null;
+    //Reset error message
+    this.createCouplingError = null;
   }
 
   private async setMountGenderCounts() {
     try {
       this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
     } catch (e) {
-      this.error = this.translateService.instant('error.unexpected');
+      this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
   }
 

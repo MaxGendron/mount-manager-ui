@@ -10,7 +10,10 @@
     "emailExist": "The specified email adress already exist",
     "usernameExist": "The specified username already exist",
     "unexpectedUpdate": "An unexpected error occured when updating \"{{field}}\", please try again",
-    "updateEmpty": "Cannot update this field with empty value"
+    "updateEmpty": "Cannot update this field with empty value",
+    "unexpectedPleaseRefresh": "An unexpected error occured, please refresh the page",
+    "sameGender": "Cannot add the same gender",
+    "notSameType": "Mount types aren't the same"
   },
   "button": {
     "login": "Login",
@@ -40,7 +43,10 @@
     "mountType": "Mount type",
     "color": "Color",
     "sortField": "Sort by",
-    "sortOrder": "Sort order"
+    "sortOrder": "Sort order",
+    "fatherName": "Nom du père",
+    "motherName": "Nom de la mère",
+    "childName": "Nom de l'enfant"
   },
   "login": {
     "title": "Login",
@@ -81,8 +87,12 @@
   },
   "myMounts": {
     "title": "My mounts",
-    "deleteConfirmation": "Do you want to delete that mount?",
-    "numberMount": "Number of mounts"
+    "mountDeleteConfirmation": "Do you want to delete this mount?",
+    "couplingDeleteConfirmation": "Do you want to delete this coupling?",
+    "numberMount": "Number of mounts",
+    "couplingTitle": "My couplings",
+    "breedingTooltip": "Mate this mount",
+    "createCouplingTitle": "Create a coupling"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",

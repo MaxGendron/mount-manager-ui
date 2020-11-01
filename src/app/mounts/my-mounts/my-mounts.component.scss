@@ -1,14 +1,21 @@
 @import '~@angular/material/theming';
 @import '../../../main_theme.scss';
 
-#card {
-  margin: auto;
-  width: 50%;
+#main-content {
   margin-top: 32px;
+
+  > div {
+    @media screen and (max-width: 1200px) {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+#mounts {
   padding: 16px 0 !important;
 }
 
-#card-header {
+.header {
   padding-left: 16px;
 }
 
@@ -20,7 +27,7 @@
 
 #add-button {
   position: absolute;
-  right: 8px;
+  right: 12px;
 }
 
 .img {
@@ -35,10 +42,6 @@
   padding-left: 8px;
   padding-top: 8px;
   position: relative;
-}
-
-.name {
-  margin: 0;
 }
 
 .color-type {
@@ -57,7 +60,7 @@
     cursor: pointer;
   }
 
-  .edit {
+  .action {
     margin-right: 4px;
 
     &:hover {
@@ -74,15 +77,6 @@
   }
 }
 
-#stats {
-  right: 75%;
-  position: absolute;
-  top: 32px;
-  margin-right: 32px;
-  padding-bottom: 0;
-  width: 200px;
-}
-
 .mat-subheader {
   height: 24px !important;
   padding-left: 0;
@@ -90,15 +84,6 @@
 
 mat-list-item {
   height: 30px !important;
-}
-
-//Tried using :last-child selector, didn't work
-#last-item {
-  margin-bottom: 8px;
-}
-
-.title {
-  padding-top: 8px;
 }
 
 //Override color for gender icon
@@ -119,7 +104,7 @@ mat-list-item {
   margin-right: 0 !important;
 }
 
-#filters {
+#mounts-filters {
   > div:first-child {
     padding-left: 0;
     padding-right: 0;
@@ -136,9 +121,68 @@ mat-list-item {
     mat-form-field {
       border-left: 1px solid rgba(255, 255, 255, 0.12);
     }
+  }
+}
 
-    > div:last-child {
-      padding-bottom: 8px;
+#couplings {
+  padding: 16px 0 !important;
+}
+
+.long-name {
+  @media screen and (max-width: 1600px) {
+    display: none;
+  }
+}
+
+.medium-name {
+  @media screen and (min-width: 1601px) {
+    display: none;
+  }
+  @media screen and (max-width: 1399px) {
+    display: none;
+  }
+}
+
+.short-name {
+  @media screen and (min-width: 1400px) {
+    display: none;
+  }
+}
+
+#add-coupling-modal {
+  position: absolute;
+  bottom: 0;
+  right: 32px;
+  z-index: 100;
+}
+
+/* treeflex stuffs */
+.tf-ancestor-tree {
+  position: relative;
+}
+.tf-ancestor-tree > ul {
+  transform: rotateX(180deg);
+}
+.tf-ancestor-tree li ul {
+  margin-bottom: 1em;
+}
+
+.tf-height {
+  height: 47px;
+}
+
+.node-text {
+  display: inline-block;
+  transform: rotateX(180deg);
+
+  .delete {
+    color: $warning;
+    cursor: pointer;
+    top: 5px;
+    position: relative;
+
+    &:hover {
+      color: $warning-light;
     }
   }
 }

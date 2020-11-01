@@ -13,6 +13,7 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 
 //Modules for all the imports related to angular material
 const angularMaterial = [
@@ -30,6 +31,7 @@ const angularMaterial = [
   MatListModule,
   MatRippleModule,
   MatSelectModule,
+  MatTooltipModule,
 ];
 
 @NgModule({
