@@ -4,4 +4,5 @@ export class CreateMountDto {
   name: string;
   colorId: string;
   gender: MountGenderEnum;
+  maxNumberOfChild: number;
 }

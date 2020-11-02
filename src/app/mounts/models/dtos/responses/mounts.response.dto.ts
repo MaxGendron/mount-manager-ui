@@ -10,4 +10,6 @@ export interface MountResponseDto {
   userId: string;
   colorId: string;
   type: MountTypeEnum;
+  maxNumberOfChild: number;
+  numberOfChild: number;
 }

@@ -13,7 +13,9 @@
     "updateEmpty": "Cannot update this field with empty value",
     "unexpectedPleaseRefresh": "An unexpected error occured, please refresh the page",
     "sameGender": "Cannot add the same gender",
-    "notSameType": "Mount types aren't the same"
+    "notSameType": "Mount types aren't the same",
+    "valueBetween": "Value must be between {{min}} and {{max}}",
+    "maxNumberOfChild": "One mount has hit the limit of the number children."
   },
   "button": {
     "login": "Login",
@@ -46,7 +48,8 @@
     "sortOrder": "Sort order",
     "fatherName": "Nom du père",
     "motherName": "Nom de la mère",
-    "childName": "Nom de l'enfant"
+    "childName": "Nom de l'enfant",
+    "maxNumberOfChild": "Max number of child"
   },
   "login": {
     "title": "Login",

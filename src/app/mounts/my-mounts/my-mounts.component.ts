@@ -180,11 +180,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           ? this.translateService.instant('myMounts.mountDeleteConfirmation')
           : this.translateService.instant('myMounts.couplingDeleteConfirmation'),
       showDenyButton: true,
-      confirmButtonText: this.translateService.instant('button.delete'),
-      denyButtonText: this.translateService.instant('button.dontDelete'),
-      reverseButtons: true,
+      confirmButtonText: this.translateService.instant('button.dontDelete'),
+      denyButtonText: this.translateService.instant('button.delete'),
     }).then(result => {
-      if (result.isConfirmed) {
+      if (result.isDenied) {
         deleteType === DeleteTypeEnum.Mount ? this.deleteMount(id) : this.deleteCoupling(id);
       }
     });
@@ -335,13 +334,20 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         coupling => {
           this.couplings.push(coupling);
           this.createCouplingLoading = false;
+          //Increment numberOfChild
+          this.couplingMother.numberOfChild = ++this.couplingMother.numberOfChild;
+          this.couplingFather.numberOfChild = ++this.couplingFather.numberOfChild;
           //Reset coupling info
           this.couplingMother = null;
           this.couplingFather = null;
           this.couplingChildName = null;
         },
-        () => {
-          this.createCouplingError = this.translateService.instant('error.unexpected');
+        error => {
+          if (error.name === 'CannotInsert') {
+            this.createCouplingError = this.translateService.instant('error.maxNumberOfChild');
+          } else {
+            this.createCouplingError = this.translateService.instant('error.unexpected');
+          }
           this.createCouplingLoading = false;
         },
       ),

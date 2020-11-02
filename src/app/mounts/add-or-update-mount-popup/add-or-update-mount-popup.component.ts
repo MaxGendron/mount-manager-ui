@@ -3,7 +3,7 @@ import { UpdateMountDto } from './../models/dtos/update-mount.dto';
 import { MountsService } from './../mounts.service';
 import { CreateMountDto } from './../models/dtos/create-mount.dto';
 import { AccountsSettingsService } from './../../my-account/accounts-settings/accounts-settings.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
 import { MountGenderEnum } from '../models/enum/mount-gender.enum';
 import { MountColorGroupedByResponseDto } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
+import { MountTypeEnum } from '../models/enum/mount-type.enum';
 
 @Component({
   selector: 'app-add-or-update-mount-popup',
@@ -28,6 +29,8 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   buttonText: string;
   types: string[];
   mountForm: FormGroup;
+  maxNumberOfChildForMountType: number;
+  minNumberOfChildForMountType: number;
 
   genders = MountGenderEnum;
   baseMount: MountResponseDto;
@@ -54,6 +57,8 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       this.baseMount = data.mount;
       this.title = translateService.instant('addOrUpdateMount.titleUpdate', { name: data.mount.name });
       this.buttonText = translateService.instant('button.edit');
+      this.maxNumberOfChildForMountType = this.getMaxNumberOfChildForMountType(data.mount.type);
+      this.minNumberOfChildForMountType = this.getMinNumberOfChildForMountType(data.mount.type);
     } else {
       this.title = translateService.instant('addOrUpdateMount.titleCreate');
       this.buttonText = translateService.instant('button.create');
@@ -65,11 +70,19 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       gender: [data.mount?.gender, Validators.required],
       type: [data.mount?.type, Validators.required],
       colorId: [data.mount?.colorId, Validators.required],
+      maxNumberOfChild: [
+        data.mount?.maxNumberOfChild,
+        Validators.compose([
+          Validators.required,
+          (control: AbstractControl) => Validators.max(this.maxNumberOfChildForMountType)(control),
+          (control: AbstractControl) => Validators.min(this.minNumberOfChildForMountType)(control),
+        ]),
+      ],
     });
   }
 
-  isDisabled(): boolean {
-    return !this.mountForm.valid || this.loading;
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
   }
 
   async ngOnInit(): Promise<void> {
@@ -87,11 +100,16 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
     this.mountForm.get('type').valueChanges.subscribe(type => {
       this.mountForm.get('colorId').setValue('');
       this.setCurrentColors(type);
+
+      const maxNumber = this.getMaxNumberOfChildForMountType(type);
+      this.maxNumberOfChildForMountType = maxNumber;
+      this.minNumberOfChildForMountType = this.getMinNumberOfChildForMountType(type);
+      this.mountForm.get('maxNumberOfChild').setValue(maxNumber);
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
+  isDisabled(): boolean {
+    return !this.mountForm.valid || this.loading;
   }
 
   submit(): void {
@@ -106,9 +124,11 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       updateMountDto.name = mountFormValue.name === baseMount.name ? null : mountFormValue.name;
       updateMountDto.gender = mountFormValue.gender === baseMount.gender ? null : mountFormValue.gender;
       updateMountDto.colorId = mountFormValue.colorId === baseMount.colorId ? null : mountFormValue.colorId;
+      updateMountDto.maxNumberOfChild =
+        mountFormValue.maxNumberOfChild === baseMount.maxNumberOfChild ? null : mountFormValue.maxNumberOfChild;
 
       //Only send update if something is updated
-      if (updateMountDto.name || updateMountDto.gender || updateMountDto.colorId) {
+      if (updateMountDto.name || updateMountDto.gender || updateMountDto.colorId || updateMountDto.maxNumberOfChild) {
         this.subscription.add(
           this.mountsService.updateMount(updateMountDto, baseMount._id).subscribe(
             mount => {
@@ -128,6 +148,8 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       createMountDto.name = mountFormValue.name;
       createMountDto.gender = mountFormValue.gender;
       createMountDto.colorId = mountFormValue.colorId;
+      createMountDto.maxNumberOfChild = mountFormValue.maxNumberOfChild;
+
       this.subscription.add(
         this.mountsService.createMount(createMountDto).subscribe(
           mount => {
@@ -153,5 +175,29 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
   private setCurrentColors(type: string): void {
     this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors;
+  }
+
+  //Given the mountType, return the max number of child this mount can have
+  private getMaxNumberOfChildForMountType(mountType: MountTypeEnum): number {
+    switch (mountType) {
+      case MountTypeEnum.Dragodinde:
+        return 5;
+      case MountTypeEnum.Muldo:
+        return 4;
+      case MountTypeEnum.Volkorne:
+        return 2;
+    }
+  }
+
+  //Given the mountType, return the min number of child this mount can have
+  private getMinNumberOfChildForMountType(mountType: MountTypeEnum): number {
+    switch (mountType) {
+      case MountTypeEnum.Dragodinde:
+        return 5;
+      case MountTypeEnum.Muldo:
+        return 2;
+      case MountTypeEnum.Volkorne:
+        return 2;
+    }
   }
 }
