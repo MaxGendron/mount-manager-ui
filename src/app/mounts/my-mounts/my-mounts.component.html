@@ -133,6 +133,7 @@
                 <h3 class="m-0">{{ mount.name }}</h3>
                 <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
                 <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
+                <p>{{ mount.numberOfChild }}/{{ mount.maxNumberOfChild }}</p>
                 <div class="item-actions">
                   <mat-icon
                     class="action"

@@ -2,50 +2,78 @@
   <h1 mat-dialog-title class="primary font-weight-bold">
     {{ title }}
   </h1>
-  <div mat-dialog-content class="row">
-    <mat-form-field appearance="standard" class="col-lg-6">
-      <mat-label>{{ 'form.name' | translate }}</mat-label>
-      <input formControlName="name" type="text" name="name" required matInput maxlength="16" />
-      <mat-error *ngIf="mountForm.get('name').hasError('required')">
-        {{ 'error.required' | translate: { input: 'form.username' | translate } }}
-      </mat-error>
-    </mat-form-field>
+  <div mat-dialog-content>
+    <div class="row">
+      <mat-form-field appearance="standard" class="col-lg-6">
+        <mat-label>{{ 'form.name' | translate }}</mat-label>
+        <input formControlName="name" type="text" name="name" required matInput maxlength="16" />
+        <mat-error *ngIf="mountForm.get('name').hasError('required')">
+          {{ 'error.required' | translate: { input: 'form.name' | translate } }}
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="standard" class="col-lg-6">
-      <mat-label>{{ 'form.gender' | translate }}</mat-label>
-      <mat-select formControlName="gender" name="gender" required>
-        <mat-option *ngFor="let gender of keys(genders)" [value]="genders[gender]">
-          {{ 'mountGenderEnum.' + gender | translate }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="mountForm.get('gender').hasError('required')">
-        {{ 'error.required' | translate: { input: 'form.mountType' | translate } }}
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="standard" class="col-lg-6">
+        <mat-label>{{ 'form.gender' | translate }}</mat-label>
+        <mat-select formControlName="gender" name="gender" required>
+          <mat-option *ngFor="let gender of keys(genders)" [value]="genders[gender]">
+            {{ 'mountGenderEnum.' + gender | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="mountForm.get('gender').hasError('required')">
+          {{ 'error.required' | translate: { input: 'form.gender' | translate } }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="standard" class="col-lg-6">
+        <mat-label>{{ 'form.mountType' | translate }}</mat-label>
+        <mat-select formControlName="type" name="type" required>
+          <mat-option *ngFor="let type of types" [value]="type">
+            {{ 'mountTypeEnum.' + type | translate }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="mountForm.get('type').hasError('required')">
+          {{ 'error.required' | translate: { input: 'form.mountType' | translate } }}
+        </mat-error>
+      </mat-form-field>
 
-    <mat-form-field appearance="standard" class="col-lg-6">
-      <mat-label>{{ 'form.mountType' | translate }}</mat-label>
-      <mat-select formControlName="type" name="type" required>
-        <mat-option *ngFor="let type of types" [value]="type">
-          {{ 'mountTypeEnum.' + type | translate }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="mountForm.get('type').hasError('required')">
-        {{ 'error.required' | translate: { input: 'form.mountType' | translate } }}
-      </mat-error>
-    </mat-form-field>
-
-    <mat-form-field appearance="standard" class="col-lg-6" *ngIf="mountForm.get('type').value">
-      <mat-label>{{ 'form.color' | translate }}</mat-label>
-      <mat-select formControlName="colorId" name="colorId" required>
-        <mat-option *ngFor="let c of currentColors" [value]="c._id">
-          {{ c.color[currentLang] }}
-        </mat-option>
-      </mat-select>
-      <mat-error *ngIf="mountForm.get('colorId').hasError('required')">
-        {{ 'error.required' | translate: { input: 'form.color' | translate } }}
-      </mat-error>
-    </mat-form-field>
+      <mat-form-field appearance="standard" class="col-lg-6" *ngIf="mountForm.get('type').value">
+        <mat-label>{{ 'form.color' | translate }}</mat-label>
+        <mat-select formControlName="colorId" name="colorId" required>
+          <mat-option *ngFor="let c of currentColors" [value]="c._id">
+            {{ c.color[currentLang] }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="mountForm.get('colorId').hasError('required')">
+          {{ 'error.required' | translate: { input: 'form.color' | translate } }}
+        </mat-error>
+      </mat-form-field>
+    </div>
+    <div class="row">
+      <mat-form-field appearance="standard" class="col-lg-6" *ngIf="mountForm.get('type').value">
+        <mat-label>{{ 'form.maxNumberOfChild' | translate }}</mat-label>
+        <input
+          formControlName="maxNumberOfChild"
+          type="number"
+          name="maxNumberOfChild"
+          required
+          matInput
+          [max]="this.maxNumberOfChildForMountType"
+          [min]="this.minNumberOfChildForMountType"
+        />
+        <mat-error *ngIf="mountForm.get('maxNumberOfChild').hasError('required')">
+          {{ 'error.required' | translate: { input: 'form.maxNumberOfChild' | translate } }}
+        </mat-error>
+        <mat-error
+          *ngIf="mountForm.get('maxNumberOfChild').hasError('min') || mountForm.get('maxNumberOfChild').hasError('max')"
+        >
+          {{
+            'error.valueBetween'
+              | translate: { min: this.minNumberOfChildForMountType, max: this.maxNumberOfChildForMountType }
+          }}
+        </mat-error>
+      </mat-form-field>
+    </div>
   </div>
 
   <div *ngIf="error">

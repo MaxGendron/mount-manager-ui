@@ -4,4 +4,5 @@ export class UpdateMountDto {
   name?: string;
   colorId?: string;
   gender?: MountGenderEnum;
+  maxNumberOfChild?: number;
 }
