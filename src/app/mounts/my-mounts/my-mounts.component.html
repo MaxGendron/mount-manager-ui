@@ -145,7 +145,8 @@
                   <mat-icon class="action" (click)="openMountPopup(mount)">create</mat-icon>
                   <mat-icon class="delete" (click)="confirmDelete(mount._id, deleteTypeEnum.Mount)">delete</mat-icon>
                 </div>
-                <!--Only have 2 lang, TODO when more lang added-->
+                <!--Only have 2 lang, TODO when more lang added
+                Checking for lang here to display text differently based on lang-->
                 <span class="color-type">
                   <span *ngIf="currentLang === 'en'">{{ mount.color.en }}</span>
                   {{ 'mountTypeEnum.' + mount.type | translate }}
