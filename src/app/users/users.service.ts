@@ -37,4 +37,8 @@ export class UsersService {
   updateUser(updateUserDto: UpdateUserDto, userId: string): Observable<UserResponseDto> {
     return this.http.put<UserResponseDto>(`${this.usersEndpoint}${userId}`, updateUserDto);
   }
+
+  validateJwtToken(): Observable<string>{
+    return this.http.get<string>(`${this.usersEndpoint}validateJwtToken`)
+  }
 }
