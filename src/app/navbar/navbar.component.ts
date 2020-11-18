@@ -5,6 +5,11 @@ import { LoginDialogComponent } from '../users/login-dialog/login-dialog.compone
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 
+export interface Lang {
+  name: string;
+  displayName: string;
+}
+
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
@@ -12,6 +17,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   connectedUsername: string;
+  currentLang: string;
+  langs: Lang[]
   private subscription: Subscription = new Subscription();
   color: string;
   constructor(public authService: AuthService, public dialog: MatDialog, private translateService: TranslateService) {}
@@ -26,6 +33,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
       }),
     );
+    this.currentLang = this.translateService.currentLang;
+    //TODO when more lang added
+    this.langs = [
+      { name: 'fr', displayName: 'Français' },
+      { name: 'en', displayName: "English" }
+    ]
   }
 
   ngOnDestroy(): void {
@@ -47,12 +60,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   //Only have 2 lang
   //TODO when more lang added
   switchLang(): void {
-    if (this.translateService.currentLang === 'fr') {
-      this.translateService.use('en');
-      localStorage.setItem('currentLang', JSON.stringify('en'));
-    } else {
-      this.translateService.use('fr');
-      localStorage.setItem('currentLang', JSON.stringify('fr'));
-    }
+    this.translateService.use(this.currentLang);
+    localStorage.setItem('currentLang', JSON.stringify(this.currentLang));
   }
 }

@@ -6,9 +6,13 @@
     Mount Manager
   </a>
   <span class="fill-remaining-space"></span>
-  <span id="switchlang" (click)="switchLang()">
-    {{ 'button.lang' | translate }}
-  </span>
+  <mat-form-field appearance="none" id="lang-selector">
+    <mat-select [(value)]="currentLang">
+      <mat-option (click)="switchLang()" [value]="lang.name" *ngFor="let lang of langs">
+        {{lang.displayName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
 
   <ng-container *ngIf="!connectedUsername; then notConnected; else connected"></ng-container>
 
@@ -32,7 +36,7 @@
 
 <mat-sidenav-container hasBackdrop="false">
   <mat-sidenav #sidenav mode="over">
-    <div *ngIf="connectedUsername">
+    <div>
       <mat-list>
         <mat-list-item matRipple [routerLink]="['my-account']" [matRippleColor]="color" (click)="sidenav.close()">
           <mat-icon>account_circle</mat-icon>
