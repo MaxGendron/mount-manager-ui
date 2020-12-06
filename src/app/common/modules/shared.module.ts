@@ -12,6 +12,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AngularMaterialModule } from './angular-material.module';
 import { MyAccountComponent } from '../../my-account/my-account.component';
+import { BulkAddComponent } from 'src/app/mounts/bulk-add/bulk-add.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -21,6 +22,7 @@ const appRoutes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard] },
   { path: 'my-mounts', component: MyMountsComponent, canActivate: [AuthGuard] },
+  { path: 'bulk-add', component: BulkAddComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

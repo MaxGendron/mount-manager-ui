@@ -27,7 +27,9 @@
     "edit": "Modifier",
     "delete": "Supprimer",
     "dontDelete": "Ne pas supprimer",
-    "filter": "Filtrer"
+    "filter": "Filtrer",
+    "yes": "Oui",
+    "no": "Non"
   },
   "form": {
     "username": "Nom de compte",
@@ -56,7 +58,8 @@
   },
   "navbar": {
     "account": "Mon compte",
-    "mounts": "Mes montures"
+    "mounts": "Mes montures",
+    "bulkAdd": "Ajouter des montures"
   },
   "register": {
     "title": "Inscription"
@@ -99,5 +102,11 @@
   "addOrUpdateMount": {
     "titleUpdate": "Modifier {{name}}",
     "titleCreate": "Ajouter une nouvelle monture"
+  },
+  "bulkAdd": {
+    "title": "Ajouter des mountures",
+    "subtitle": "Utilisez cette page pour créer plusieurs montures en même temps",
+    "addRow": "Ajouter une rangée",
+    "success": "Les montures ont été créées, voulez-vous aller à la page \"Mes montures\"? Sinon, vous resterez sur celle-ci."
   }
 }

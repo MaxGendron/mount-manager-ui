@@ -57,8 +57,8 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       this.baseMount = data.mount;
       this.title = translateService.instant('addOrUpdateMount.titleUpdate', { name: data.mount.name });
       this.buttonText = translateService.instant('button.edit');
-      this.maxNumberOfChildForMountType = this.getMaxNumberOfChildForMountType(data.mount.type);
-      this.minNumberOfChildForMountType = this.getMinNumberOfChildForMountType(data.mount.type);
+      this.maxNumberOfChildForMountType = this.mountsService.getMaxNumberOfChildForMountType(data.mount.type);
+      this.minNumberOfChildForMountType = this.mountsService.getMinNumberOfChildForMountType(data.mount.type);
     } else {
       this.title = translateService.instant('addOrUpdateMount.titleCreate');
       this.buttonText = translateService.instant('button.create');
@@ -101,9 +101,9 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       this.mountForm.get('colorId').setValue('');
       this.setCurrentColors(type);
 
-      const maxNumber = this.getMaxNumberOfChildForMountType(type);
+      const maxNumber = this.mountsService.getMaxNumberOfChildForMountType(type);
       this.maxNumberOfChildForMountType = maxNumber;
-      this.minNumberOfChildForMountType = this.getMinNumberOfChildForMountType(type);
+      this.minNumberOfChildForMountType = this.mountsService.getMinNumberOfChildForMountType(type);
       this.mountForm.get('maxNumberOfChild').setValue(maxNumber);
     });
   }
@@ -175,29 +175,5 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
   private setCurrentColors(type: string): void {
     this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors;
-  }
-
-  //Given the mountType, return the max number of child this mount can have
-  private getMaxNumberOfChildForMountType(mountType: MountTypeEnum): number {
-    switch (mountType) {
-      case MountTypeEnum.Dragodinde:
-        return 5;
-      case MountTypeEnum.Muldo:
-        return 4;
-      case MountTypeEnum.Volkorne:
-        return 2;
-    }
-  }
-
-  //Given the mountType, return the min number of child this mount can have
-  private getMinNumberOfChildForMountType(mountType: MountTypeEnum): number {
-    switch (mountType) {
-      case MountTypeEnum.Dragodinde:
-        return 5;
-      case MountTypeEnum.Muldo:
-        return 2;
-      case MountTypeEnum.Volkorne:
-        return 2;
-    }
   }
 }

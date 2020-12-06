@@ -48,6 +48,11 @@
           <span>{{ 'navbar.mounts' | translate }}</span>
         </mat-list-item>
         <mat-divider></mat-divider>
+        <mat-list-item matRipple [routerLink]="['bulk-add']" [matRippleColor]="color" (click)="sidenav.close()">
+          <mat-icon>add</mat-icon>
+          <span>{{ 'navbar.bulkAdd' | translate }}</span>
+        </mat-list-item>
+        <mat-divider></mat-divider>
       </mat-list>
     </div>
   </mat-sidenav>
