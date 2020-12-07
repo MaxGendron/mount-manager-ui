@@ -1,0 +1,119 @@
+<div id="main-content">
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>
+        <h1 class="card-title">{{ 'bulkAdd.title' | translate}}</h1>
+        <div id="add-button">
+          <button color="accent" mat-raised-button (click)="addItemToFormArray()">
+            {{ 'bulkAdd.addRow' | translate}}
+          </button>
+        </div>
+      </mat-card-title>
+      <mat-card-subtitle>
+        <p>{{ 'bulkAdd.subtitle' | translate}}</p>
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <form *ngFor="let mountForm of mounts.controls; let i = index" [formGroup]="mountForm">
+        <div class="row pb-2">
+          <mat-form-field appearance="standard" class="col-lg-2">
+            <mat-label>{{ 'form.name' | translate }}</mat-label>
+            <input formControlName="name" type="text" name="name" required matInput maxlength="16" />
+            <mat-error *ngIf="mountForm.get('name').hasError('required')">
+              {{ 'error.required' | translate: { input: 'form.name' | translate } }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" class="col-lg-2">
+            <mat-label>{{ 'form.gender' | translate }}</mat-label>
+            <mat-select formControlName="gender" name="gender" required>
+              <mat-option *ngFor="let gender of keys(genders)" [value]="genders[gender]">
+                {{ 'mountGenderEnum.' + gender | translate }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="mountForm.get('gender').hasError('required')">
+              {{ 'error.required' | translate: { input: 'form.gender' | translate } }}
+            </mat-error>
+          </mat-form-field>
+
+          <div formGroupName="typeGroup" class="col-lg-2 row" id="type-group">
+            <mat-form-field appearance="standard" class="col-lg-12">
+              <mat-label>{{ 'form.mountType' | translate }}</mat-label>
+              <mat-select formControlName="type" name="type" required>
+                <mat-option *ngFor="let type of types" [value]="type">
+                  {{ 'mountTypeEnum.' + type | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-error
+                *ngIf="
+                  mountForm
+                    .get('typeGroup')
+                    .get('type')
+                    .hasError('required')
+                "
+              >
+                {{ 'error.required' | translate: { input: 'form.mountType' | translate } }}
+              </mat-error>
+            </mat-form-field>
+
+            <!-- Hidden input for index -->
+            <input formControlName="index" hidden readonly />
+          </div>
+
+          <mat-form-field appearance="standard" class="col-lg-3" *ngIf="mountForm.get('typeGroup').get('type').value">
+            <mat-label>{{ 'form.color' | translate }}</mat-label>
+            <mat-select formControlName="colorId" name="colorId" required>
+              <mat-option *ngFor="let c of currentColors[i]" [value]="c._id">
+                {{ c.color[currentLang] }}
+              </mat-option>
+            </mat-select>
+            <mat-error *ngIf="mountForm.get('colorId').hasError('required')">
+              {{ 'error.required' | translate: { input: 'form.color' | translate } }}
+            </mat-error>
+          </mat-form-field>
+
+          <mat-form-field appearance="standard" class="col-lg-2" *ngIf="mountForm.get('typeGroup').get('type').value">
+            <mat-label>{{ 'form.maxNumberOfChild' | translate }}</mat-label>
+            <input
+              formControlName="maxNumberOfChild"
+              type="number"
+              name="maxNumberOfChild"
+              required
+              matInput
+              [max]="this.maxNumberOfChildForMountType[i]"
+              [min]="this.minNumberOfChildForMountType[i]"
+            />
+            <mat-error *ngIf="mountForm.get('maxNumberOfChild').hasError('required')">
+              {{ 'error.required' | translate: { input: 'form.maxNumberOfChild' | translate } }}
+            </mat-error>
+            <mat-error
+              *ngIf="
+                mountForm.get('maxNumberOfChild').hasError('min') || mountForm.get('maxNumberOfChild').hasError('max')
+              "
+            >
+              {{
+                'error.valueBetween'
+                  | translate: { min: this.minNumberOfChildForMountType, max: this.maxNumberOfChildForMountType }
+              }}
+            </mat-error>
+          </mat-form-field>
+          <div class="item-actions col-lg-1">
+            <mat-icon class="delete" (click)="deleteRow(i)">delete</mat-icon>
+          </div>
+        </div>
+        <mat-divider></mat-divider>
+      </form>
+
+      <div *ngIf="error" class="mt-3">
+        <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
+      </div>
+
+      <div align="end" class="mt-3">
+        <button color="accent" mat-raised-button (click)="submit()" [disabled]="isDisabled()">
+          {{ 'button.create' | translate }}
+        </button>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</div>

@@ -1,0 +1,43 @@
+@import '~@angular/material/theming';
+@import '../../../main_theme.scss';
+
+#main-content {
+  width: 60%;
+  margin: 32px auto 16px auto;
+  > div {
+    @media screen and (max-width: 1200px) {
+      margin-bottom: 16px;
+    }
+  }
+}
+
+#add-button {
+  position: absolute;
+  right: 16px;
+  top: 16px;
+}
+
+#type-group {
+  margin: 0 !important;
+  > mat-form-field {
+    padding: 0 !important;
+  }
+}
+
+.item-actions {
+  position: relative;
+  top: 28px;
+  right: 8px;
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  .delete {
+    color: $warning;
+
+    &:hover {
+      color: $warning-light;
+    }
+  }
+}

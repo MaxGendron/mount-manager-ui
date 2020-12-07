@@ -48,7 +48,7 @@ mat-sidenav-container {
 }
 
 mat-sidenav {
-  width: 15%;
+  width: 250px;
 }
 
 mat-list {
@@ -73,4 +73,8 @@ mat-list-item {
 a {
   text-decoration: none;
   color: #ffffff;
+}
+
+#lang-selector {
+  width: 120px;
 }

@@ -74,7 +74,10 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
   ) {
     this.currentLang = translateService.currentLang;
-    translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
+    translateService.onLangChange.subscribe((e: LangChangeEvent) => {
+      this.currentLang = e.lang;
+      this.breedingTooltip = this.translateService.instant('myMounts.breedingTooltip');
+    });
 
     //Initialize the mountsFilters form
     this.mountsFiltersForm = this.fb.group({
@@ -120,8 +123,6 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.couplingsFiltersForm.valueChanges.subscribe(() => {
       this.couplingError = '';
     });
-
-    this.breedingTooltip = this.translateService.instant('myMounts.breedingTooltip');
   }
 
   ngOnDestroy(): void {

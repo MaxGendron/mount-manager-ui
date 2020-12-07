@@ -1,9 +1,15 @@
+import { UsersService } from './../users/users.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AuthService } from '../users/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../users/login-dialog/login-dialog.component';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+
+export interface Lang {
+  name: string;
+  displayName: string;
+}
 
 @Component({
   selector: 'app-navbar',
@@ -12,11 +18,27 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class NavbarComponent implements OnInit, OnDestroy {
   connectedUsername: string;
+  currentLang: string;
+  langs: Lang[]
   private subscription: Subscription = new Subscription();
   color: string;
-  constructor(public authService: AuthService, public dialog: MatDialog, private translateService: TranslateService) {}
+  constructor(public authService: AuthService,
+    public dialog: MatDialog,
+    private translateService: TranslateService,
+    private usersService: UsersService)
+  {}
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    /* Do a call to see if the token isn't expired.
+    If it is the jwtInterceptor will catch the error.
+    We do that here so on page that doesn't have call to the api we still
+    validate the user to update the navbar. */
+    try {
+      await this.usersService.validateJwtToken().toPromise();
+    } catch (error) {
+      //Do nothing on error
+    }
+
     this.subscription.add(
       this.authService.currentUser.subscribe(() => {
         if (this.authService.currentUserValue !== null) {
@@ -26,6 +48,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
         }
       }),
     );
+    this.currentLang = this.translateService.currentLang;
+    //TODO when more lang added
+    this.langs = [
+      { name: 'fr', displayName: 'Français' },
+      { name: 'en', displayName: "English" }
+    ]
   }
 
   ngOnDestroy(): void {
@@ -47,12 +75,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   //Only have 2 lang
   //TODO when more lang added
   switchLang(): void {
-    if (this.translateService.currentLang === 'fr') {
-      this.translateService.use('en');
-      localStorage.setItem('currentLang', JSON.stringify('en'));
-    } else {
-      this.translateService.use('fr');
-      localStorage.setItem('currentLang', JSON.stringify('fr'));
-    }
+    this.translateService.use(this.currentLang);
+    localStorage.setItem('currentLang', JSON.stringify(this.currentLang));
   }
 }
