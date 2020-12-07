@@ -88,7 +88,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       sortField: [MountSortFieldEnum.Name],
       sortOrder: [SortOrderEnum.Asc],
       hasMaxedChild: [false],
-      hasNoChild: [false]
+      hasNoChild: [false],
     });
 
     //Initialize the couplingsFiltersForm form

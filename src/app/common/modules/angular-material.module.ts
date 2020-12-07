@@ -33,7 +33,7 @@ const angularMaterial = [
   MatRippleModule,
   MatSelectModule,
   MatTooltipModule,
-  MatCheckboxModule
+  MatCheckboxModule,
 ];
 
 @NgModule({
