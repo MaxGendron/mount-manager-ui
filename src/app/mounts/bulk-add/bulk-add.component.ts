@@ -7,7 +7,10 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MountGenderEnum } from '../models/enum/mount-gender.enum';
-import { MountColorDto, MountColorGroupedByResponseDto } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
+import {
+  MountColorDto,
+  MountColorGroupedByResponseDto,
+} from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
 import { CreateMountDto } from '../models/dtos/create-mount.dto';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2/src/sweetalert2.js';
@@ -15,14 +18,14 @@ import Swal from 'sweetalert2/src/sweetalert2.js';
 @Component({
   selector: 'app-bulk-add',
   templateUrl: './bulk-add.component.html',
-  styleUrls: ['./bulk-add.component.scss']
+  styleUrls: ['./bulk-add.component.scss'],
 })
 export class BulkAddComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   currentLang: string;
   loading: boolean;
   error: string;
-  keys = Object.keys
+  keys = Object.keys;
 
   mounts = new FormArray([]);
   types: string[];
@@ -33,12 +36,14 @@ export class BulkAddComponent implements OnInit, OnDestroy {
   maxNumberOfChildForMountType: number[] = [];
   minNumberOfChildForMountType: number[] = [];
 
-  constructor(private translateService: TranslateService,
+  constructor(
+    private translateService: TranslateService,
     private mountsService: MountsService,
     private accountsSettingsService: AccountsSettingsService,
     private mountColorsService: MountColorsService,
     private router: Router,
-    private fb: FormBuilder) {
+    private fb: FormBuilder,
+  ) {
     this.currentLang = translateService.currentLang;
     translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
   }
@@ -71,19 +76,22 @@ export class BulkAddComponent implements OnInit, OnDestroy {
       gender: ['', Validators.required],
       typeGroup: this.fb.group({
         type: ['', Validators.required],
-        index: index
+        index: index,
       }),
       colorId: ['', Validators.required],
-      maxNumberOfChild: ['', Validators.compose([
-        Validators.required,
-        (control: AbstractControl) => Validators.max(this.maxNumberOfChildForMountType[index])(control),
-        (control: AbstractControl) => Validators.min(this.minNumberOfChildForMountType[index])(control),
-      ]),],
+      maxNumberOfChild: [
+        '',
+        Validators.compose([
+          Validators.required,
+          (control: AbstractControl) => Validators.max(this.maxNumberOfChildForMountType[index])(control),
+          (control: AbstractControl) => Validators.min(this.minNumberOfChildForMountType[index])(control),
+        ]),
+      ],
     });
 
     mountForm.get('typeGroup').valueChanges.subscribe(data => {
-      const type = data["type"];
-      const index = data["index"];
+      const type = data['type'];
+      const index = data['index'];
       const changedForm = this.mounts.controls[index];
 
       changedForm.get('colorId').setValue('');
@@ -105,7 +113,7 @@ export class BulkAddComponent implements OnInit, OnDestroy {
   submit(): void {
     this.loading = true;
     let createMountsDto: CreateMountsDto = new CreateMountsDto();
-    createMountsDto.createMountDtos = []
+    createMountsDto.createMountDtos = [];
 
     for (const control of this.mounts.controls) {
       const values = control.value;
@@ -119,13 +127,16 @@ export class BulkAddComponent implements OnInit, OnDestroy {
     }
 
     this.subscription.add(
-      this.mountsService.createMounts(createMountsDto).subscribe(() => {
-        this.loading = false;
-        this.showSuccessDialog();
-      }, () => {
-        this.loading = false;
-        this.error = this.translateService.instant('error.unexpected');
-      })
+      this.mountsService.createMounts(createMountsDto).subscribe(
+        () => {
+          this.loading = false;
+          this.showSuccessDialog();
+        },
+        () => {
+          this.loading = false;
+          this.error = this.translateService.instant('error.unexpected');
+        },
+      ),
     );
   }
 

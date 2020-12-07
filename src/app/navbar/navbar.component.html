@@ -9,7 +9,7 @@
   <mat-form-field appearance="none" id="lang-selector">
     <mat-select [(value)]="currentLang">
       <mat-option (click)="switchLang()" [value]="lang.name" *ngFor="let lang of langs">
-        {{lang.displayName}}
+        {{ lang.displayName }}
       </mat-option>
     </mat-select>
   </mat-form-field>

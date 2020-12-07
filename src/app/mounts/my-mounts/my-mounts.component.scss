@@ -191,3 +191,11 @@ mat-list-item {
     }
   }
 }
+
+#fake-border {
+  border: 3px solid #424242;
+}
+
+#max-child {
+  border: 3px solid $warning;
+}

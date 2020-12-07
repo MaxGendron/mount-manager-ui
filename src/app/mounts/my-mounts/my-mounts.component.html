@@ -153,6 +153,8 @@
                   <span *ngIf="currentLang === 'fr'">{{ mount.color.fr }}</span>
                 </span>
               </div>
+              <div *ngIf="mount.numberOfChild === mount.maxNumberOfChild; else fakeBorder" id="max-child"></div>
+              <ng-template #fakeBorder><div id="fake-border"></div></ng-template>
             </div>
             <mat-divider></mat-divider>
           </div>
