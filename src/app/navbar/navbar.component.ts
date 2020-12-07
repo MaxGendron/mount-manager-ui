@@ -19,14 +19,15 @@ export interface Lang {
 export class NavbarComponent implements OnInit, OnDestroy {
   connectedUsername: string;
   currentLang: string;
-  langs: Lang[]
+  langs: Lang[];
   private subscription: Subscription = new Subscription();
   color: string;
-  constructor(public authService: AuthService,
+  constructor(
+    public authService: AuthService,
     public dialog: MatDialog,
     private translateService: TranslateService,
-    private usersService: UsersService)
-  {}
+    private usersService: UsersService,
+  ) {}
 
   async ngOnInit(): Promise<void> {
     /* Do a call to see if the token isn't expired.
@@ -52,8 +53,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     //TODO when more lang added
     this.langs = [
       { name: 'fr', displayName: 'Français' },
-      { name: 'en', displayName: "English" }
-    ]
+      { name: 'en', displayName: 'English' },
+    ];
   }
 
   ngOnDestroy(): void {

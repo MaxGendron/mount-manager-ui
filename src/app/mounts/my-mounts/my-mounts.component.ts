@@ -87,6 +87,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       colorId: [''],
       sortField: [MountSortFieldEnum.Name],
       sortOrder: [SortOrderEnum.Asc],
+      hasMaxedChild: [false],
+      hasNoChild: [false],
     });
 
     //Initialize the couplingsFiltersForm form
@@ -236,6 +238,12 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     }
     if (filtersFormValue.colorId) {
       searchMountDto.colorId = filtersFormValue.colorId;
+    }
+    if (filtersFormValue.hasMaxedChild) {
+      searchMountDto.hasMaxedChild = filtersFormValue.hasMaxedChild;
+    }
+    if (filtersFormValue.hasNoChild) {
+      searchMountDto.hasNoChild = filtersFormValue.hasNoChild;
     }
     if (filtersFormValue.sortField) {
       searchMountDto.sortField = filtersFormValue.sortField;

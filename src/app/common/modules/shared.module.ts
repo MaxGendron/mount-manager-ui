@@ -22,7 +22,7 @@ const appRoutes: Routes = [
   { path: '', component: IndexComponent },
   { path: 'my-account', component: MyAccountComponent, canActivate: [AuthGuard] },
   { path: 'my-mounts', component: MyMountsComponent, canActivate: [AuthGuard] },
-  { path: 'bulk-add', component: BulkAddComponent, canActivate: [AuthGuard] }
+  { path: 'bulk-add', component: BulkAddComponent, canActivate: [AuthGuard] },
 ];
 
 @NgModule({
