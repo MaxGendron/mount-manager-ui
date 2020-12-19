@@ -2,7 +2,6 @@ import { MountColorDto } from './../mount-colors/models/dtos/responses/mount-col
 import { UpdateMountDto } from './../models/dtos/update-mount.dto';
 import { MountsService } from './../mounts.service';
 import { CreateMountDto } from './../models/dtos/create-mount.dto';
-import { AccountsSettingsService } from './../../my-account/accounts-settings/accounts-settings.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
@@ -11,7 +10,6 @@ import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
 import { MountGenderEnum } from '../models/enum/mount-gender.enum';
 import { MountColorGroupedByResponseDto } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
-import { MountTypeEnum } from '../models/enum/mount-type.enum';
 
 @Component({
   selector: 'app-add-or-update-mount-popup',
