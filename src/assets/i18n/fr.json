@@ -99,7 +99,8 @@
     "numberMount": "Nombre de montures",
     "couplingTitle": "Mes accouplements",
     "breedingTooltip": "Accoupler cette monture",
-    "createCouplingTitle": "Créer un accouplement"
+    "createCouplingTitle": "Créer un accouplement",
+    "total": "Total"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Modifier {{name}}",

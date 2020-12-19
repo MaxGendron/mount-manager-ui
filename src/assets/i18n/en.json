@@ -99,7 +99,8 @@
     "numberMount": "Number of mounts",
     "couplingTitle": "My couplings",
     "breedingTooltip": "Mate this mount",
-    "createCouplingTitle": "Create a coupling"
+    "createCouplingTitle": "Create a coupling",
+    "total": "Total"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",
