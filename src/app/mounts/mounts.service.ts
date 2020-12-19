@@ -67,7 +67,7 @@ export class MountsService {
       case MountTypeEnum.Muldo:
         return 2;
       case MountTypeEnum.Volkorne:
-        return 2;
+        return 1;
     }
   }
 }
