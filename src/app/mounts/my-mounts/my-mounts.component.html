@@ -20,10 +20,16 @@
               <span>&nbsp;{{ genderCount.female }}</span>
             </div>
           </mat-list-item>
-          <mat-list-item class="mb-2">
+          <mat-list-item>
             <i mat-list-icon class="fas fa-mars gender-icon"></i>
             <div mat-line>
               <span>&nbsp;{{ genderCount.male }}</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item class="mb-2 border-top border-white">
+            <div mat-line>
+              <span class="stat-total">Total:</span>
+              <span>&nbsp;{{ genderCount.male + genderCount.female }}</span>
             </div>
           </mat-list-item>
           <mat-divider></mat-divider>

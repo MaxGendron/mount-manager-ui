@@ -95,6 +95,10 @@ mat-list-item {
   height: 30px !important;
 }
 
+.stat-total {
+  padding-right: 9px;
+}
+
 //Override color for gender icon
 .fa-venus {
   color: mat-color($mat-pink, 300);
