@@ -140,7 +140,7 @@
                   src="{{ '../../../assets/images/' + mount.type + '/' + mount.color.fr + '.png' }}"
                 />
               </div>
-              <div class="info flex-grow-1">
+              <div class="mount-item flex-grow-1">
                 <h3 class="m-0">{{ mount.name }}</h3>
                 <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
                 <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
@@ -228,7 +228,7 @@
                     }}"
                   />
                 </div>
-                <div class="info">
+                <div class="coupling-item">
                   <h3 class="m-0 long-name">{{ coupling.mother.name }}</h3>
                   <h3 class="m-0 medium-name">
                     {{ coupling.mother.name.substring(0, 12) }}<span *ngIf="coupling.mother.name.length > 12">...</span>
@@ -253,7 +253,7 @@
                     }}"
                   />
                 </div>
-                <div class="info">
+                <div class="coupling-item">
                   <h3 class="m-0 long-name">{{ coupling.father.name }}</h3>
                   <h3 class="m-0 medium-name">
                     {{ coupling.father.name.substring(0, 12) }}<span *ngIf="coupling.father.name.length > 12">...</span>
@@ -266,7 +266,7 @@
                 </div>
               </div>
               <div class="col-md-4" style="padding: 0!important;">
-                <div class="info">
+                <div class="coupling-item">
                   <h3 class="m-0">{{ coupling.childName }}</h3>
                   <div class="item-actions">
                     <mat-icon class="delete" (click)="confirmDelete(coupling._id, deleteTypeEnum.Coupling)"

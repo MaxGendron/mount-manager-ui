@@ -38,15 +38,19 @@
   font-size: x-large;
 }
 
-.info {
+.mount-item {
   padding-left: 8px;
-  padding-top: 8px;
   position: relative;
 
   p {
     margin: 0;
     font-size: 15px;
   }
+}
+
+.coupling-item {
+  padding-top: 4px;
+  padding-left: 8px;
 }
 
 .color-type {
