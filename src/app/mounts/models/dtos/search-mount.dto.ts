@@ -15,6 +15,6 @@ export class SearchMountDto {
   gender?: MountGenderEnum;
   type?: MountTypeEnum;
   colorId?: string;
-  hasMaxedChild: boolean;
-  hasNoChild: boolean;
+  hasMaxedChild?: boolean;
+  hasNoChild?: boolean;
 }
