@@ -159,10 +159,20 @@ mat-list-item {
 }
 
 #add-coupling-modal {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 32px;
+  width: 450px;
   z-index: 100;
+
+  @media screen and (max-width: 1200px) {
+    margin-bottom: 0 !important;
+  }
+
+  > mat-card {
+    background-color: #4d4d4d;
+    border: 2px solid #000000;
+  }
 }
 
 /* treeflex stuffs */
