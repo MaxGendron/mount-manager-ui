@@ -52,8 +52,8 @@
     "motherName": "Nom de la mère",
     "childName": "Nom de l'enfant",
     "maxNumberOfChild": "Max number of child",
-    "hasMaxedChild": "Has the max number of child",
-    "hasNoChild": "Has no child"
+    "hasMaxedChild": "Maximum children",
+    "hasNoChild": "No children"
   },
   "login": {
     "title": "Login",

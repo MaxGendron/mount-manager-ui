@@ -94,14 +94,14 @@
             </mat-form-field>
 
             <div class="col-lg-12 row">
-              <div class="col-lg-7" style="padding-left: 0!important;">
-                <mat-checkbox class="example-margin" formControlName="hasMaxedChild">{{
-                  'form.hasMaxedChild' | translate
-                }}</mat-checkbox>
-              </div>
-              <div class="col-lg-5" style="padding-left: 0!important;">
+              <div class="col-lg-6" style="padding-left: 0!important;">
                 <mat-checkbox class="example-margin" formControlName="hasNoChild">{{
                   'form.hasNoChild' | translate
+                }}</mat-checkbox>
+              </div>
+              <div class="col-lg-6" style="padding-left: 0!important;">
+                <mat-checkbox class="example-margin" formControlName="hasMaxedChild">{{
+                  'form.hasMaxedChild' | translate
                 }}</mat-checkbox>
               </div>
             </div>
@@ -277,7 +277,8 @@
               </div>
               <div class="col-md-4" style="padding: 0!important;">
                 <div class="coupling-item">
-                  <h3 class="m-0">{{ coupling.childName }}</h3>
+                  <h3 class="m-0 child-long">{{ coupling.childName }}</h3>
+                  <h3 class="m-0 child-medium">{{ coupling.childName.substring(0, 12) }}<span *ngIf="coupling.childName.length > 12">...</span></h3>
                   <div class="item-actions">
                     <mat-icon class="delete" (click)="confirmDelete(coupling._id, deleteTypeEnum.Coupling)"
                       >delete</mat-icon

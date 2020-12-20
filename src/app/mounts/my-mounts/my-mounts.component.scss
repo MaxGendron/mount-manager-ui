@@ -5,7 +5,7 @@
   margin-top: 32px;
   margin-bottom: 16px;
   > div {
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: 1199px) {
       margin-bottom: 16px;
     }
   }
@@ -142,13 +142,19 @@ mat-list-item {
 }
 
 .long-name {
-  @media screen and (max-width: 1600px) {
-    display: none;
+  //Show this class if the width is less than 1200 and more than 1600
+  display: none;
+  @media screen and (min-width: 1600px) {
+    display: block;
+  }
+  @media screen and (max-width: 1199px) {
+    display: block;
   }
 }
 
 .medium-name {
-  @media screen and (min-width: 1601px) {
+  //Only show this class if the width is between 1400 and 1599
+  @media screen and (min-width: 1600px) {
     display: none;
   }
   @media screen and (max-width: 1399px) {
@@ -157,7 +163,32 @@ mat-list-item {
 }
 
 .short-name {
+  //Only show this class if the width is between 1200 and 1399
   @media screen and (min-width: 1400px) {
+    display: none;
+  }
+  @media screen and (max-width: 1199px) {
+    display: none;
+  }
+}
+
+.child-long {
+  //Show this class if the width is less than 1200 and more than 1300
+  display: none;
+  @media screen and (min-width: 1300px) {
+    display: block;
+  }
+  @media screen and (max-width: 1199px) {
+    display: block;
+  }
+}
+
+.child-medium {
+  //Only show this class is the width is between 1200 & 1300
+  @media screen and (min-width: 1300px) {
+    display: none;
+  }
+  @media screen and (max-width: 1199px) {
     display: none;
   }
 }
