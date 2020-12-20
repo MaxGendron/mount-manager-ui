@@ -22,6 +22,7 @@ import {
 } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
 import { MountColorsService } from '../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/accounts-settings.service';
+import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 
 export enum DeleteTypeEnum {
   Mount,
@@ -76,6 +77,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     private accountsSettingsService: AccountsSettingsService,
     private couplingsService: CouplingsService,
     private fb: FormBuilder,
+    private scrollDispatcher: ScrollDispatcher,
     public dialog: MatDialog,
   ) {
     this.currentLang = translateService.currentLang;
@@ -101,6 +103,18 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       fatherName: [''],
       motherName: [''],
       childName: [''],
+    });
+  }
+
+  ngAfterViewInit(){
+    //Subscribe on scroll event to add "back to top button"
+    this.scrollDispatcher.scrolled().subscribe((data: CdkScrollable) => {
+      if (data.measureScrollOffset('top') > 100) {
+        console.log('top');
+        // data.scrollTo({
+        //   top: 0
+        // })
+      }
     });
   }
 
@@ -134,6 +148,32 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  scrollToTop(): void {
+    /* I know this is ugly but it's the only solution I found.
+    I tried using a bunch of stuff including a ViewChild of the CdkScrollable
+    which got my object in it, but the scrollTo function did nothing.
+    I think it's because of the way the app is build with the sidenav etc.*/
+    for(const containers of this.scrollDispatcher.scrollContainers) {
+      for(const element of containers) {
+        if (element instanceof CdkScrollable) {
+          element.scrollTo({
+            top: 0
+          })
+        }
+      }
+    }
+  }
+
+  handleMountError(): void {
+    this.mountError = this.translateService.instant('error.unexpected');
+    this.scrollToTop();
+  }
+
+  handleCouplingError(): void {
+    this.couplingError = this.translateService.instant('error.unexpected');
+    this.scrollToTop();
   }
 
   isMountButtonDisabled(): boolean {
@@ -207,7 +247,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.setMountGenderCounts();
         },
         () => {
-          this.mountError = this.translateService.instant('error.unexpected');
+          this.handleMountError();
         },
       ),
     );
@@ -221,13 +261,13 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.couplings = this.couplings.filter(m => m._id !== couplingId);
         },
         () => {
-          this.mountError = this.translateService.instant('error.unexpected');
+          this.handleMountError();
         },
       ),
     );
   }
 
-  filterMounts(searchMountDto?: SearchMountDto) {
+  filterMounts(searchMountDto?: SearchMountDto): void {
     this.mountLoading = true;
     const filtersFormValue = this.mountsFiltersForm.value;
     //If no dto passed, if means we come from the filter button, so we need to create the object
@@ -270,14 +310,14 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.mountLoading = false;
         },
         () => {
-          this.mountError = this.translateService.instant('error.unexpected');
+          this.handleMountError();
           this.mountLoading = false;
         },
       ),
     );
   }
 
-  filterCouplings(searchCouplingDto?: SearchCouplingDto) {
+  filterCouplings(searchCouplingDto?: SearchCouplingDto): void {
     this.couplingLoading = true;
     const filtersFormValue = this.couplingsFiltersForm.value;
     //If no dto passed, if means we come from the filter button, so we need to create the object
@@ -305,14 +345,14 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.couplingLoading = false;
         },
         () => {
-          this.couplingError = this.translateService.instant('error.unexpected');
+          this.handleCouplingError();
           this.couplingLoading = false;
         },
       ),
     );
   }
 
-  addToBreeding(mount: MountResponseDto) {
+  addToBreeding(mount: MountResponseDto): void {
     //Reset error message
     this.createCouplingError = null;
 
@@ -348,7 +388,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     }
   }
 
-  createCoupling() {
+  createCoupling(): void {
     this.createCouplingLoading = true;
     let createCouplingDto = new CreateCouplingDto();
     createCouplingDto.childName = this.couplingChildName;
@@ -380,43 +420,43 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     );
   }
 
-  deleteCouplingMother() {
+  deleteCouplingMother(): void {
     this.couplingMother = null;
     this.couplingChildName = this.couplingChildName = null;
     //Reset error message
     this.createCouplingError = null;
   }
 
-  deleteCouplingFather() {
+  deleteCouplingFather(): void {
     this.couplingFather = null;
     this.couplingChildName = this.couplingChildName = null;
     //Reset error message
     this.createCouplingError = null;
   }
 
-  loadMoreMounts() {
+  loadMoreMounts(): void {
     this.mountsLimit += this.limitIncrement;
     let searchMountDto = new SearchMountDto();
     searchMountDto.limit = this.mountsLimit;
     this.filterMounts(searchMountDto);
   }
 
-  loadMoreCouplings() {
+  loadMoreCouplings(): void {
     this.couplingsLimit += this.limitIncrement;
     let searchCouplingDto = new SearchCouplingDto();
     searchCouplingDto.limit = this.mountsLimit;
     this.filterCouplings(searchCouplingDto);
   }
 
-  resetMountsLimit() {
+  resetMountsLimit(): void {
     this.mountsLimit = this.limitIncrement;
   }
 
-  resetCouplingsLimit() {
+  resetCouplingsLimit(): void {
     this.couplingsLimit = this.limitIncrement;
   }
 
-  private async setMountGenderCounts() {
+  private async setMountGenderCounts(): Promise<void> {
     try {
       this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
     } catch (e) {
