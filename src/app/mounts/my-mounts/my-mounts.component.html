@@ -278,7 +278,9 @@
               <div class="col-md-4" style="padding: 0!important;">
                 <div class="coupling-item">
                   <h3 class="m-0 child-long">{{ coupling.childName }}</h3>
-                  <h3 class="m-0 child-medium">{{ coupling.childName.substring(0, 12) }}<span *ngIf="coupling.childName.length > 12">...</span></h3>
+                  <h3 class="m-0 child-medium">
+                    {{ coupling.childName.substring(0, 12) }}<span *ngIf="coupling.childName.length > 12">...</span>
+                  </h3>
                   <div class="item-actions">
                     <mat-icon class="delete" (click)="confirmDelete(coupling._id, deleteTypeEnum.Coupling)"
                       >delete</mat-icon

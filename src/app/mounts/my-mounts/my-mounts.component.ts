@@ -108,19 +108,19 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngAfterViewInit(){
+  ngAfterViewInit(): void {
     //Subscribe on scroll event to add "back to top button"
     this.scrollDispatcher.scrolled().subscribe((data: CdkScrollable) => {
       if (data.measureScrollOffset('top') > 1000) {
         //Need to get into angular zone to use dataBindings
         this.ngZone.run(() => {
           this.showButton = true;
-        })
+        });
       } else {
         //Need to get into angular zone to use dataBindings
         this.ngZone.run(() => {
           this.showButton = false;
-        })
+        });
       }
     });
   }
@@ -162,12 +162,12 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     I tried using a bunch of stuff including a ViewChild of the CdkScrollable
     which got my object in it, but the scrollTo function did nothing.
     I think it's because of the way the app is build with the sidenav etc.*/
-    for(const containers of this.scrollDispatcher.scrollContainers) {
-      for(const element of containers) {
+    for (const containers of this.scrollDispatcher.scrollContainers) {
+      for (const element of containers) {
         if (element instanceof CdkScrollable) {
           element.scrollTo({
-            top: 0
-          })
+            top: 0,
+          });
         }
       }
     }
