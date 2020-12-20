@@ -179,6 +179,16 @@ mat-list-item {
   }
 }
 
+.view-more {
+  margin: auto;
+  width: 150px;
+  margin-top: 16px;
+
+  > button {
+    width: 100%;
+  }
+}
+
 /* treeflex stuffs */
 .tf-ancestor-tree {
   position: relative;

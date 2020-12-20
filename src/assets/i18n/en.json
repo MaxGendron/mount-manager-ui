@@ -29,7 +29,8 @@
     "dontDelete": "Don't delete",
     "filter": "Filter",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "viewMore": "View more"
   },
   "form": {
     "username": "Username",

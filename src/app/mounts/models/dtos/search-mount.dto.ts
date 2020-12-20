@@ -17,4 +17,6 @@ export class SearchMountDto {
   colorId?: string;
   hasMaxedChild?: boolean;
   hasNoChild?: boolean;
+
+  limit?: number;
 }

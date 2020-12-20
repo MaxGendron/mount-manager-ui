@@ -35,16 +35,21 @@ export enum DeleteTypeEnum {
 })
 export class MyMountsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
+  private limitIncrement: number = 20;
   currentLang: string;
   keys = Object.keys;
+  breedingTooltip: string;
+  mountsLimit: number = this.limitIncrement;
+  couplingsLimit: number = this.limitIncrement;
+
   mountLoading = false;
   couplingLoading = false;
   createCouplingLoading = false;
+
   mountError: string;
   couplingError: string;
   createCouplingError: string;
   globalError: string;
-  breedingTooltip: string;
 
   mountsFiltersForm: FormGroup;
   couplingsFiltersForm: FormGroup;
@@ -222,10 +227,16 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     );
   }
 
-  filterMounts() {
+  filterMounts(searchMountDto?: SearchMountDto) {
     this.mountLoading = true;
     const filtersFormValue = this.mountsFiltersForm.value;
-    let searchMountDto = new SearchMountDto();
+    //If no dto passed, if means we come from the filter button, so we need to create the object
+    //& reset the mountsLimit.
+    //Otherwise we come from the "viewMore" button so we already have a dto
+    if (!searchMountDto) {
+      searchMountDto = new SearchMountDto();
+      this.resetMountsLimit();
+    }
 
     if (filtersFormValue.name) {
       searchMountDto.name = filtersFormValue.name;
@@ -266,10 +277,16 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     );
   }
 
-  filterCouplings() {
+  filterCouplings(searchCouplingDto?: SearchCouplingDto) {
     this.couplingLoading = true;
     const filtersFormValue = this.couplingsFiltersForm.value;
-    let searchCouplingDto = new SearchCouplingDto();
+    //If no dto passed, if means we come from the filter button, so we need to create the object
+    //& reset the couplingsLimit.
+    //Otherwise we come from the "viewMore" button so we already have a dto
+    if (!searchCouplingDto) {
+      searchCouplingDto = new SearchCouplingDto();
+      this.resetCouplingsLimit();
+    }
 
     if (filtersFormValue.fatherName) {
       searchCouplingDto.fatherName = filtersFormValue.fatherName;
@@ -375,6 +392,28 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     this.couplingChildName = this.couplingChildName = null;
     //Reset error message
     this.createCouplingError = null;
+  }
+
+  loadMoreMounts() {
+    this.mountsLimit += this.limitIncrement;
+    let searchMountDto = new SearchMountDto();
+    searchMountDto.limit = this.mountsLimit;
+    this.filterMounts(searchMountDto);
+  }
+
+  loadMoreCouplings() {
+    this.couplingsLimit += this.limitIncrement;
+    let searchCouplingDto = new SearchCouplingDto();
+    searchCouplingDto.limit = this.mountsLimit;
+    this.filterCouplings(searchCouplingDto);
+  }
+
+  resetMountsLimit() {
+    this.mountsLimit = this.limitIncrement;
+  }
+
+  resetCouplingsLimit() {
+    this.couplingsLimit = this.limitIncrement;
   }
 
   private async setMountGenderCounts() {

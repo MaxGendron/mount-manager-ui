@@ -178,6 +178,10 @@
         </div>
       </mat-card-content>
     </mat-card>
+
+    <div class="view-more">
+      <button color="accent" (click)="loadMoreMounts()" mat-raised-button>{{ 'button.viewMore' | translate }}</button>
+    </div>
   </div>
 
   <div class="col-xl-6">
@@ -287,6 +291,12 @@
         </div>
       </mat-card-content>
     </mat-card>
+
+    <div class="view-more">
+      <button color="accent" (click)="loadMoreCouplings()" mat-raised-button>
+        {{ 'button.viewMore' | translate }}
+      </button>
+    </div>
   </div>
 
   <div id="add-coupling-modal" *ngIf="couplingMother || couplingFather">
