@@ -220,6 +220,22 @@ mat-list-item {
   }
 }
 
+#top-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  bottom: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 24px;
+  z-index: 1000;
+  min-width: 0!important;
+  font-size: x-large;
+}
+
 /* treeflex stuffs */
 .tf-ancestor-tree {
   position: relative;

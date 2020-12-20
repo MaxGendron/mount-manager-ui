@@ -9,7 +9,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MountGenderCountResponseDto } from './../models/dtos/responses/mount-gender-count.response.dto';
 import { MountGenderEnum } from './../models/enum/mount-gender.enum';
 import { MountsService } from './../mounts.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
@@ -42,6 +42,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   breedingTooltip: string;
   mountsLimit: number = this.limitIncrement;
   couplingsLimit: number = this.limitIncrement;
+  showButton: boolean = false;
 
   mountLoading = false;
   couplingLoading = false;
@@ -78,6 +79,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     private couplingsService: CouplingsService,
     private fb: FormBuilder,
     private scrollDispatcher: ScrollDispatcher,
+    private ngZone: NgZone,
     public dialog: MatDialog,
   ) {
     this.currentLang = translateService.currentLang;
@@ -109,11 +111,16 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   ngAfterViewInit(){
     //Subscribe on scroll event to add "back to top button"
     this.scrollDispatcher.scrolled().subscribe((data: CdkScrollable) => {
-      if (data.measureScrollOffset('top') > 100) {
-        console.log('top');
-        // data.scrollTo({
-        //   top: 0
-        // })
+      if (data.measureScrollOffset('top') > 1000) {
+        //Need to get into angular zone to use dataBindings
+        this.ngZone.run(() => {
+          this.showButton = true;
+        })
+      } else {
+        //Need to get into angular zone to use dataBindings
+        this.ngZone.run(() => {
+          this.showButton = false;
+        })
       }
     });
   }
