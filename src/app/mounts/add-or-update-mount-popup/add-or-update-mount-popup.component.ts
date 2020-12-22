@@ -7,7 +7,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Subscription } from 'rxjs';
-import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
+import { MountResponseDto } from '../models/dtos/responses/mount.response.dto';
 import { MountGenderEnum } from '../models/enum/mount-gender.enum';
 import { MountColorGroupedByResponseDto } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
 

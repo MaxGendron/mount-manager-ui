@@ -180,7 +180,9 @@
     </mat-card>
 
     <div class="view-more">
-      <button color="accent" (click)="loadMoreMounts()" mat-raised-button>{{ 'button.viewMore' | translate }}</button>
+      <button color="accent" (click)="loadMoreMounts()" mat-raised-button [disabled]="isViewMoreMountsDisabled">
+        {{ 'button.viewMore' | translate }}
+      </button>
     </div>
   </div>
 
@@ -296,7 +298,7 @@
     </mat-card>
 
     <div class="view-more">
-      <button color="accent" (click)="loadMoreCouplings()" mat-raised-button>
+      <button color="accent" (click)="loadMoreCouplings()" mat-raised-button [disabled]="isViewMoreCouplingsDisabled">
         {{ 'button.viewMore' | translate }}
       </button>
     </div>

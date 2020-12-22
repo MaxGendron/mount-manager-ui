@@ -12,7 +12,7 @@ import { MountsService } from './../mounts.service';
 import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
+import { MountResponseDto } from '../models/dtos/responses/mount.response.dto';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
 import Swal from 'sweetalert2/src/sweetalert2.js';
@@ -43,6 +43,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   mountsLimit: number = this.limitIncrement;
   couplingsLimit: number = this.limitIncrement;
   showButton: boolean = false;
+  isViewMoreMountsDisabled: boolean = false;
+  isViewMoreCouplingsDisabled: boolean = false;
 
   mountLoading = false;
   couplingLoading = false;
@@ -127,8 +129,16 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   async ngOnInit(): Promise<void> {
     try {
-      this.mounts = await this.mountsService.getMountForUserId().toPromise();
-      this.couplings = await this.couplingsService.getCouplingsForUserId().toPromise();
+      const mountsResponse = await this.mountsService.getMountForUserId().toPromise();
+      if (mountsResponse != null) {
+        this.mounts = mountsResponse.mounts;
+        this.setIsViewMoreMountsDisabled(mountsResponse.totalCount);
+      }
+      const couplingsResponse = await this.couplingsService.getCouplingsForUserId().toPromise();
+      if (couplingsResponse != null) {
+        this.couplings = couplingsResponse.couplings;
+        this.setIsViewMoreCouplingsDisabled(couplingsResponse.totalCount);
+      }
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
       this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
     } catch (e) {
@@ -312,8 +322,9 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.mountsService.getMountForUserId(searchMountDto).subscribe(
-        mounts => {
-          this.mounts = mounts;
+        response => {
+          this.mounts = response.mounts;
+          this.setIsViewMoreMountsDisabled(response.totalCount);
           this.mountLoading = false;
         },
         () => {
@@ -347,8 +358,9 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.couplingsService.getCouplingsForUserId(searchCouplingDto).subscribe(
-        couplings => {
-          this.couplings = couplings;
+        response => {
+          this.couplings = response.couplings;
+          this.setIsViewMoreCouplingsDisabled(response.totalCount);
           this.couplingLoading = false;
         },
         () => {
@@ -461,6 +473,16 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   resetCouplingsLimit(): void {
     this.couplingsLimit = this.limitIncrement;
+  }
+
+  //Set the variable based on totalCount vs array count
+  private setIsViewMoreMountsDisabled(totalCount: number) {
+    this.isViewMoreMountsDisabled = !(totalCount > this.mounts.length);
+  }
+
+  //Set the variable based on totalCount vs array count
+  private setIsViewMoreCouplingsDisabled(totalCount: number) {
+    this.isViewMoreCouplingsDisabled = !(totalCount > this.couplings.length);
   }
 
   private async setMountGenderCounts(): Promise<void> {
