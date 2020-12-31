@@ -48,9 +48,9 @@
     "color": "Color",
     "sortField": "Sort by",
     "sortOrder": "Sort order",
-    "fatherName": "Nom du père",
-    "motherName": "Nom de la mère",
-    "childName": "Nom de l'enfant",
+    "fatherName": "Father name",
+    "motherName": "Mother name",
+    "childName": "Child name",
     "maxNumberOfChild": "Max number of child",
     "hasMaxedChild": "Maximum children",
     "hasNoChild": "No children"
