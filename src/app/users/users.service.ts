@@ -41,4 +41,8 @@ export class UsersService {
   validateJwtToken(): Observable<string> {
     return this.http.get<string>(`${this.usersEndpoint}validateJwtToken`);
   }
+
+  deleteUser(userId: string): Observable<void> {
+    return this.http.delete<void>(`${this.usersEndpoint}${userId}`);
+  }
 }

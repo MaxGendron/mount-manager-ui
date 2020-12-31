@@ -163,6 +163,13 @@
           </mat-form-field>
         </div>
       </form>
+
+      <div align="end">
+        <button (click)="confirmDelete()" color="warn" id="delete-account" mat-raised-button [disabled]="isDeleteButtonDisabled()">
+          {{ 'button.deleteAccount' | translate }}
+          <!-- <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i> -->
+        </button>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>

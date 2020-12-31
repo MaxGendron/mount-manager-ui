@@ -30,7 +30,8 @@
     "filter": "Filter",
     "yes": "Yes",
     "no": "No",
-    "viewMore": "View more"
+    "viewMore": "View more",
+    "deleteAccount": "Delete the account"
   },
   "form": {
     "username": "Username",
@@ -73,7 +74,8 @@
     "updated": "{{field}} updated!",
     "showPassword": "Show password fields",
     "hidePassword": "Hide password fields",
-    "accountSettings": "Account Settings"
+    "accountSettings": "Account Settings",
+    "deleteConfirmation": "Do you really want to delete your account? This action is irreversible and all your data will be lost."
   },
   "mountTypeEnum": {
     "Dragodinde": "Dragoturkey",

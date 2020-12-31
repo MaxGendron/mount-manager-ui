@@ -30,7 +30,8 @@
     "filter": "Filtrer",
     "yes": "Oui",
     "no": "Non",
-    "viewMore": "Voir plus"
+    "viewMore": "Voir plus",
+    "deleteAccount": "Supprimer le compte"
   },
   "form": {
     "username": "Nom de compte",
@@ -73,7 +74,8 @@
     "updated": "{{field}} actualisé!",
     "showPassword": "Afficher les champs de mot de passe",
     "hidePassword": "Cacher les champs de mot de passe",
-    "accountSettings": "Paramètres du compte"
+    "accountSettings": "Paramètres du compte",
+    "deleteConfirmation": "Voulez-vous vraiment supprimer votre compte? Cette action est irréversible et toutes vos données seront perdues."
   },
   "mountTypeEnum": {
     "Dragodinde": "Dragodinde",
