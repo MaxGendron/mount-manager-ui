@@ -49,7 +49,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     private serverService: ServersService,
     private userService: UsersService,
     private fb: FormBuilder,
-    private authService: AuthService
+    private authService: AuthService,
   ) {
     //Initialize the user form
     this.userForm = this.fb.group({
@@ -309,13 +309,17 @@ export class MyAccountComponent implements OnInit, OnDestroy {
 
   //Delete the user
   deleteUser(): void {
-    this.subscription.add(this.userService.deleteUser(this.userInfo._id).subscribe(() => {
-      //User has been deleted, logout
-      this.authService.logout();
-    },
-    () => {
-      this.error = this.translateService.instant('error.unexpected');
-    }))
+    this.subscription.add(
+      this.userService.deleteUser(this.userInfo._id).subscribe(
+        () => {
+          //User has been deleted, logout
+          this.authService.logout();
+        },
+        () => {
+          this.error = this.translateService.instant('error.unexpected');
+        },
+      ),
+    );
   }
 
   isDeleteButtonDisabled(): boolean {
