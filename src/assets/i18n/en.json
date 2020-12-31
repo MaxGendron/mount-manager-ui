@@ -29,7 +29,9 @@
     "dontDelete": "Don't delete",
     "filter": "Filter",
     "yes": "Yes",
-    "no": "No"
+    "no": "No",
+    "viewMore": "View more",
+    "deleteAccount": "Delete the account"
   },
   "form": {
     "username": "Username",
@@ -47,12 +49,12 @@
     "color": "Color",
     "sortField": "Sort by",
     "sortOrder": "Sort order",
-    "fatherName": "Nom du père",
-    "motherName": "Nom de la mère",
-    "childName": "Nom de l'enfant",
+    "fatherName": "Father name",
+    "motherName": "Mother name",
+    "childName": "Child name",
     "maxNumberOfChild": "Max number of child",
-    "hasMaxedChild": "Has the max number of child",
-    "hasNoChild": "Has no child"
+    "hasMaxedChild": "Maximum children",
+    "hasNoChild": "No children"
   },
   "login": {
     "title": "Login",
@@ -72,7 +74,8 @@
     "updated": "{{field}} updated!",
     "showPassword": "Show password fields",
     "hidePassword": "Hide password fields",
-    "accountSettings": "Account Settings"
+    "accountSettings": "Account Settings",
+    "deleteConfirmation": "Do you really want to delete your account? This action is irreversible and all your data will be lost."
   },
   "mountTypeEnum": {
     "Dragodinde": "Dragoturkey",
@@ -99,7 +102,8 @@
     "numberMount": "Number of mounts",
     "couplingTitle": "My couplings",
     "breedingTooltip": "Mate this mount",
-    "createCouplingTitle": "Create a coupling"
+    "createCouplingTitle": "Create a coupling",
+    "total": "Total"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Update {{name}}",

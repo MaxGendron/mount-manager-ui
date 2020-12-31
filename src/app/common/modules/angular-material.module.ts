@@ -15,6 +15,7 @@ import { MatRippleModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+import { ScrollingModule } from '@angular/cdk/scrolling';
 
 //Modules for all the imports related to angular material
 const angularMaterial = [
@@ -34,6 +35,7 @@ const angularMaterial = [
   MatSelectModule,
   MatTooltipModule,
   MatCheckboxModule,
+  ScrollingModule,
 ];
 
 @NgModule({

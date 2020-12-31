@@ -5,7 +5,7 @@
   margin-top: 32px;
   margin-bottom: 16px;
   > div {
-    @media screen and (max-width: 1200px) {
+    @media screen and (max-width: 1199px) {
       margin-bottom: 16px;
     }
   }
@@ -38,15 +38,19 @@
   font-size: x-large;
 }
 
-.info {
+.mount-item {
   padding-left: 8px;
-  padding-top: 8px;
   position: relative;
 
   p {
     margin: 0;
     font-size: 15px;
   }
+}
+
+.coupling-item {
+  padding-top: 4px;
+  padding-left: 8px;
 }
 
 .color-type {
@@ -89,6 +93,10 @@
 
 mat-list-item {
   height: 30px !important;
+}
+
+.stat-total {
+  padding-right: 9px;
 }
 
 //Override color for gender icon
@@ -134,13 +142,19 @@ mat-list-item {
 }
 
 .long-name {
-  @media screen and (max-width: 1600px) {
-    display: none;
+  //Show this class if the width is less than 1200 and more than 1600
+  display: none;
+  @media screen and (min-width: 1600px) {
+    display: block;
+  }
+  @media screen and (max-width: 1199px) {
+    display: block;
   }
 }
 
 .medium-name {
-  @media screen and (min-width: 1601px) {
+  //Only show this class if the width is between 1400 and 1599
+  @media screen and (min-width: 1600px) {
     display: none;
   }
   @media screen and (max-width: 1399px) {
@@ -149,16 +163,77 @@ mat-list-item {
 }
 
 .short-name {
+  //Only show this class if the width is between 1200 and 1399
   @media screen and (min-width: 1400px) {
+    display: none;
+  }
+  @media screen and (max-width: 1199px) {
+    display: none;
+  }
+}
+
+.child-long {
+  //Show this class if the width is less than 1200 and more than 1300
+  display: none;
+  @media screen and (min-width: 1300px) {
+    display: block;
+  }
+  @media screen and (max-width: 1199px) {
+    display: block;
+  }
+}
+
+.child-medium {
+  //Only show this class is the width is between 1200 & 1300
+  @media screen and (min-width: 1300px) {
+    display: none;
+  }
+  @media screen and (max-width: 1199px) {
     display: none;
   }
 }
 
 #add-coupling-modal {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   right: 32px;
+  width: 450px;
   z-index: 100;
+
+  @media screen and (max-width: 1200px) {
+    margin-bottom: 0 !important;
+  }
+
+  > mat-card {
+    background-color: #4d4d4d;
+    border: 2px solid #000000;
+  }
+}
+
+.view-more {
+  margin: auto;
+  width: 150px;
+  margin-top: 16px;
+
+  > button {
+    width: 100%;
+  }
+}
+
+#top-button {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: 50%;
+  bottom: 24px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  position: fixed;
+  left: 24px;
+  z-index: 1000;
+  min-width: 0 !important;
+  font-size: x-large;
 }
 
 /* treeflex stuffs */

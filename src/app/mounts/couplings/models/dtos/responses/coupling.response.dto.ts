@@ -1,4 +1,4 @@
-import { MountResponseDto } from './../../../../models/dtos/responses/mounts.response.dto';
+import { MountResponseDto } from '../../../../models/dtos/responses/mount.response.dto';
 
 export interface CouplingResponseDto {
   _id: string;

@@ -1,7 +1,7 @@
 import { CreateMountsDto } from './models/dtos/create-mounts.dto';
 import { SearchMountDto } from './models/dtos/search-mount.dto';
 import { MountGenderCountResponseDto } from './models/dtos/responses/mount-gender-count.response.dto';
-import { MountResponseDto } from './models/dtos/responses/mounts.response.dto';
+import { MountResponseDto } from './models/dtos/responses/mount.response.dto';
 import { CreateMountDto } from './models/dtos/create-mount.dto';
 import { UpdateMountDto } from './models/dtos/update-mount.dto';
 import { Injectable } from '@angular/core';
@@ -9,6 +9,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 import { MountTypeEnum } from './models/enum/mount-type.enum';
+import { GetMountsResponseDto } from './models/dtos/responses/get-mounts.response.dto';
 
 @Injectable({
   providedIn: 'root',
@@ -36,8 +37,8 @@ export class MountsService {
 
   //UserId from the Auth Token
   //Can pass a search request if needed
-  getMountForUserId(searchMountDto?: SearchMountDto): Observable<MountResponseDto[]> {
-    return this.http.get<MountResponseDto[]>(`${this.mountsEndpoint}find/user-id`, {
+  getMountForUserId(searchMountDto?: SearchMountDto): Observable<GetMountsResponseDto> {
+    return this.http.get<GetMountsResponseDto>(`${this.mountsEndpoint}find/user-id`, {
       params: searchMountDto === undefined ? {} : JSON.parse(JSON.stringify(searchMountDto)),
     });
   }
@@ -67,7 +68,7 @@ export class MountsService {
       case MountTypeEnum.Muldo:
         return 2;
       case MountTypeEnum.Volkorne:
-        return 2;
+        return 1;
     }
   }
 }

@@ -61,13 +61,6 @@ button .fa-spin {
   }
 }
 
-button {
-  outline: none !important;
-  &:hover:enabled {
-    background-color: $accent-light;
-  }
-}
-
 .pointer {
   cursor: pointer;
 }

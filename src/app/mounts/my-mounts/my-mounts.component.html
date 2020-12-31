@@ -2,7 +2,7 @@
   <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ globalError }} </span>
 </div>
 
-<div class="row" id="main-content">
+<div class="row" id="main-content" cdkScrollable #cdkScrollable>
   <div class="col-xl-2">
     <mat-card>
       <mat-card-header>
@@ -20,10 +20,16 @@
               <span>&nbsp;{{ genderCount.female }}</span>
             </div>
           </mat-list-item>
-          <mat-list-item class="mb-2">
+          <mat-list-item>
             <i mat-list-icon class="fas fa-mars gender-icon"></i>
             <div mat-line>
               <span>&nbsp;{{ genderCount.male }}</span>
+            </div>
+          </mat-list-item>
+          <mat-list-item class="mb-2 border-top border-white">
+            <div mat-line>
+              <span class="stat-total">{{ 'myMounts.total' | translate }}:</span>
+              <span>&nbsp;{{ genderCount.male + genderCount.female }}</span>
             </div>
           </mat-list-item>
           <mat-divider></mat-divider>
@@ -88,14 +94,14 @@
             </mat-form-field>
 
             <div class="col-lg-12 row">
-              <div class="col-lg-7" style="padding-left: 0!important;">
-                <mat-checkbox class="example-margin" formControlName="hasMaxedChild">{{
-                  'form.hasMaxedChild' | translate
-                }}</mat-checkbox>
-              </div>
-              <div class="col-lg-5" style="padding-left: 0!important;">
+              <div class="col-lg-6" style="padding-left: 0!important;">
                 <mat-checkbox class="example-margin" formControlName="hasNoChild">{{
                   'form.hasNoChild' | translate
+                }}</mat-checkbox>
+              </div>
+              <div class="col-lg-6" style="padding-left: 0!important;">
+                <mat-checkbox class="example-margin" formControlName="hasMaxedChild">{{
+                  'form.hasMaxedChild' | translate
                 }}</mat-checkbox>
               </div>
             </div>
@@ -123,7 +129,7 @@
             <div class="col-lg-12 mb-2" align="end">
               <button type="submit" color="accent" mat-raised-button [disabled]="isMountButtonDisabled()">
                 {{ 'button.filter' | translate }}
-                <i *ngIf="mountLoading" class="fas fa-circle-notch fa-spin"></i>
+                <!-- <i *ngIf="mountLoading" class="fas fa-circle-notch fa-spin"></i> -->
               </button>
             </div>
           </div>
@@ -140,7 +146,7 @@
                   src="{{ '../../../assets/images/' + mount.type + '/' + mount.color.fr + '.png' }}"
                 />
               </div>
-              <div class="info flex-grow-1">
+              <div class="mount-item flex-grow-1">
                 <h3 class="m-0">{{ mount.name }}</h3>
                 <i *ngIf="mount.gender === mountGenderEnum.Female" class="fas fa-venus gender-icon"></i>
                 <i *ngIf="mount.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
@@ -172,6 +178,12 @@
         </div>
       </mat-card-content>
     </mat-card>
+
+    <div class="view-more">
+      <button color="accent" (click)="loadMoreMounts()" mat-raised-button [disabled]="isViewMoreMountsDisabled">
+        {{ 'button.viewMore' | translate }}
+      </button>
+    </div>
   </div>
 
   <div class="col-xl-6">
@@ -206,7 +218,7 @@
           <div class="col-lg-12 pb-2" align="end">
             <button type="submit" color="accent" mat-raised-button [disabled]="isCouplingButtonDisabled()">
               {{ 'button.filter' | translate }}
-              <i *ngIf="couplingLoading" class="fas fa-circle-notch fa-spin"></i>
+              <!-- <i *ngIf="couplingLoading" class="fas fa-circle-notch fa-spin"></i> -->
             </button>
           </div>
         </form>
@@ -228,7 +240,7 @@
                     }}"
                   />
                 </div>
-                <div class="info">
+                <div class="coupling-item">
                   <h3 class="m-0 long-name">{{ coupling.mother.name }}</h3>
                   <h3 class="m-0 medium-name">
                     {{ coupling.mother.name.substring(0, 12) }}<span *ngIf="coupling.mother.name.length > 12">...</span>
@@ -253,7 +265,7 @@
                     }}"
                   />
                 </div>
-                <div class="info">
+                <div class="coupling-item">
                   <h3 class="m-0 long-name">{{ coupling.father.name }}</h3>
                   <h3 class="m-0 medium-name">
                     {{ coupling.father.name.substring(0, 12) }}<span *ngIf="coupling.father.name.length > 12">...</span>
@@ -266,8 +278,11 @@
                 </div>
               </div>
               <div class="col-md-4" style="padding: 0!important;">
-                <div class="info">
-                  <h3 class="m-0">{{ coupling.childName }}</h3>
+                <div class="coupling-item">
+                  <h3 class="m-0 child-long">{{ coupling.childName }}</h3>
+                  <h3 class="m-0 child-medium">
+                    {{ coupling.childName.substring(0, 12) }}<span *ngIf="coupling.childName.length > 12">...</span>
+                  </h3>
                   <div class="item-actions">
                     <mat-icon class="delete" (click)="confirmDelete(coupling._id, deleteTypeEnum.Coupling)"
                       >delete</mat-icon
@@ -281,6 +296,12 @@
         </div>
       </mat-card-content>
     </mat-card>
+
+    <div class="view-more">
+      <button color="accent" (click)="loadMoreCouplings()" mat-raised-button [disabled]="isViewMoreCouplingsDisabled">
+        {{ 'button.viewMore' | translate }}
+      </button>
+    </div>
   </div>
 
   <div id="add-coupling-modal" *ngIf="couplingMother || couplingFather">
@@ -341,3 +362,7 @@
     </mat-card>
   </div>
 </div>
+
+<button id="top-button" *ngIf="showButton" color="accent" mat-raised-button (click)="scrollToTop()">
+  <i class="fas fa-angle-up"></i>
+</button>

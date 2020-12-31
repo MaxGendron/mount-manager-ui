@@ -1,7 +1,7 @@
 {
   "error": {
     "userNotfound": "Impossible de trouver votre compte, vérifiez vos informations d'identification et réessayez",
-    "unexpected": "Une erreur inattendue s'est produite, veuillez réessayer",
+    "unexpected": "Une erreur inattendue c'est produite, veuillez réessayer",
     "matchPassword": "Les mots de passe ne correspondent pas",
     "allFields": "Veuillez remplir tout les champs",
     "required": "{{input}} is required",
@@ -9,9 +9,9 @@
     "accountExist": "L'adresse courriel ou le nom de compte est déjà pris, veuillez réessayer",
     "emailExist": "L'adresse courriel spécifié existe déjà",
     "usernameExist": "Le nom d'utilisateur spécifié existe déjà",
-    "unexpectedUpdate": "Une erreur inattendue s'est produite en mettant a jour \"{{field}}\", veuillez réessayer",
+    "unexpectedUpdate": "Une erreur inattendue c'est produite en mettant a jour \"{{field}}\", veuillez réessayer",
     "updateEmpty": "Impossible de mettre à jour ce champ avec aucune valeur",
-    "unexpectedPleaseRefresh": "Une erreur inattendue s'est produite, veuillez rechargez la page",
+    "unexpectedPleaseRefresh": "Une erreur inattendue c'est produite, veuillez rechargez la page",
     "sameGender": "Impossible d'ajouter le même sexe",
     "notSameType": "Les types de montures ne sont pas les mêmes",
     "valueBetween": "La valeur doit être entre {{min}} et {{max}}",
@@ -29,7 +29,9 @@
     "dontDelete": "Ne pas supprimer",
     "filter": "Filtrer",
     "yes": "Oui",
-    "no": "Non"
+    "no": "Non",
+    "viewMore": "Voir plus",
+    "deleteAccount": "Supprimer le compte"
   },
   "form": {
     "username": "Nom de compte",
@@ -47,12 +49,12 @@
     "color": "Couleur",
     "sortField": "Trier par",
     "sortOrder": "Ordre de tri",
-    "fatherName": "Father name",
-    "motherName": "Mother name",
-    "childName": "Child name",
+    "fatherName": "Nom du père",
+    "motherName": "Nom de la mère",
+    "childName": "Nom de l'enfant",
     "maxNumberOfChild": "Nombre maximum d'enfant",
-    "hasMaxedChild": "A le maximum d'enfant",
-    "hasNoChild": "N'a pas d'enfant"
+    "hasMaxedChild": "Maximum d'enfants",
+    "hasNoChild": "Pas d'enfants"
   },
   "login": {
     "title": "Connexion",
@@ -72,7 +74,8 @@
     "updated": "{{field}} actualisé!",
     "showPassword": "Afficher les champs de mot de passe",
     "hidePassword": "Cacher les champs de mot de passe",
-    "accountSettings": "Paramètres du compte"
+    "accountSettings": "Paramètres du compte",
+    "deleteConfirmation": "Voulez-vous vraiment supprimer votre compte? Cette action est irréversible et toutes vos données seront perdues."
   },
   "mountTypeEnum": {
     "Dragodinde": "Dragodinde",
@@ -99,7 +102,8 @@
     "numberMount": "Nombre de montures",
     "couplingTitle": "Mes accouplements",
     "breedingTooltip": "Accoupler cette monture",
-    "createCouplingTitle": "Créer un accouplement"
+    "createCouplingTitle": "Créer un accouplement",
+    "total": "Total"
   },
   "addOrUpdateMount": {
     "titleUpdate": "Modifier {{name}}",

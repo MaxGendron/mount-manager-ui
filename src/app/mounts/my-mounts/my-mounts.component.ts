@@ -9,10 +9,10 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MountGenderCountResponseDto } from './../models/dtos/responses/mount-gender-count.response.dto';
 import { MountGenderEnum } from './../models/enum/mount-gender.enum';
 import { MountsService } from './../mounts.service';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
-import { MountResponseDto } from '../models/dtos/responses/mounts.response.dto';
+import { MountResponseDto } from '../models/dtos/responses/mount.response.dto';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
 import Swal from 'sweetalert2/src/sweetalert2.js';
@@ -22,6 +22,7 @@ import {
 } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
 import { MountColorsService } from '../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/accounts-settings.service';
+import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
 
 export enum DeleteTypeEnum {
   Mount,
@@ -35,16 +36,24 @@ export enum DeleteTypeEnum {
 })
 export class MyMountsComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
+  private limitIncrement: number = 20;
   currentLang: string;
   keys = Object.keys;
+  breedingTooltip: string;
+  mountsLimit: number = this.limitIncrement;
+  couplingsLimit: number = this.limitIncrement;
+  showButton: boolean = false;
+  isViewMoreMountsDisabled: boolean = false;
+  isViewMoreCouplingsDisabled: boolean = false;
+
   mountLoading = false;
   couplingLoading = false;
   createCouplingLoading = false;
+
   mountError: string;
   couplingError: string;
   createCouplingError: string;
   globalError: string;
-  breedingTooltip: string;
 
   mountsFiltersForm: FormGroup;
   couplingsFiltersForm: FormGroup;
@@ -71,6 +80,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     private accountsSettingsService: AccountsSettingsService,
     private couplingsService: CouplingsService,
     private fb: FormBuilder,
+    private scrollDispatcher: ScrollDispatcher,
+    private ngZone: NgZone,
     public dialog: MatDialog,
   ) {
     this.currentLang = translateService.currentLang;
@@ -99,10 +110,35 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    //Subscribe on scroll event to add "back to top button"
+    this.scrollDispatcher.scrolled().subscribe((data: CdkScrollable) => {
+      if (data.measureScrollOffset('top') > 1000) {
+        //Need to get into angular zone to use dataBindings
+        this.ngZone.run(() => {
+          this.showButton = true;
+        });
+      } else {
+        //Need to get into angular zone to use dataBindings
+        this.ngZone.run(() => {
+          this.showButton = false;
+        });
+      }
+    });
+  }
+
   async ngOnInit(): Promise<void> {
     try {
-      this.mounts = await this.mountsService.getMountForUserId().toPromise();
-      this.couplings = await this.couplingsService.getCouplingsForUserId().toPromise();
+      const mountsResponse = await this.mountsService.getMountForUserId().toPromise();
+      if (mountsResponse != null) {
+        this.mounts = mountsResponse.mounts;
+        this.setIsViewMoreMountsDisabled(mountsResponse.totalCount);
+      }
+      const couplingsResponse = await this.couplingsService.getCouplingsForUserId().toPromise();
+      if (couplingsResponse != null) {
+        this.couplings = couplingsResponse.couplings;
+        this.setIsViewMoreCouplingsDisabled(couplingsResponse.totalCount);
+      }
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
       this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
     } catch (e) {
@@ -129,6 +165,32 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
+  }
+
+  scrollToTop(): void {
+    /* I know this is ugly but it's the only solution I found.
+    I tried using a bunch of stuff including a ViewChild of the CdkScrollable
+    which got my object in it, but the scrollTo function did nothing.
+    I think it's because of the way the app is build with the sidenav etc.*/
+    for (const containers of this.scrollDispatcher.scrollContainers) {
+      for (const element of containers) {
+        if (element instanceof CdkScrollable) {
+          element.scrollTo({
+            top: 0,
+          });
+        }
+      }
+    }
+  }
+
+  handleMountError(): void {
+    this.mountError = this.translateService.instant('error.unexpected');
+    this.scrollToTop();
+  }
+
+  handleCouplingError(): void {
+    this.couplingError = this.translateService.instant('error.unexpected');
+    this.scrollToTop();
   }
 
   isMountButtonDisabled(): boolean {
@@ -202,7 +264,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.setMountGenderCounts();
         },
         () => {
-          this.mountError = this.translateService.instant('error.unexpected');
+          this.handleMountError();
         },
       ),
     );
@@ -216,16 +278,22 @@ export class MyMountsComponent implements OnInit, OnDestroy {
           this.couplings = this.couplings.filter(m => m._id !== couplingId);
         },
         () => {
-          this.mountError = this.translateService.instant('error.unexpected');
+          this.handleMountError();
         },
       ),
     );
   }
 
-  filterMounts() {
+  filterMounts(searchMountDto?: SearchMountDto): void {
     this.mountLoading = true;
     const filtersFormValue = this.mountsFiltersForm.value;
-    let searchMountDto = new SearchMountDto();
+    //If no dto passed, if means we come from the filter button, so we need to create the object
+    //& reset the mountsLimit.
+    //Otherwise we come from the "viewMore" button so we already have a dto
+    if (!searchMountDto) {
+      searchMountDto = new SearchMountDto();
+      this.resetMountsLimit();
+    }
 
     if (filtersFormValue.name) {
       searchMountDto.name = filtersFormValue.name;
@@ -254,22 +322,29 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.mountsService.getMountForUserId(searchMountDto).subscribe(
-        mounts => {
-          this.mounts = mounts;
+        response => {
+          this.mounts = response.mounts;
+          this.setIsViewMoreMountsDisabled(response.totalCount);
           this.mountLoading = false;
         },
         () => {
-          this.mountError = this.translateService.instant('error.unexpected');
+          this.handleMountError();
           this.mountLoading = false;
         },
       ),
     );
   }
 
-  filterCouplings() {
+  filterCouplings(searchCouplingDto?: SearchCouplingDto): void {
     this.couplingLoading = true;
     const filtersFormValue = this.couplingsFiltersForm.value;
-    let searchCouplingDto = new SearchCouplingDto();
+    //If no dto passed, if means we come from the filter button, so we need to create the object
+    //& reset the couplingsLimit.
+    //Otherwise we come from the "viewMore" button so we already have a dto
+    if (!searchCouplingDto) {
+      searchCouplingDto = new SearchCouplingDto();
+      this.resetCouplingsLimit();
+    }
 
     if (filtersFormValue.fatherName) {
       searchCouplingDto.fatherName = filtersFormValue.fatherName;
@@ -283,19 +358,20 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
     this.subscription.add(
       this.couplingsService.getCouplingsForUserId(searchCouplingDto).subscribe(
-        couplings => {
-          this.couplings = couplings;
+        response => {
+          this.couplings = response.couplings;
+          this.setIsViewMoreCouplingsDisabled(response.totalCount);
           this.couplingLoading = false;
         },
         () => {
-          this.couplingError = this.translateService.instant('error.unexpected');
+          this.handleCouplingError();
           this.couplingLoading = false;
         },
       ),
     );
   }
 
-  addToBreeding(mount: MountResponseDto) {
+  addToBreeding(mount: MountResponseDto): void {
     //Reset error message
     this.createCouplingError = null;
 
@@ -331,7 +407,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     }
   }
 
-  createCoupling() {
+  createCoupling(): void {
     this.createCouplingLoading = true;
     let createCouplingDto = new CreateCouplingDto();
     createCouplingDto.childName = this.couplingChildName;
@@ -363,21 +439,53 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     );
   }
 
-  deleteCouplingMother() {
+  deleteCouplingMother(): void {
     this.couplingMother = null;
     this.couplingChildName = this.couplingChildName = null;
     //Reset error message
     this.createCouplingError = null;
   }
 
-  deleteCouplingFather() {
+  deleteCouplingFather(): void {
     this.couplingFather = null;
     this.couplingChildName = this.couplingChildName = null;
     //Reset error message
     this.createCouplingError = null;
   }
 
-  private async setMountGenderCounts() {
+  loadMoreMounts(): void {
+    this.mountsLimit += this.limitIncrement;
+    let searchMountDto = new SearchMountDto();
+    searchMountDto.limit = this.mountsLimit;
+    this.filterMounts(searchMountDto);
+  }
+
+  loadMoreCouplings(): void {
+    this.couplingsLimit += this.limitIncrement;
+    let searchCouplingDto = new SearchCouplingDto();
+    searchCouplingDto.limit = this.mountsLimit;
+    this.filterCouplings(searchCouplingDto);
+  }
+
+  resetMountsLimit(): void {
+    this.mountsLimit = this.limitIncrement;
+  }
+
+  resetCouplingsLimit(): void {
+    this.couplingsLimit = this.limitIncrement;
+  }
+
+  //Set the variable based on totalCount vs array count
+  private setIsViewMoreMountsDisabled(totalCount: number) {
+    this.isViewMoreMountsDisabled = !(totalCount > this.mounts.length);
+  }
+
+  //Set the variable based on totalCount vs array count
+  private setIsViewMoreCouplingsDisabled(totalCount: number) {
+    this.isViewMoreCouplingsDisabled = !(totalCount > this.couplings.length);
+  }
+
+  private async setMountGenderCounts(): Promise<void> {
     try {
       this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
     } catch (e) {

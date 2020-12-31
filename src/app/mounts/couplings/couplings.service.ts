@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
+import { GetCouplingsReponseDto } from './models/dtos/responses/get-couplings.response.dto';
 
 @Injectable()
 export class CouplingsService {
@@ -14,8 +15,8 @@ export class CouplingsService {
 
   //UserId from the Auth Token
   //Can pass a search request if needed
-  getCouplingsForUserId(searchCouplingDto?: SearchCouplingDto): Observable<CouplingResponseDto[]> {
-    return this.http.get<CouplingResponseDto[]>(`${this.couplingEndpoint}find/user-id`, {
+  getCouplingsForUserId(searchCouplingDto?: SearchCouplingDto): Observable<GetCouplingsReponseDto> {
+    return this.http.get<GetCouplingsReponseDto>(`${this.couplingEndpoint}find/user-id`, {
       params: searchCouplingDto === undefined ? {} : JSON.parse(JSON.stringify(searchCouplingDto)),
     });
   }

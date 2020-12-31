@@ -1,3 +1,4 @@
+import { AuthService } from './../users/auth.service';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountsSettingsService } from './accounts-settings/accounts-settings.service';
@@ -12,6 +13,7 @@ import { UpdateAccountSettingsDto } from './accounts-settings/models/dtos/update
 import { ServerResponseDto } from './servers/models/dtos/responses/server.response.dto';
 import { ServersService } from './servers/servers.service';
 import { MountTypeEnum } from 'src/app/mounts/models/enum/mount-type.enum';
+import Swal from 'sweetalert2/src/sweetalert2.js';
 
 @Component({
   selector: 'app-my-account',
@@ -47,6 +49,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     private serverService: ServersService,
     private userService: UsersService,
     private fb: FormBuilder,
+    private authService: AuthService,
   ) {
     //Initialize the user form
     this.userForm = this.fb.group({
@@ -289,5 +292,37 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         ),
       );
     }
+  }
+
+  confirmDelete(): void {
+    Swal.fire({
+      title: this.translateService.instant('myAccount.deleteConfirmation'),
+      showDenyButton: true,
+      confirmButtonText: this.translateService.instant('button.dontDelete'),
+      denyButtonText: this.translateService.instant('button.delete'),
+    }).then(result => {
+      if (result.isDenied) {
+        this.deleteUser();
+      }
+    });
+  }
+
+  //Delete the user
+  deleteUser(): void {
+    this.subscription.add(
+      this.userService.deleteUser(this.userInfo._id).subscribe(
+        () => {
+          //User has been deleted, logout
+          this.authService.logout();
+        },
+        () => {
+          this.error = this.translateService.instant('error.unexpected');
+        },
+      ),
+    );
+  }
+
+  isDeleteButtonDisabled(): boolean {
+    return this.loading;
   }
 }
