@@ -22,6 +22,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
   langs: Lang[];
   private subscription: Subscription = new Subscription();
   color: string;
+  isContainerOpened: boolean = false;
+
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
@@ -43,12 +45,19 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.subscription.add(
       this.authService.currentUser.subscribe(() => {
         if (this.authService.currentUserValue !== null) {
+          var openSidenav: string = localStorage.getItem('openSidenav');
+          if (openSidenav === 'true') {
+            this.isContainerOpened = true;
+            localStorage.setItem('openSidenav', 'false');
+          }
           this.connectedUsername = this.authService.currentUserValue.username;
         } else {
           this.connectedUsername = null;
+          this.isContainerOpened = false;
         }
       }),
     );
+
     this.currentLang = this.translateService.currentLang;
     //TODO when more lang added
     this.langs = [
@@ -73,10 +82,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Only have 2 lang
-  //TODO when more lang added
   switchLang(): void {
     this.translateService.use(this.currentLang);
     localStorage.setItem('currentLang', JSON.stringify(this.currentLang));
+  }
+
+  loginEvent(event) {
+    console.log(event)
   }
 }

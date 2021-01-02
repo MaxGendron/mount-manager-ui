@@ -35,29 +35,29 @@
 </mat-toolbar>
 
 <mat-sidenav-container hasBackdrop="false">
-  <mat-sidenav #sidenav mode="over">
+  <mat-sidenav #sidenav mode="over" [(opened)]="isContainerOpened" disableClose>
     <div>
       <mat-list>
-        <mat-list-item matRipple [routerLink]="['my-account']" [matRippleColor]="color" (click)="sidenav.close()">
-          <mat-icon>account_circle</mat-icon>
-          <span>{{ 'navbar.account' | translate }}</span>
+        <mat-list-item matRipple [routerLink]="['my-account']" [matRippleColor]="color" (click)="sidenav.close()" class="row">
+          <mat-icon class="col-lg-2">account_circle</mat-icon>
+          <span class="col-lg-10">{{ 'navbar.account' | translate }}</span>
         </mat-list-item>
         <mat-divider></mat-divider>
-        <mat-list-item matRipple [routerLink]="['my-mounts']" [matRippleColor]="color" (click)="sidenav.close()">
-          <mat-icon>pets</mat-icon>
-          <span>{{ 'navbar.mounts' | translate }}</span>
+        <mat-list-item matRipple [routerLink]="['my-mounts']" [matRippleColor]="color" (click)="sidenav.close()" class="row">
+          <mat-icon class="col-lg-2">pets</mat-icon>
+          <span class="col-lg-10">{{ 'navbar.mounts' | translate }}</span>
         </mat-list-item>
         <mat-divider></mat-divider>
-        <mat-list-item matRipple [routerLink]="['bulk-add']" [matRippleColor]="color" (click)="sidenav.close()">
-          <mat-icon>add</mat-icon>
-          <span>{{ 'navbar.bulkAdd' | translate }}</span>
+        <mat-list-item matRipple [routerLink]="['bulk-add']" [matRippleColor]="color" (click)="sidenav.close()" class="row">
+          <mat-icon class="col-lg-2">add</mat-icon>
+          <span class="col-lg-10">{{ 'navbar.bulkAdd' | translate }}</span>
         </mat-list-item>
         <mat-divider></mat-divider>
       </mat-list>
     </div>
   </mat-sidenav>
 
-  <mat-sidenav-content (click)="sidenav.close()">
+  <mat-sidenav-content>
     <router-outlet></router-outlet>
   </mat-sidenav-content>
 </mat-sidenav-container>
