@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../users/login-dialog/login-dialog.component';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../environments/environment';
 
 export interface Lang {
   name: string;
@@ -23,6 +24,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   private subscription: Subscription = new Subscription();
   color: string;
   isContainerOpened: boolean = false;
+  appName: string = environment.appName;
 
   constructor(
     public authService: AuthService,
@@ -32,16 +34,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
-    /* Do a call to see if the token isn't expired.
-    If it is the jwtInterceptor will catch the error.
-    We do that here so on page that doesn't have call to the api we still
-    validate the user to update the navbar. */
-    try {
-      await this.usersService.validateJwtToken().toPromise();
-    } catch (error) {
-      //Do nothing on error
-    }
-
     this.subscription.add(
       this.authService.currentUser.subscribe(() => {
         if (this.authService.currentUserValue !== null) {
@@ -64,6 +56,16 @@ export class NavbarComponent implements OnInit, OnDestroy {
       { name: 'fr', displayName: 'Français' },
       { name: 'en', displayName: 'English' },
     ];
+
+    /* Do a call to see if the token isn't expired.
+    If it is the jwtInterceptor will catch the error.
+    We do that here so on page that doesn't have call to the api we still
+    validate the user to update the navbar. */
+    try {
+      await this.usersService.validateJwtToken().toPromise();
+    } catch (error) {
+      //Do nothing on error
+    }
   }
 
   ngOnDestroy(): void {
