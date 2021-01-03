@@ -3,7 +3,7 @@
     <mat-icon>menu</mat-icon>
   </button>
   <a class="pointer outline-none" [routerLink]="['']">
-    Mount Manager
+    {{appName}}
   </a>
   <span class="fill-remaining-space"></span>
   <mat-form-field appearance="none" id="lang-selector">
@@ -38,6 +38,10 @@
   <mat-sidenav #sidenav mode="over" [(opened)]="isContainerOpened" disableClose>
     <div>
       <mat-list>
+        <mat-list-item matRipple [routerLink]="['']" [matRippleColor]="color" (click)="sidenav.close()" class="row">
+          <mat-icon class="col-lg-2">home</mat-icon>
+          <span class="col-lg-10">{{ 'navbar.home' | translate }}</span>
+        </mat-list-item>
         <mat-list-item matRipple [routerLink]="['my-account']" [matRippleColor]="color" (click)="sidenav.close()" class="row">
           <mat-icon class="col-lg-2">account_circle</mat-icon>
           <span class="col-lg-10">{{ 'navbar.account' | translate }}</span>

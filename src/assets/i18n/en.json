@@ -39,8 +39,8 @@
     "usernameOrEmail": "Username or email",
     "password": "Password",
     "confirmPassword": "Confirm Password",
-    "mountTypes": "Mount Types in the breeding",
-    "igUsername": "In game Username",
+    "mountTypes": "Mount types in the breeding",
+    "igUsername": "In game username",
     "serverName": "Server name",
     "optional": "Optional",
     "name": "Name",
@@ -63,7 +63,8 @@
   "navbar": {
     "account": "My account",
     "mounts": "My mounts",
-    "bulkAdd": "Add mounts"
+    "bulkAdd": "Add mounts",
+    "home": "Home"
   },
   "register": {
     "title": "Register"
@@ -114,5 +115,19 @@
     "subtitle": "Use this page to create multiple mount at the same time",
     "addRow": "Add row",
     "success": "The mounts have been created, do you wanna go to \"My mounts\" page? Otherwise you'll stay on this one."
+  },
+  "index": {
+    "title": "Welcome to {{appName}} !",
+    "description": "{{appName}} allows you to manage your breeding by keeping track of your mounts and couplings while offering a speed of research non-existent in Dofus.",
+    "featureTitle": "Feature implemented:",
+    "feature1": "Decide which types of mounts are in your breeding",
+    "feature2": "Manage mounts & couplings",
+    "feature3": "Filter / search mounts & couplings",
+    "feature4": "Automatically pre-filled children name based on parents name when coupling",
+    "feature5": "Number of mounts in breeding grouped by type",
+    "futureTitle": "Future feature planned (maybe):",
+    "future1": "Income/Expenditure to calculate efficiency of your breeding",
+    "future2": "Some kind of trading mechanism with users of your server",
+    "future3": "More things maybe? Who knows 😶"
   }
 }

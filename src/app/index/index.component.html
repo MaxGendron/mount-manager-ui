@@ -1,0 +1,33 @@
+<div id="main-content">
+  <mat-card id="card">
+    <mat-card-header>
+      <mat-card-header>
+        <mat-card-title>
+          {{ 'index.title' | translate: { appName: appName } }}
+        </mat-card-title>
+      </mat-card-header>
+    </mat-card-header>
+    <mat-divider></mat-divider>
+    <mat-card-content>
+      <p style="margin-top: 8px;">
+        {{ 'index.description' | translate: { appName: appName } }}
+      </p>
+
+      <h3>{{ 'index.featureTitle' | translate }}</h3>
+      <ul>
+        <li>{{ 'index.feature1' | translate }}</li>
+        <li>{{ 'index.feature2' | translate }}</li>
+        <li>{{ 'index.feature3' | translate }}</li>
+        <li>{{ 'index.feature4' | translate }}</li>
+        <li>{{ 'index.feature5' | translate }}</li>
+      </ul>
+
+      <h3>{{ 'index.futureTitle' | translate }}</h3>
+      <ul>
+        <li>{{ 'index.future1' | translate }}</li>
+        <li>{{ 'index.future2' | translate }}</li>
+        <li>{{ 'index.future3' | translate }}</li>
+      </ul>
+    </mat-card-content>
+  </mat-card>
+</div>
