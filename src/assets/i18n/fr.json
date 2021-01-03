@@ -63,7 +63,7 @@
   "navbar": {
     "account": "Mon compte",
     "mounts": "Mes montures",
-    "bulkAdd": "Ajouter des montures",
+    "bulkAdd": "Ajouter plusieurs montures",
     "home": "Accueil"
   },
   "register": {
@@ -111,7 +111,7 @@
     "titleCreate": "Ajouter une nouvelle monture"
   },
   "bulkAdd": {
-    "title": "Ajouter des mountures",
+    "title": "Ajouter des montures",
     "subtitle": "Utilisez cette page pour créer plusieurs montures en même temps",
     "addRow": "Ajouter une rangée",
     "success": "Les montures ont été créées, voulez-vous aller à la page \"Mes montures\"? Sinon, vous resterez sur celle-ci."

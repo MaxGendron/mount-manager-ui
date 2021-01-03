@@ -63,7 +63,7 @@
   "navbar": {
     "account": "My account",
     "mounts": "My mounts",
-    "bulkAdd": "Add mounts",
+    "bulkAdd": "Add multiple mounts",
     "home": "Home"
   },
   "register": {
@@ -112,7 +112,7 @@
   },
   "bulkAdd": {
     "title": "Add mounts",
-    "subtitle": "Use this page to create multiple mount at the same time",
+    "subtitle": "Use this page to create multiple mounts at the same time",
     "addRow": "Add row",
     "success": "The mounts have been created, do you wanna go to \"My mounts\" page? Otherwise you'll stay on this one."
   },
