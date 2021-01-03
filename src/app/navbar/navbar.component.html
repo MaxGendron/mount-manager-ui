@@ -35,7 +35,7 @@
 </mat-toolbar>
 
 <mat-sidenav-container hasBackdrop="false">
-  <mat-sidenav #sidenav mode="over" [(opened)]="isContainerOpened" disableClose>
+  <mat-sidenav #sidenav autoFocus="false" mode="over" [(opened)]="isContainerOpened" disableClose>
     <div>
       <mat-list>
         <mat-list-item matRipple [routerLink]="['']" [matRippleColor]="color" (click)="sidenav.close()" class="row">
