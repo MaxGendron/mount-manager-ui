@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../users/login-dialog/login-dialog.component';
 import { Subscription } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { environment } from '../../environments/environment';
 
 export interface Lang {
   name: string;
@@ -22,6 +23,9 @@ export class NavbarComponent implements OnInit, OnDestroy {
   langs: Lang[];
   private subscription: Subscription = new Subscription();
   color: string;
+  isContainerOpened: boolean = false;
+  appName: string = environment.appName;
+
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
@@ -30,6 +34,29 @@ export class NavbarComponent implements OnInit, OnDestroy {
   ) {}
 
   async ngOnInit(): Promise<void> {
+    this.subscription.add(
+      this.authService.currentUser.subscribe(() => {
+        if (this.authService.currentUserValue !== null) {
+          var openSidenav: string = localStorage.getItem('openSidenav');
+          if (openSidenav === 'true') {
+            this.isContainerOpened = true;
+            localStorage.setItem('openSidenav', 'false');
+          }
+          this.connectedUsername = this.authService.currentUserValue.username;
+        } else {
+          this.connectedUsername = null;
+          this.isContainerOpened = false;
+        }
+      }),
+    );
+
+    this.currentLang = this.translateService.currentLang;
+    //TODO when more lang added
+    this.langs = [
+      { name: 'fr', displayName: 'Français' },
+      { name: 'en', displayName: 'English' },
+    ];
+
     /* Do a call to see if the token isn't expired.
     If it is the jwtInterceptor will catch the error.
     We do that here so on page that doesn't have call to the api we still
@@ -39,22 +66,6 @@ export class NavbarComponent implements OnInit, OnDestroy {
     } catch (error) {
       //Do nothing on error
     }
-
-    this.subscription.add(
-      this.authService.currentUser.subscribe(() => {
-        if (this.authService.currentUserValue !== null) {
-          this.connectedUsername = this.authService.currentUserValue.username;
-        } else {
-          this.connectedUsername = null;
-        }
-      }),
-    );
-    this.currentLang = this.translateService.currentLang;
-    //TODO when more lang added
-    this.langs = [
-      { name: 'fr', displayName: 'Français' },
-      { name: 'en', displayName: 'English' },
-    ];
   }
 
   ngOnDestroy(): void {
@@ -73,10 +84,12 @@ export class NavbarComponent implements OnInit, OnDestroy {
     });
   }
 
-  //Only have 2 lang
-  //TODO when more lang added
   switchLang(): void {
     this.translateService.use(this.currentLang);
     localStorage.setItem('currentLang', JSON.stringify(this.currentLang));
+  }
+
+  loginEvent(event) {
+    console.log(event)
   }
 }

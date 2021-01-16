@@ -63,7 +63,8 @@
   "navbar": {
     "account": "Mon compte",
     "mounts": "Mes montures",
-    "bulkAdd": "Ajouter des montures"
+    "bulkAdd": "Ajouter plusieurs montures",
+    "home": "Accueil"
   },
   "register": {
     "title": "Inscription"
@@ -110,9 +111,23 @@
     "titleCreate": "Ajouter une nouvelle monture"
   },
   "bulkAdd": {
-    "title": "Ajouter des mountures",
+    "title": "Ajouter des montures",
     "subtitle": "Utilisez cette page pour créer plusieurs montures en même temps",
     "addRow": "Ajouter une rangée",
     "success": "Les montures ont été créées, voulez-vous aller à la page \"Mes montures\"? Sinon, vous resterez sur celle-ci."
+  },
+  "index": {
+    "title": "Bienvenue sur {{appName}} !",
+    "description": "{{appName}} vous permet de gérer votre élevage en gardant une trace de vos montures et accouplements tout en offrant une rapidité de recherche inexistante dans Dofus.",
+    "featureTitle": "Fonctionnalité implémentée:",
+    "feature1": "Décidez quels types de montures de votre élevage",
+    "feature2": "Gérer les montures et les accouplements",
+    "feature3": "Filtrer / rechercher des montures et des accouplements",
+    "feature4": "Nom de l'enfant pré-rempli automatiquement en fonction du nom des parents lors de l'accouplement",
+    "feature5": "Nombre de montures dans l'élevage regroupées par type",
+    "futureTitle": "Fonctionnalité future prévue (peut-être):",
+    "future1": "Revenus / Dépenses pour calculer l'efficacité de votre élevage",
+    "future2": "Un mécanisme d'échange avec les utilisateurs de votre serveur",
+    "future3": "Plus de choses peut-être? Qui sait 😶"
   }
 }

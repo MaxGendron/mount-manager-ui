@@ -1,4 +1,6 @@
+import { TranslateService } from '@ngx-translate/core';
 import { Component, OnInit } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-index',
@@ -6,7 +8,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./index.component.scss'],
 })
 export class IndexComponent implements OnInit {
-  constructor() {}
+  appName: string = environment.appName;
+
+  constructor(private translateService: TranslateService) {}
 
   ngOnInit(): void {}
 }

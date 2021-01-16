@@ -25,6 +25,7 @@ export class AuthService {
   //Set the user in the localStorage & currentUser
   login(user: LoggedUserResponseDto): void {
     localStorage.setItem('currentUser', JSON.stringify(user));
+    localStorage.setItem('openSidenav', 'true');
     this.currentUserSubject.next(user);
     this.router.navigate(['my-account']);
   }
@@ -32,6 +33,7 @@ export class AuthService {
   //Remove user from localStorage
   logout(): void {
     localStorage.removeItem('currentUser');
+    localStorage.removeItem('openSidenav');
     this.currentUserSubject.next(null);
     this.router.navigate(['']);
   }
