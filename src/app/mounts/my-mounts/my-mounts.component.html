@@ -94,13 +94,13 @@
             </mat-form-field>
 
             <div class="col-lg-12 row">
-              <div class="col-lg-6" style="padding-left: 0!important;">
-                <mat-checkbox class="example-margin" formControlName="hasNoChild">{{
+              <div class="col-lg-6 p-0">
+                <mat-checkbox formControlName="hasNoChild">{{
                   'form.hasNoChild' | translate
                 }}</mat-checkbox>
               </div>
-              <div class="col-lg-6" style="padding-left: 0!important;">
-                <mat-checkbox class="example-margin" formControlName="hasMaxedChild">{{
+              <div class="col-lg-6 p-0">
+                <mat-checkbox formControlName="hasMaxedChild">{{
                   'form.hasMaxedChild' | translate
                 }}</mat-checkbox>
               </div>
@@ -228,8 +228,7 @@
           <div *ngFor="let coupling of couplings">
             <div class="row">
               <div
-                class="d-flex col-md-4"
-                style="padding: 0!important; border-right: 1px solid rgba(255, 255, 255, 0.12);"
+                class="d-flex col-md-4 coupling-image"
               >
                 <div class="img">
                   <img
@@ -253,8 +252,7 @@
                 </div>
               </div>
               <div
-                class="d-flex col-md-4"
-                style="padding: 0!important; border-right: 1px solid rgba(255, 255, 255, 0.12);"
+                class="d-flex col-md-4 coupling-image"
               >
                 <div class="img">
                   <img
@@ -277,7 +275,7 @@
                   <i *ngIf="coupling.father.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
                 </div>
               </div>
-              <div class="col-md-4" style="padding: 0!important;">
+              <div class="col-md-4 p-0">
                 <div class="coupling-item">
                   <h3 class="m-0 child-long">{{ coupling.childName }}</h3>
                   <h3 class="m-0 child-medium">
