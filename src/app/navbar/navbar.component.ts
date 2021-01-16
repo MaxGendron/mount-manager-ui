@@ -88,8 +88,4 @@ export class NavbarComponent implements OnInit, OnDestroy {
     this.translateService.use(this.currentLang);
     localStorage.setItem('currentLang', JSON.stringify(this.currentLang));
   }
-
-  loginEvent(event) {
-    console.log(event)
-  }
 }

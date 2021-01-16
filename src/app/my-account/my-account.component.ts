@@ -42,6 +42,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   igUsernameUpdated = false;
   serverNameUpdated = false;
   mountTypesUpdated = false;
+  autoFillChildNameUpdated = false;
 
   constructor(
     private translateService: TranslateService,
@@ -72,6 +73,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       igUsername: [''],
       serverName: [''],
       mountTypes: ['', Validators.required],
+      autoFillChildName: [false, Validators.required],
     });
   }
 
@@ -97,6 +99,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       igUsername: this.accountSettingsInfo.igUsername,
       serverName: this.accountSettingsInfo.serverName,
       mountTypes: this.accountSettingsInfo.mountTypes,
+      autoFillChildName: this.accountSettingsInfo.autoFillChildName,
     });
 
     //Listen on value changes to reset error & success message
@@ -111,6 +114,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       this.igUsernameUpdated = false;
       this.serverNameUpdated = false;
       this.mountTypesUpdated = false;
+      this.autoFillChildNameUpdated = false;
     });
 
     //Listen on value changes on the selects to call the update
@@ -119,6 +123,9 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     });
     this.accountSettingForm.get('mountTypes').valueChanges.subscribe(mountTypes => {
       this.updateMountTypes(mountTypes);
+    });
+    this.accountSettingForm.get('autoFillChildName').valueChanges.subscribe(autoFillChildName => {
+      this.updateAutoFillChildName(autoFillChildName);
     });
   }
 
@@ -287,6 +294,31 @@ export class MyAccountComponent implements OnInit, OnDestroy {
           () => {
             //Error handling
             const field = this.translateService.instant('form.mountTypes');
+            this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
+          },
+        ),
+      );
+    }
+  }
+
+  //Update AutoFillChildName field in accountSettings
+  updateAutoFillChildName(autoFillChildName: boolean): void {
+    //Only update if changed & valid
+    if (autoFillChildName !== this.accountSettingsInfo.autoFillChildName) {
+      const accountSettingsDto = new UpdateAccountSettingsDto();
+      accountSettingsDto.autoFillChildName = autoFillChildName;
+
+      this.subscription.add(
+        this.accountSettingsService.updateAccountSetting(accountSettingsDto, this.accountSettingsInfo._id).subscribe(
+          accountSettings => {
+            //Set accountSettingsInfo to new accountSettings
+            this.accountSettingsInfo = accountSettings;
+            //Add visual info to the user
+            this.autoFillChildNameUpdated = true;
+          },
+          () => {
+            //Error handling
+            const field = this.translateService.instant('form.autoFillChildNameUpdated');
             this.error = this.translateService.instant('error.unexpectedUpdate', { field: field });
           },
         ),
