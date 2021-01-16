@@ -4,4 +4,5 @@ export class UpdateAccountSettingsDto {
   igUsername?: string;
   serverName?: string;
   mountTypes?: MountTypeEnum[];
+  autoFillChildName: boolean;
 }

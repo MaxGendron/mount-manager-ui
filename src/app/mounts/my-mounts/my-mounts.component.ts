@@ -1,3 +1,4 @@
+import { AccountSettingsResponseDto } from './../../my-account/accounts-settings/models/dtos/responses/account-settings.response.dto';
 import { CreateCouplingDto } from './../couplings/models/dtos/create-coupling.dto';
 import { SearchCouplingDto } from './../couplings/models/dtos/search-coupling.dto';
 import { CouplingResponseDto } from './../couplings/models/dtos/responses/coupling.response.dto';
@@ -57,7 +58,6 @@ export class MyMountsComponent implements OnInit, OnDestroy {
 
   mountsFiltersForm: FormGroup;
   couplingsFiltersForm: FormGroup;
-  types: string[];
 
   mountGenderEnum = MountGenderEnum;
   mountSortFieldEnum = MountSortFieldEnum;
@@ -72,6 +72,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   couplingMother: MountResponseDto;
   couplingFather: MountResponseDto;
   couplingChildName: string;
+  accountSettings: AccountSettingsResponseDto;
 
   constructor(
     private translateService: TranslateService,
@@ -140,7 +141,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
         this.setIsViewMoreCouplingsDisabled(couplingsResponse.totalCount);
       }
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
-      this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise())?.mountTypes;
+      this.accountSettings = await this.accountsSettingsService.getAccountSettingByUserId().toPromise();
     } catch (e) {
       this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
@@ -213,7 +214,7 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       data: {
         mount: mount,
         colors: this.groupedColorDtos,
-        types: this.types,
+        types: this.accountSettings.mountTypes,
       },
       autoFocus: false,
     });
@@ -401,9 +402,15 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       }
     }
 
-    //If both parents selected, set childName
-    if (this.couplingFather && this.couplingMother) {
-      this.couplingChildName = this.couplingMother.name + this.couplingFather.name;
+    //If both parents selected, set childName. Also check if accountSettings allow it and if length <= 16
+    const childName = this.couplingMother.name + this.couplingFather.name;
+    if (
+      this.couplingFather &&
+      this.couplingMother &&
+      this.accountSettings.autoFillChildName &&
+      childName.length <= 16
+    ) {
+      this.couplingChildName = childName;
     }
   }
 

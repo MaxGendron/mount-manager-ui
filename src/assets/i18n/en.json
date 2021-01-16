@@ -54,7 +54,8 @@
     "childName": "Child name",
     "maxNumberOfChild": "Max number of child",
     "hasMaxedChild": "Maximum children",
-    "hasNoChild": "No children"
+    "hasNoChild": "No children",
+    "autoFillChildName": "Automatically fill the child's name"
   },
   "login": {
     "title": "Login",

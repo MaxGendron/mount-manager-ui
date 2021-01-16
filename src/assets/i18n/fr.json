@@ -54,7 +54,8 @@
     "childName": "Nom de l'enfant",
     "maxNumberOfChild": "Nombre maximum d'enfant",
     "hasMaxedChild": "Maximum d'enfants",
-    "hasNoChild": "Pas d'enfants"
+    "hasNoChild": "Pas d'enfants",
+    "autoFillChildName": "Remplir automatiquement le nom de l'enfant"
   },
   "login": {
     "title": "Connexion",

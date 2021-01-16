@@ -77,7 +77,7 @@
               <mat-label>{{ 'form.mountType' | translate }}</mat-label>
               <mat-select formControlName="type" name="type">
                 <mat-option>- - -</mat-option>
-                <mat-option *ngFor="let type of types" [value]="type">
+                <mat-option *ngFor="let type of accountSettings.mountTypes" [value]="type">
                   {{ 'mountTypeEnum.' + type | translate }}
                 </mat-option>
               </mat-select>
@@ -95,14 +95,10 @@
 
             <div class="col-lg-12 row">
               <div class="col-lg-6 p-0">
-                <mat-checkbox formControlName="hasNoChild">{{
-                  'form.hasNoChild' | translate
-                }}</mat-checkbox>
+                <mat-checkbox formControlName="hasNoChild">{{ 'form.hasNoChild' | translate }}</mat-checkbox>
               </div>
               <div class="col-lg-6 p-0">
-                <mat-checkbox formControlName="hasMaxedChild">{{
-                  'form.hasMaxedChild' | translate
-                }}</mat-checkbox>
+                <mat-checkbox formControlName="hasMaxedChild">{{ 'form.hasMaxedChild' | translate }}</mat-checkbox>
               </div>
             </div>
           </div>
@@ -227,9 +223,7 @@
         <div>
           <div *ngFor="let coupling of couplings">
             <div class="row">
-              <div
-                class="d-flex col-md-4 coupling-image"
-              >
+              <div class="d-flex col-md-4 coupling-image">
                 <div class="img">
                   <img
                     width="75"
@@ -251,9 +245,7 @@
                   <i *ngIf="coupling.mother.gender === mountGenderEnum.Male" class="fas fa-mars gender-icon"></i>
                 </div>
               </div>
-              <div
-                class="d-flex col-md-4 coupling-image"
-              >
+              <div class="d-flex col-md-4 coupling-image">
                 <div class="img">
                   <img
                     width="75"

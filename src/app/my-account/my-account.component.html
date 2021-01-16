@@ -161,6 +161,16 @@
               {{ 'error.updateEmpty' | translate }}
             </mat-error>
           </mat-form-field>
+
+          <div id="auto-fill-child-name" class="col-lg-6">
+            <mat-checkbox formControlName="autoFillChildName" name="autoFillChildName">
+              <span id="auto-fill-child-name-label">{{ 'form.autoFillChildName' | translate }}</span>
+            </mat-checkbox>
+            <br />
+            <mat-hint *ngIf="autoFillChildNameUpdated" class="success small">{{
+              'myAccount.updated' | translate: { field: 'form.autoFillChildName' | translate }
+            }}</mat-hint>
+          </div>
         </div>
       </form>
 

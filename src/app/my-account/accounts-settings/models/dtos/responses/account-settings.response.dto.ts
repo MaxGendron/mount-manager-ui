@@ -5,4 +5,5 @@ export interface AccountSettingsResponseDto {
   igUsername: string;
   serverName: string;
   mountTypes: MountTypeEnum[];
+  autoFillChildName: boolean;
 }
