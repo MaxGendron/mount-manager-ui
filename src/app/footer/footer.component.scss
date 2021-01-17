@@ -1,0 +1,12 @@
+@import '~@angular/material/theming';
+@import '../../main_theme.scss';
+
+footer {
+  z-index: 10;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: $primary;
+  text-align: center;
+  padding: 8px 0;
+}

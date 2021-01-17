@@ -1,3 +1,4 @@
+import { FooterComponent } from './../../footer/footer.component';
 import { AuthGuard } from './../../users/auth.guard';
 import { MyMountsComponent } from './../../mounts/my-mounts/my-mounts.component';
 import { NgModule } from '@angular/core';
@@ -26,7 +27,7 @@ const appRoutes: Routes = [
 ];
 
 @NgModule({
-  declarations: [],
+  declarations: [FooterComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -53,6 +54,7 @@ const appRoutes: Routes = [
     TranslateModule,
     RouterModule,
     AngularMaterialModule,
+    FooterComponent
   ],
 })
 export class SharedModule {}

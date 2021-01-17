@@ -132,5 +132,8 @@
     "future1": "Income/Expenditure to calculate efficiency of your breeding",
     "future2": "Some kind of trading mechanism with users of your server",
     "future3": "More things maybe? Who knows 😶"
+  },
+  "footer": {
+    "copyright": "© {{years}} Dofus Mount Manager. Some illustrations are the property of Ankama Studio and Dofus - All rights reserved."
   }
 }

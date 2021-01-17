@@ -132,5 +132,8 @@
     "future1": "Revenus / Dépenses pour calculer l'efficacité de votre élevage",
     "future2": "Un mécanisme d'échange avec les utilisateurs de votre serveur",
     "future3": "Plus de choses peut-être? Qui sait 😶"
+  },
+  "footer": {
+    "copyright": "© {{years}} Mount Manager. Certaines illustrations sont la propriété d'Ankama Studio et de Dofus - Tous droits réservés."
   }
 }
