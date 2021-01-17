@@ -16,6 +16,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ScrollingModule } from '@angular/cdk/scrolling';
+import {MatSlideToggleModule} from '@angular/material/slide-toggle';
 
 //Modules for all the imports related to angular material
 const angularMaterial = [
@@ -36,6 +37,7 @@ const angularMaterial = [
   MatTooltipModule,
   MatCheckboxModule,
   ScrollingModule,
+  MatSlideToggleModule
 ];
 
 @NgModule({

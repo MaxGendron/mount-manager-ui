@@ -163,9 +163,9 @@
           </mat-form-field>
 
           <div id="auto-fill-child-name" class="col-lg-6">
-            <mat-checkbox formControlName="autoFillChildName" name="autoFillChildName">
+            <mat-slide-toggle formControlName="autoFillChildName" name="autoFillChildName">
               <span id="auto-fill-child-name-label">{{ 'form.autoFillChildName' | translate }}</span>
-            </mat-checkbox>
+            </mat-slide-toggle>
             <br />
             <mat-hint *ngIf="autoFillChildNameUpdated" class="success small">{{
               'myAccount.updated' | translate: { field: 'form.autoFillChildName' | translate }
