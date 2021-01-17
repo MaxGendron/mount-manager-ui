@@ -23,7 +23,7 @@ export class NavbarComponent implements OnInit, OnDestroy {
   langs: Lang[];
   private subscription: Subscription = new Subscription();
   color: string;
-  isContainerOpened: boolean = true;
+  isContainerOpened: boolean = false;
   appName: string = environment.appName;
   githubTooltip: string;
   discordTooltip: string;
