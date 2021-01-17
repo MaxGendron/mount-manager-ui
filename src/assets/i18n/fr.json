@@ -65,7 +65,9 @@
     "account": "Mon compte",
     "mounts": "Mes montures",
     "bulkAdd": "Ajouter plusieurs montures",
-    "home": "Accueil"
+    "home": "Accueil",
+    "githubTooltip": "Voir mes autres projets ici",
+    "discordTooltip": "Contactez-moi: {{username}}"
   },
   "register": {
     "title": "Inscription"

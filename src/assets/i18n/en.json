@@ -65,7 +65,9 @@
     "account": "My account",
     "mounts": "My mounts",
     "bulkAdd": "Add multiple mounts",
-    "home": "Home"
+    "home": "Home",
+    "githubTooltip": "See my other projects here",
+    "discordTooltip": "Contact me: {{username}}"
   },
   "register": {
     "title": "Register"

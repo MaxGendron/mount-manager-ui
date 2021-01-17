@@ -80,3 +80,20 @@ a {
 #lang-selector {
   width: 120px;
 }
+
+#icon-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  padding-bottom: 16px;
+  text-align: center;
+  font-size: 32px;
+
+  mat-divider {
+    padding-top: 16px;
+  }
+
+  i {
+    padding: 0 16px;
+  }
+}
