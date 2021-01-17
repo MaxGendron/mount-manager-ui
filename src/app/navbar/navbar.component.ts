@@ -4,7 +4,7 @@ import { AuthService } from '../users/auth.service';
 import { MatDialog } from '@angular/material/dialog';
 import { LoginDialogComponent } from '../users/login-dialog/login-dialog.component';
 import { Subscription } from 'rxjs';
-import { TranslateService } from '@ngx-translate/core';
+import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { environment } from '../../environments/environment';
 
 export interface Lang {
@@ -25,13 +25,20 @@ export class NavbarComponent implements OnInit, OnDestroy {
   color: string;
   isContainerOpened: boolean = false;
   appName: string = environment.appName;
+  githubTooltip: string;
+  discordTooltip: string;
 
   constructor(
     public authService: AuthService,
     public dialog: MatDialog,
     private translateService: TranslateService,
     private usersService: UsersService,
-  ) {}
+  ) {
+    translateService.onLangChange.subscribe((e: LangChangeEvent) => {
+      this.githubTooltip = this.translateService.instant('navbar.githubTooltip', { username : 'Torbraw#7689'});
+      this.discordTooltip = this.translateService.instant('navbar.discordTooltip', { username : 'Torbraw#7689'});
+    });
+  }
 
   async ngOnInit(): Promise<void> {
     this.subscription.add(
