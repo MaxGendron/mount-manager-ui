@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "format": "prettier --write \"src/**/*.ts\" \"src/**/*.html\" \"src/**/*.scss\"",
-    "postinstall": "ngcc"
+    "postinstall": "ngcc",
+    "build:prod": "(if exist ..\\mount-manager-server\\public rmdir ..\\mount-manager-server\\public /s /q) && ng build --prod && move dist/mount-manager-ui ..\\mount-manager-server\\public"
   },
   "private": true,
   "dependencies": {
