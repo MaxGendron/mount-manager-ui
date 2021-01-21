@@ -77,9 +77,11 @@
               <mat-label>{{ 'form.mountType' | translate }}</mat-label>
               <mat-select formControlName="type" name="type">
                 <mat-option>- - -</mat-option>
-                <mat-option *ngFor="let type of accountSettings.mountTypes" [value]="type">
-                  {{ 'mountTypeEnum.' + type | translate }}
-                </mat-option>
+                <div *ngIf="accountSettings">
+                  <mat-option *ngFor="let type of accountSettings.mountTypes" [value]="type">
+                    {{ 'mountTypeEnum.' + type | translate }}
+                  </mat-option>
+                </div>
               </mat-select>
             </mat-form-field>
 
