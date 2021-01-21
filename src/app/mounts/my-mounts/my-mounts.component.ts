@@ -10,7 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MountGenderCountResponseDto } from './../models/dtos/responses/mount-gender-count.response.dto';
 import { MountGenderEnum } from './../models/enum/mount-gender.enum';
 import { MountsService } from './../mounts.service';
-import { Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mount.response.dto';
@@ -35,7 +35,7 @@ export enum DeleteTypeEnum {
   templateUrl: './my-mounts.component.html',
   styleUrls: ['./my-mounts.component.scss'],
 })
-export class MyMountsComponent implements OnInit, OnDestroy {
+export class MyMountsComponent implements OnDestroy, AfterViewInit {
   private subscription: Subscription = new Subscription();
   private limitIncrement: number = 20;
   currentLang: string;
@@ -44,8 +44,8 @@ export class MyMountsComponent implements OnInit, OnDestroy {
   mountsLimit: number = this.limitIncrement;
   couplingsLimit: number = this.limitIncrement;
   showButton: boolean = false;
-  isViewMoreMountsDisabled: boolean = false;
-  isViewMoreCouplingsDisabled: boolean = false;
+  isViewMoreMountsDisabled: boolean = true;
+  isViewMoreCouplingsDisabled: boolean = true;
 
   mountLoading = false;
   couplingLoading = false;
@@ -109,26 +109,25 @@ export class MyMountsComponent implements OnInit, OnDestroy {
       motherName: [''],
       childName: [''],
     });
-  }
 
-  ngAfterViewInit(): void {
-    //Subscribe on scroll event to add "back to top button"
-    this.scrollDispatcher.scrolled().subscribe((data: CdkScrollable) => {
-      if (data.measureScrollOffset('top') > 1000) {
-        //Need to get into angular zone to use dataBindings
-        this.ngZone.run(() => {
-          this.showButton = true;
-        });
-      } else {
-        //Need to get into angular zone to use dataBindings
-        this.ngZone.run(() => {
-          this.showButton = false;
-        });
+    //Listen on value changes on type to reset value of color and reset currentColors
+    this.mountsFiltersForm.get('type').valueChanges.subscribe(type => {
+      this.mountsFiltersForm.get('colorId').setValue('');
+      if (type) {
+        this.setCurrentColors(type);
       }
+    });
+
+    //Listen on value changes to reset error message
+    this.mountsFiltersForm.valueChanges.subscribe(() => {
+      this.mountError = '';
+    });
+    this.couplingsFiltersForm.valueChanges.subscribe(() => {
+      this.couplingError = '';
     });
   }
 
-  async ngOnInit(): Promise<void> {
+  async ngAfterViewInit(): Promise<void> {
     try {
       const mountsResponse = await this.mountsService.getMountForUserId().toPromise();
       if (mountsResponse != null) {
@@ -147,20 +146,19 @@ export class MyMountsComponent implements OnInit, OnDestroy {
     }
     this.setMountGenderCounts();
 
-    //Listen on value changes on type to reset value of color and reset currentColors
-    this.mountsFiltersForm.get('type').valueChanges.subscribe(type => {
-      this.mountsFiltersForm.get('colorId').setValue('');
-      if (type) {
-        this.setCurrentColors(type);
+    //Subscribe on scroll event to add "back to top button"
+    this.scrollDispatcher.scrolled().subscribe((data: CdkScrollable) => {
+      if (data.measureScrollOffset('top') > 1000) {
+        //Need to get into angular zone to use dataBindings
+        this.ngZone.run(() => {
+          this.showButton = true;
+        });
+      } else {
+        //Need to get into angular zone to use dataBindings
+        this.ngZone.run(() => {
+          this.showButton = false;
+        });
       }
-    });
-
-    //Listen on value changes to reset error message
-    this.mountsFiltersForm.valueChanges.subscribe(() => {
-      this.mountError = '';
-    });
-    this.couplingsFiltersForm.valueChanges.subscribe(() => {
-      this.couplingError = '';
     });
   }
 

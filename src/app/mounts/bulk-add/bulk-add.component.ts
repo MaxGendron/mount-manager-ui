@@ -3,7 +3,7 @@ import { MountColorsService } from './../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/accounts-settings.service';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { MountsService } from './../mounts.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MountGenderEnum } from '../models/enum/mount-gender.enum';
@@ -20,12 +20,13 @@ import Swal from 'sweetalert2/src/sweetalert2.js';
   templateUrl: './bulk-add.component.html',
   styleUrls: ['./bulk-add.component.scss'],
 })
-export class BulkAddComponent implements OnInit, OnDestroy {
+export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
   private subscription: Subscription = new Subscription();
   currentLang: string;
   loading: boolean;
   error: string;
   keys = Object.keys;
+  globalError: string;
 
   mounts = new FormArray([]);
   types: string[];
@@ -46,18 +47,25 @@ export class BulkAddComponent implements OnInit, OnDestroy {
   ) {
     this.currentLang = translateService.currentLang;
     translateService.onLangChange.subscribe((e: LangChangeEvent) => (this.currentLang = e.lang));
-  }
-
-  async ngOnInit(): Promise<void> {
-    this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise()).mountTypes;
-    this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
-    //Add some items to the array
-    this.initializeMountsArray();
 
     //Listen on value changes to reset error message
     this.mounts.valueChanges.subscribe(() => {
       this.error = '';
     });
+  }
+
+  ngOnInit(): void {
+    //Add some items to the array
+    this.initializeMountsArray();
+  }
+
+  async ngAfterViewInit(): Promise<void> {
+    try {
+      this.types = (await this.accountsSettingsService.getAccountSettingByUserId().toPromise()).mountTypes;
+      this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
+    } catch (e) {
+      this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
+    }
   }
 
   ngOnDestroy(): void {

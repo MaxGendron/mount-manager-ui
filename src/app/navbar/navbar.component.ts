@@ -35,8 +35,8 @@ export class NavbarComponent implements OnInit, OnDestroy {
     private usersService: UsersService,
   ) {
     translateService.onLangChange.subscribe((e: LangChangeEvent) => {
-      this.githubTooltip = this.translateService.instant('navbar.githubTooltip', { username : 'Torbraw#7689'});
-      this.discordTooltip = this.translateService.instant('navbar.discordTooltip', { username : 'Torbraw#7689'});
+      this.githubTooltip = this.translateService.instant('navbar.githubTooltip', { username: 'Torbraw#7689' });
+      this.discordTooltip = this.translateService.instant('navbar.discordTooltip', { username: 'Torbraw#7689' });
     });
   }
 
