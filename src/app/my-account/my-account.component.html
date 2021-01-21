@@ -7,185 +7,187 @@
     </mat-card-header>
     <mat-divider></mat-divider>
     <mat-card-content>
-      <div *ngIf="error" class="mt-3">
-        <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
-      </div>
-
-      <h2 class="section-title">{{ 'myAccount.accountInfo' | translate }}</h2>
-
-      <!--NgIf needed because we initialize on init instead on constructor-->
-      <form [formGroup]="userForm" (ngSubmit)="updatePassword()">
-        <div class="row">
-          <mat-form-field appearance="standard" class="col-lg-6">
-            <mat-label>{{ 'form.username' | translate }}</mat-label>
-            <input
-              (blur)="updateUsername($event.target)"
-              (keydown.enter)="$event.target.blur()"
-              formControlName="username"
-              type="text"
-              name="username"
-              matInput
-              required
-            />
-            <mat-hint *ngIf="usernameUpdated" class="success small">{{
-              'myAccount.updated' | translate: { field: 'form.username' | translate }
-            }}</mat-hint>
-            <mat-error *ngIf="userForm.get('username').hasError('exist')">
-              {{ 'error.usernameExist' | translate }}
-            </mat-error>
-            <mat-error *ngIf="userForm.get('username').hasError('required')">
-              {{ 'error.updateEmpty' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <mat-form-field appearance="standard" class="col-lg-6">
-            <mat-label>{{ 'form.email' | translate }}</mat-label>
-            <input
-              (blur)="updateEmail($event.target)"
-              (keydown.enter)="$event.target.blur()"
-              formControlName="email"
-              type="email"
-              name="email"
-              matInput
-              required
-            />
-            <mat-hint *ngIf="emailUpdated" class="success small">{{
-              'myAccount.updated' | translate: { field: 'form.email' | translate }
-            }}</mat-hint>
-            <mat-error *ngIf="userForm.get('email').hasError('pattern')">
-              {{ 'error.invalidEmail' | translate }}
-            </mat-error>
-            <mat-error *ngIf="userForm.get('email').hasError('exist')">
-              {{ 'error.emailExist' | translate }}
-            </mat-error>
-            <mat-error *ngIf="userForm.get('email').hasError('required')">
-              {{ 'error.updateEmpty' | translate }}
-            </mat-error>
-          </mat-form-field>
+      <mat-spinner *ngIf="initialize; else content" class="initialize-spinner" color="accent"></mat-spinner>
+      <ng-template #content>
+        <div *ngIf="error" class="mt-3">
+          <span class="warning"> <i class="fas fa-exclamation-circle"></i>&nbsp;{{ error }} </span>
         </div>
+        <h2 class="section-title">{{ 'myAccount.accountInfo' | translate }}</h2>
 
-        <span id="show-password" (click)="togglePassword()">
-          {{ (showPassword ? 'myAccount.hidePassword' : 'myAccount.showPassword') | translate }}
-        </span>
-
-        <div *ngIf="showPassword" formGroupName="passwords">
+        <!--NgIf needed because we initialize on init instead on constructor-->
+        <form [formGroup]="userForm" (ngSubmit)="updatePassword()">
           <div class="row">
             <mat-form-field appearance="standard" class="col-lg-6">
-              <mat-label>{{ 'form.password' | translate }}</mat-label>
-              <input formControlName="password" type="password" name="password" matInput />
-              <mat-hint *ngIf="passwordUpdated" class="success small">{{
-                'myAccount.updated' | translate: { field: 'form.password' | translate }
+              <mat-label>{{ 'form.username' | translate }}</mat-label>
+              <input
+                (blur)="updateUsername($event.target)"
+                (keydown.enter)="$event.target.blur()"
+                formControlName="username"
+                type="text"
+                name="username"
+                matInput
+                required
+              />
+              <mat-hint *ngIf="usernameUpdated" class="success small">{{
+                'myAccount.updated' | translate: { field: 'form.username' | translate }
               }}</mat-hint>
-              <mat-error
-                *ngIf="
-                  userForm
-                    .get('passwords')
-                    .get('password')
-                    .hasError('required')
-                "
-              >
-                {{ 'error.required' | translate: { input: 'form.password' | translate } }}
+              <mat-error *ngIf="userForm.get('username').hasError('exist')">
+                {{ 'error.usernameExist' | translate }}
+              </mat-error>
+              <mat-error *ngIf="userForm.get('username').hasError('required')">
+                {{ 'error.updateEmpty' | translate }}
               </mat-error>
             </mat-form-field>
 
             <mat-form-field appearance="standard" class="col-lg-6">
-              <mat-label>{{ 'form.confirmPassword' | translate }}</mat-label>
+              <mat-label>{{ 'form.email' | translate }}</mat-label>
               <input
-                [errorStateMatcher]="passwordMatcher"
-                formControlName="confirmPassword"
-                type="confirmPassword"
-                name="confirmPassword"
+                (blur)="updateEmail($event.target)"
+                (keydown.enter)="$event.target.blur()"
+                formControlName="email"
+                type="email"
+                name="email"
                 matInput
+                required
               />
-              <mat-error *ngIf="userForm.get('passwords').hasError('notSame')">
-                {{ 'error.matchPassword' | translate }}
+              <mat-hint *ngIf="emailUpdated" class="success small">{{
+                'myAccount.updated' | translate: { field: 'form.email' | translate }
+              }}</mat-hint>
+              <mat-error *ngIf="userForm.get('email').hasError('pattern')">
+                {{ 'error.invalidEmail' | translate }}
+              </mat-error>
+              <mat-error *ngIf="userForm.get('email').hasError('exist')">
+                {{ 'error.emailExist' | translate }}
+              </mat-error>
+              <mat-error *ngIf="userForm.get('email').hasError('required')">
+                {{ 'error.updateEmpty' | translate }}
               </mat-error>
             </mat-form-field>
           </div>
-          <div align="right">
-            <button type="submit" color="accent" mat-raised-button [disabled]="isPasswordButtonDisabled()">
-              {{ 'button.changePassword' | translate }}
-              <!-- <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i> -->
-            </button>
+
+          <span id="show-password" (click)="togglePassword()">
+            {{ (showPassword ? 'myAccount.hidePassword' : 'myAccount.showPassword') | translate }}
+          </span>
+
+          <div *ngIf="showPassword" formGroupName="passwords">
+            <div class="row">
+              <mat-form-field appearance="standard" class="col-lg-6">
+                <mat-label>{{ 'form.password' | translate }}</mat-label>
+                <input formControlName="password" type="password" name="password" matInput />
+                <mat-hint *ngIf="passwordUpdated" class="success small">{{
+                  'myAccount.updated' | translate: { field: 'form.password' | translate }
+                }}</mat-hint>
+                <mat-error
+                  *ngIf="
+                    userForm
+                      .get('passwords')
+                      .get('password')
+                      .hasError('required')
+                  "
+                >
+                  {{ 'error.required' | translate: { input: 'form.password' | translate } }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field appearance="standard" class="col-lg-6">
+                <mat-label>{{ 'form.confirmPassword' | translate }}</mat-label>
+                <input
+                  [errorStateMatcher]="passwordMatcher"
+                  formControlName="confirmPassword"
+                  type="confirmPassword"
+                  name="confirmPassword"
+                  matInput
+                />
+                <mat-error *ngIf="userForm.get('passwords').hasError('notSame')">
+                  {{ 'error.matchPassword' | translate }}
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div align="right">
+              <button type="submit" color="accent" mat-raised-button [disabled]="isPasswordButtonDisabled()">
+                {{ 'button.changePassword' | translate }}
+                <!-- <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i> -->
+              </button>
+            </div>
           </div>
-        </div>
-      </form>
+        </form>
 
-      <h2 class="section-title">{{ 'myAccount.accountSettings' | translate }}</h2>
+        <h2 class="section-title">{{ 'myAccount.accountSettings' | translate }}</h2>
 
-      <!--NgIf needed because we initialize on init instead on constructor-->
-      <form [formGroup]="accountSettingForm">
-        <div class="row">
-          <mat-form-field appearance="standard" class="col-lg-6">
-            <mat-label>{{ 'form.igUsername' | translate }} ({{ 'form.optional' | translate }})</mat-label>
-            <input
-              (blur)="updateIgUsername($event.target)"
-              (keydown.enter)="$event.target.blur()"
-              formControlName="igUsername"
-              type="text"
-              name="igUsername"
-              matInput
-            />
-            <mat-hint *ngIf="igUsernameUpdated" class="success small">{{
-              'myAccount.updated' | translate: { field: 'form.igUsername' | translate }
-            }}</mat-hint>
-          </mat-form-field>
+        <!--NgIf needed because we initialize on init instead on constructor-->
+        <form [formGroup]="accountSettingForm">
+          <div class="row">
+            <mat-form-field appearance="standard" class="col-lg-6">
+              <mat-label>{{ 'form.igUsername' | translate }} ({{ 'form.optional' | translate }})</mat-label>
+              <input
+                (blur)="updateIgUsername($event.target)"
+                (keydown.enter)="$event.target.blur()"
+                formControlName="igUsername"
+                type="text"
+                name="igUsername"
+                matInput
+              />
+              <mat-hint *ngIf="igUsernameUpdated" class="success small">{{
+                'myAccount.updated' | translate: { field: 'form.igUsername' | translate }
+              }}</mat-hint>
+            </mat-form-field>
 
-          <mat-form-field appearance="standard" class="col-lg-6">
-            <mat-label>{{ 'form.serverName' | translate }} ({{ 'form.optional' | translate }})</mat-label>
-            <!--Call update on select-->
-            <mat-select formControlName="serverName" name="serverName">
-              <mat-option>- - -</mat-option>
-              <mat-option *ngFor="let server of servers" [value]="server.serverName">{{
-                server.serverName
-              }}</mat-option>
-            </mat-select>
-            <mat-hint *ngIf="serverNameUpdated" class="success small">{{
-              'myAccount.updated' | translate: { field: 'form.serverName' | translate }
-            }}</mat-hint>
-          </mat-form-field>
-        </div>
-
-        <div class="row">
-          <mat-form-field appearance="standard" class="col-lg-6">
-            <mat-label>{{ 'form.mountTypes' | translate }}</mat-label>
-            <mat-select formControlName="mountTypes" name="mountTypes" multiple required>
-              <mat-option *ngFor="let mountType of keys(mountTypes)" [value]="mountTypes[mountType]">
-                {{ 'mountTypeEnum.' + mountType | translate }}
-              </mat-option>
-            </mat-select>
-            <mat-hint *ngIf="mountTypesUpdated" class="success small">{{
-              'myAccount.updated' | translate: { field: 'form.mountTypes' | translate }
-            }}</mat-hint>
-            <mat-error *ngIf="accountSettingForm.get('mountTypes').hasError('required')">
-              {{ 'error.updateEmpty' | translate }}
-            </mat-error>
-          </mat-form-field>
-
-          <div id="auto-fill-child-name" class="col-lg-6">
-            <mat-slide-toggle formControlName="autoFillChildName" name="autoFillChildName">
-              <span id="auto-fill-child-name-label">{{ 'form.autoFillChildName' | translate }}</span>
-            </mat-slide-toggle>
-            <br />
-            <mat-hint *ngIf="autoFillChildNameUpdated" class="success small">{{
-              'myAccount.updated' | translate: { field: 'form.autoFillChildName' | translate }
-            }}</mat-hint>
+            <mat-form-field appearance="standard" class="col-lg-6">
+              <mat-label>{{ 'form.serverName' | translate }} ({{ 'form.optional' | translate }})</mat-label>
+              <!--Call update on select-->
+              <mat-select formControlName="serverName" name="serverName">
+                <mat-option>- - -</mat-option>
+                <mat-option *ngFor="let server of servers" [value]="server.serverName">{{
+                  server.serverName
+                }}</mat-option>
+              </mat-select>
+              <mat-hint *ngIf="serverNameUpdated" class="success small">{{
+                'myAccount.updated' | translate: { field: 'form.serverName' | translate }
+              }}</mat-hint>
+            </mat-form-field>
           </div>
-        </div>
-      </form>
 
-      <div align="end">
-        <button
-          (click)="confirmDelete()"
-          color="warn"
-          id="delete-account"
-          mat-raised-button
-          [disabled]="isDeleteButtonDisabled()"
-        >
-          {{ 'button.deleteAccount' | translate }}
-          <!-- <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i> -->
-        </button>
-      </div>
+          <div class="row">
+            <mat-form-field appearance="standard" class="col-lg-6">
+              <mat-label>{{ 'form.mountTypes' | translate }}</mat-label>
+              <mat-select formControlName="mountTypes" name="mountTypes" multiple required>
+                <mat-option *ngFor="let mountType of keys(mountTypes)" [value]="mountTypes[mountType]">
+                  {{ 'mountTypeEnum.' + mountType | translate }}
+                </mat-option>
+              </mat-select>
+              <mat-hint *ngIf="mountTypesUpdated" class="success small">{{
+                'myAccount.updated' | translate: { field: 'form.mountTypes' | translate }
+              }}</mat-hint>
+              <mat-error *ngIf="accountSettingForm.get('mountTypes').hasError('required')">
+                {{ 'error.updateEmpty' | translate }}
+              </mat-error>
+            </mat-form-field>
+
+            <div id="auto-fill-child-name" class="col-lg-6">
+              <mat-slide-toggle formControlName="autoFillChildName" name="autoFillChildName">
+                <span id="auto-fill-child-name-label">{{ 'form.autoFillChildName' | translate }}</span>
+              </mat-slide-toggle>
+              <br />
+              <mat-hint *ngIf="autoFillChildNameUpdated" class="success small">{{
+                'myAccount.updated' | translate: { field: 'form.autoFillChildName' | translate }
+              }}</mat-hint>
+            </div>
+          </div>
+        </form>
+
+        <div align="end">
+          <button
+            (click)="confirmDelete()"
+            color="warn"
+            id="delete-account"
+            mat-raised-button
+            [disabled]="isDeleteButtonDisabled()"
+          >
+            {{ 'button.deleteAccount' | translate }}
+            <!-- <i *ngIf="loading" class="fas fa-circle-notch fa-spin"></i> -->
+          </button>
+        </div>
+      </ng-template>
     </mat-card-content>
   </mat-card>
 </div>

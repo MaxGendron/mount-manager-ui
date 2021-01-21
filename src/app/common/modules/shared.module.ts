@@ -54,7 +54,7 @@ const appRoutes: Routes = [
     TranslateModule,
     RouterModule,
     AngularMaterialModule,
-    FooterComponent
+    FooterComponent,
   ],
 })
 export class SharedModule {}

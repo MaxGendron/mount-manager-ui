@@ -1,5 +1,5 @@
 import { AuthService } from './../users/auth.service';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnDestroy, AfterViewInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AccountsSettingsService } from './accounts-settings/accounts-settings.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -20,13 +20,14 @@ import Swal from 'sweetalert2/src/sweetalert2.js';
   templateUrl: './my-account.component.html',
   styleUrls: ['./my-account.component.scss'],
 })
-export class MyAccountComponent implements OnInit, OnDestroy {
+export class MyAccountComponent implements OnDestroy, AfterViewInit {
   private subscription: Subscription = new Subscription();
   error: string;
   loading = false;
   showPassword = false;
   mountTypes = MountTypeEnum;
   keys = Object.keys;
+  initialize = true;
 
   passwordMatcher = new PasswordErrorStateMatcher();
   userForm: FormGroup;
@@ -75,32 +76,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       mountTypes: ['', Validators.required],
       autoFillChildName: [false, Validators.required],
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
-  async ngOnInit(): Promise<void> {
-    try {
-      //Get the connected user
-      this.userInfo = await this.userService.getUserByUserId().toPromise();
-      //Get the accountsSettings
-      this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
-      //Get the servers
-      this.servers = await this.serverService.getServers().toPromise();
-    } catch (e) {
-      this.error = this.translateService.instant('error.unexpectedPleaseRefresh');
-    }
-
-    //Set value to both forms
-    this.userForm.patchValue({ username: this.userInfo.username, email: this.userInfo.email });
-    this.accountSettingForm.patchValue({
-      igUsername: this.accountSettingsInfo.igUsername,
-      serverName: this.accountSettingsInfo.serverName,
-      mountTypes: this.accountSettingsInfo.mountTypes,
-      autoFillChildName: this.accountSettingsInfo.autoFillChildName,
-    });
 
     //Listen on value changes to reset error & success message
     this.userForm.valueChanges.subscribe(() => {
@@ -127,6 +102,34 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     this.accountSettingForm.get('autoFillChildName').valueChanges.subscribe(autoFillChildName => {
       this.updateAutoFillChildName(autoFillChildName);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
+
+  async ngAfterViewInit(): Promise<void> {
+    try {
+      //Get the connected user
+      this.userInfo = await this.userService.getUserByUserId().toPromise();
+      //Get the accountsSettings
+      this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
+      //Get the servers
+      this.servers = await this.serverService.getServers().toPromise();
+    } catch (e) {
+      this.error = this.translateService.instant('error.unexpectedPleaseRefresh');
+    }
+
+    //Set value to both forms
+    this.userForm.patchValue({ username: this.userInfo.username, email: this.userInfo.email });
+    this.accountSettingForm.patchValue({
+      igUsername: this.accountSettingsInfo.igUsername,
+      serverName: this.accountSettingsInfo.serverName,
+      mountTypes: this.accountSettingsInfo.mountTypes,
+      autoFillChildName: this.accountSettingsInfo.autoFillChildName,
+    });
+
+    this.initialize = false;
   }
 
   isPasswordButtonDisabled(): boolean {
