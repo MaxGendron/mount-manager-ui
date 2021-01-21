@@ -50,7 +50,6 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
   mountLoading = false;
   couplingLoading = false;
   createCouplingLoading = false;
-  initialize = true;
 
   mountError: string;
   couplingError: string;
@@ -161,8 +160,6 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
         });
       }
     });
-
-    this.initialize = false;
   }
 
   ngOnDestroy(): void {
