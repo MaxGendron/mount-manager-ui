@@ -64,11 +64,11 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
   sortOrderEnum = SortOrderEnum;
   deleteTypeEnum = DeleteTypeEnum;
 
-  mounts: MountResponseDto[] = new Array();
+  mounts: MountResponseDto[];
   currentColors: MountColorDto[];
   mountGenderCounts: MountGenderCountResponseDto[];
   groupedColorDtos: MountColorGroupedByResponseDto[];
-  couplings: CouplingResponseDto[] = new Array();
+  couplings: CouplingResponseDto[];
   couplingMother: MountResponseDto;
   couplingFather: MountResponseDto;
   couplingChildName: string;
