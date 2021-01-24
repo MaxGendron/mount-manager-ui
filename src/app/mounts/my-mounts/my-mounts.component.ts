@@ -153,8 +153,8 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
         this.couplings = couplingsResponse.couplings;
         this.setIsViewMoreCouplingsDisabled(couplingsResponse.totalCount);
       }
+      this.setMountGenderCounts(true);
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
-      this.mountGenderCountsLoading = false;
       this.accountSettings = await this.accountsSettingsService.getAccountSettingByUserId().toPromise();
     } catch (e) {
       this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
@@ -162,7 +162,6 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
     this.mountsLoading = false;
     this.couplingsLoading = false;
     this.mountGenderCountsLoading = false;
-    this.setMountGenderCounts();
 
     //Subscribe on scroll event to add "back to top button"
     this.scrollDispatcher.scrolled().subscribe((data: CdkScrollable) => {
@@ -508,9 +507,12 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
     this.isViewMoreCouplingsDisabled = !(totalCount > this.couplings.length);
   }
 
-  private async setMountGenderCounts(): Promise<void> {
+  private async setMountGenderCounts(disableLoading: boolean = false): Promise<void> {
     try {
       this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
+      if (disableLoading) {
+        this.mountGenderCountsLoading = true;
+      }
     } catch (e) {
       this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
