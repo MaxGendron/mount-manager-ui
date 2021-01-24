@@ -143,15 +143,18 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
     try {
       const mountsResponse = await this.mountsService.getMountForUserId().toPromise();
       if (mountsResponse != null) {
+        this.mountsLoading = false;
         this.mounts = mountsResponse.mounts;
         this.setIsViewMoreMountsDisabled(mountsResponse.totalCount);
       }
       const couplingsResponse = await this.couplingsService.getCouplingsForUserId().toPromise();
       if (couplingsResponse != null) {
+        this.couplingsLoading = false;
         this.couplings = couplingsResponse.couplings;
         this.setIsViewMoreCouplingsDisabled(couplingsResponse.totalCount);
       }
       this.groupedColorDtos = await this.mountColorsService.getMountColorsGroupedByMountType().toPromise();
+      this.mountGenderCountsLoading = false;
       this.accountSettings = await this.accountsSettingsService.getAccountSettingByUserId().toPromise();
     } catch (e) {
       this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
