@@ -28,6 +28,23 @@
         <li>{{ 'index.future2' | translate }}</li>
         <li>{{ 'index.future3' | translate }}</li>
       </ul>
+      <mat-divider></mat-divider>
+      <div id="icon-container">
+        <a
+          [matTooltip]="githubTooltip"
+          matTooltipClass="links-tooltip"
+          href="https://github.com/MaxGendron"
+          target="_blank"
+          ><i class="fab fa-github"></i
+        ></a>
+        <a
+          [matTooltip]="discordTooltip"
+          matTooltipClass="links-tooltip"
+          href="https://discord.com/channels/@me/"
+          target="_blank"
+          ><i class="fab fa-discord"></i
+        ></a>
+      </div>
     </mat-card-content>
   </mat-card>
 </div>
