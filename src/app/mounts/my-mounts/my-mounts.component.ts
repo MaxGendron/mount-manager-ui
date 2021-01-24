@@ -511,7 +511,7 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
     try {
       const response = await this.mountsService.genderCountByTypeForUserId().toPromise();
       if (disableLoading) {
-        this.mountGenderCountsLoading = true;
+        this.mountGenderCountsLoading = false;
       }
       this.mountGenderCounts = response;
     } catch (e) {
