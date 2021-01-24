@@ -15,7 +15,8 @@
     "sameGender": "Cannot add the same gender",
     "notSameType": "Mount types aren't the same",
     "valueBetween": "Value must be between {{min}} and {{max}}",
-    "maxNumberOfChild": "One mount has hit the limit of the number children."
+    "maxNumberOfChild": "One mount has hit the limit of the number children.",
+    "invalidAutocompleteObject": "Please choose a value in the list"
   },
   "button": {
     "login": "Login",

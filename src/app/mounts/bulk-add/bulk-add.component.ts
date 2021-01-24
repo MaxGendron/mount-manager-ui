@@ -5,7 +5,7 @@ import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { MountsService } from './../mounts.service';
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MountGenderEnum } from '../models/enum/mount-gender.enum';
 import {
   MountColorDto,
@@ -14,6 +14,8 @@ import {
 import { CreateMountDto } from '../models/dtos/create-mount.dto';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2/src/sweetalert2.js';
+import ValidatorUtil from 'src/app/common/utils/validator-util';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-bulk-add',
@@ -36,6 +38,7 @@ export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
   currentColors: MountColorDto[][] = [];
   maxNumberOfChildForMountType: number[] = [];
   minNumberOfChildForMountType: number[] = [];
+  filteredColors: Observable<MountColorDto[]>[] = new Array();
 
   constructor(
     private translateService: TranslateService,
@@ -86,7 +89,7 @@ export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
         type: ['', Validators.required],
         index: index,
       }),
-      colorId: ['', Validators.required],
+      color: ['', Validators.compose([ValidatorUtil.autocompleteObjectValidator(), Validators.required])],
       maxNumberOfChild: [
         '',
         Validators.compose([
@@ -102,14 +105,22 @@ export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
       const index = data['index'];
       const changedForm = this.mounts.controls[index];
 
-      changedForm.get('colorId').setValue('');
       this.setCurrentColors(index, type);
+      changedForm.get('color').setValue('');
 
       const maxNumber = this.mountsService.getMaxNumberOfChildForMountType(type);
       this.maxNumberOfChildForMountType[index] = maxNumber;
       this.minNumberOfChildForMountType[index] = this.mountsService.getMinNumberOfChildForMountType(type);
       changedForm.get('maxNumberOfChild').setValue(maxNumber);
     });
+
+    this.filteredColors[index] = mountForm.get('color').valueChanges.pipe(
+      startWith(''),
+      map<any, any>(value => (value ? (value.color ? value.color[this.currentLang] : value) : undefined)),
+      map<any, MountColorDto[]>(color =>
+        color ? this._filterColors(color, index) : this.currentColors[index].slice(),
+      ),
+    );
 
     this.mounts.push(mountForm);
   }
@@ -128,7 +139,7 @@ export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
       const createMountDto = new CreateMountDto();
       createMountDto.name = values.name;
       createMountDto.gender = values.gender;
-      createMountDto.colorId = values.colorId;
+      createMountDto.colorId = values.color._id;
       createMountDto.maxNumberOfChild = values.maxNumberOfChild;
 
       createMountsDto.createMountDtos.push(createMountDto);
@@ -176,5 +187,20 @@ export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
 
   private setCurrentColors(index: number, type: string): void {
     this.currentColors[index] = this.groupedColorDtos.find(c => c.type === type).colors;
+  }
+
+  private _filterColors(value: string, i: number): MountColorDto[] {
+    const filterValue = value.toLowerCase();
+    return this.currentColors[i].filter(
+      color => color.color[this.currentLang].toLowerCase().indexOf(filterValue) === 0,
+    );
+  }
+
+  public displayFnWrapper() {
+    return color => this.displayFn(color);
+  }
+
+  public displayFn(color: MountColorDto): string {
+    return color && color.color ? color.color[this.currentLang] : undefined;
   }
 }

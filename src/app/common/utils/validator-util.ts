@@ -1,4 +1,4 @@
-import { FormGroup, FormControl, FormGroupDirective, NgForm } from '@angular/forms';
+import { FormGroup, FormControl, FormGroupDirective, NgForm, ValidatorFn, AbstractControl } from '@angular/forms';
 import { ErrorStateMatcher } from '@angular/material/core';
 
 export default class ValidatorUtil {
@@ -7,6 +7,15 @@ export default class ValidatorUtil {
     let confirmPassword = formGroup.get('confirmPassword').value;
 
     return password === confirmPassword ? null : { notSame: true };
+  }
+
+  static autocompleteObjectValidator() {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      if (typeof control.value === 'string' && control.value != '') {
+        return { invalidAutocompleteObject: true };
+      }
+      return null; /* valid option selected */
+    };
   }
 }
 
