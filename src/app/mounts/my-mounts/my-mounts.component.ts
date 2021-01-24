@@ -509,10 +509,11 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
 
   private async setMountGenderCounts(disableLoading: boolean = false): Promise<void> {
     try {
-      this.mountGenderCounts = await this.mountsService.genderCountByTypeForUserId().toPromise();
+      const response = await this.mountsService.genderCountByTypeForUserId().toPromise();
       if (disableLoading) {
         this.mountGenderCountsLoading = true;
       }
+      this.mountGenderCounts = response;
     } catch (e) {
       this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
