@@ -48,6 +48,9 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
   showButton: boolean = false;
   isViewMoreMountsDisabled: boolean = true;
   isViewMoreCouplingsDisabled: boolean = true;
+  mountGenderCountsLoading = true;
+  mountsLoading = true;
+  couplingsLoading = true;
 
   mountLoading = false;
   couplingLoading = false;
@@ -153,6 +156,9 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
     } catch (e) {
       this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
+    this.mountsLoading = false;
+    this.couplingsLoading = false;
+    this.mountGenderCountsLoading = false;
     this.setMountGenderCounts();
 
     //Subscribe on scroll event to add "back to top button"

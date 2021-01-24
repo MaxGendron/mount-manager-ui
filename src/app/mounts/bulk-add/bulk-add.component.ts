@@ -29,6 +29,7 @@ export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
   error: string;
   keys = Object.keys;
   globalError: string;
+  typesLoading = true;
 
   mounts = new FormArray([]);
   types: string[];
@@ -69,6 +70,7 @@ export class BulkAddComponent implements OnInit, OnDestroy, AfterViewInit {
     } catch (e) {
       this.globalError = this.translateService.instant('error.unexpectedPleaseRefresh');
     }
+    this.typesLoading = false;
   }
 
   ngOnDestroy(): void {
