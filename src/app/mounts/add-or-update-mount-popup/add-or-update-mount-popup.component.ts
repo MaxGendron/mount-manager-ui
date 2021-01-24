@@ -6,10 +6,12 @@ import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/fo
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mount.response.dto';
 import { MountGenderEnum } from '../models/enum/mount-gender.enum';
 import { MountColorGroupedByResponseDto } from '../mount-colors/models/dtos/responses/mount-color-grouped-by.response.dto';
+import ValidatorUtil from 'src/app/common/utils/validator-util';
+import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-add-or-update-mount-popup',
@@ -34,6 +36,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
   baseMount: MountResponseDto;
   groupedColorDtos: MountColorGroupedByResponseDto[];
   currentColors: MountColorDto[];
+  filteredColors: Observable<MountColorDto[]>;
 
   constructor(
     private translateService: TranslateService,
@@ -67,7 +70,10 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       name: [data.mount?.name, Validators.required],
       gender: [data.mount?.gender, Validators.required],
       type: [data.mount?.type, Validators.required],
-      colorId: [data.mount?.colorId, Validators.required],
+      color: [
+        data.mount?.colorId,
+        Validators.compose([ValidatorUtil.autocompleteObjectValidator(), Validators.required]),
+      ],
       maxNumberOfChild: [
         data.mount?.maxNumberOfChild,
         Validators.compose([
@@ -96,7 +102,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
     //Listen on value changes on type to reset value of color and reset currentColors
     this.mountForm.get('type').valueChanges.subscribe(type => {
-      this.mountForm.get('colorId').setValue('');
+      this.mountForm.get('color').setValue('');
       this.setCurrentColors(type);
 
       const maxNumber = this.mountsService.getMaxNumberOfChildForMountType(type);
@@ -104,6 +110,12 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       this.minNumberOfChildForMountType = this.mountsService.getMinNumberOfChildForMountType(type);
       this.mountForm.get('maxNumberOfChild').setValue(maxNumber);
     });
+
+    this.filteredColors = this.mountForm.get('color').valueChanges.pipe(
+      startWith(''),
+      map(value => (value ? (value.color ? value.color[this.currentLang] : value) : undefined)),
+      map(color => (color ? this._filterColors(color) : this.currentColors.slice())),
+    );
   }
 
   isDisabled(): boolean {
@@ -145,7 +157,7 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
       const createMountDto = new CreateMountDto();
       createMountDto.name = mountFormValue.name;
       createMountDto.gender = mountFormValue.gender;
-      createMountDto.colorId = mountFormValue.colorId;
+      createMountDto.colorId = mountFormValue.color._id;
       createMountDto.maxNumberOfChild = mountFormValue.maxNumberOfChild;
 
       this.subscription.add(
@@ -173,5 +185,19 @@ export class AddOrUpdateMountPopupComponent implements OnInit, OnDestroy {
 
   private setCurrentColors(type: string): void {
     this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors;
+  }
+
+  private _filterColors(value: string): MountColorDto[] {
+    const filterValue = value.toLowerCase();
+
+    return this.currentColors.filter(color => color.color[this.currentLang].toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  public displayFnWrapper() {
+    return color => this.displayFn(color);
+  }
+
+  public displayFn(color: MountColorDto): string {
+    return color && color.color ? color.color[this.currentLang] : undefined;
   }
 }

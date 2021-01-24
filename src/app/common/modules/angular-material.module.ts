@@ -18,6 +18,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 //Modules for all the imports related to angular material
 const angularMaterial = [
@@ -40,6 +41,7 @@ const angularMaterial = [
   ScrollingModule,
   MatSlideToggleModule,
   MatProgressSpinnerModule,
+  MatAutocompleteModule,
 ];
 
 @NgModule({

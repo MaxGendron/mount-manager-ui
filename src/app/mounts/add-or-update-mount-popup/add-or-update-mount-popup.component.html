@@ -39,12 +39,16 @@
 
       <mat-form-field appearance="standard" class="col-lg-6" *ngIf="mountForm.get('type').value">
         <mat-label>{{ 'form.color' | translate }}</mat-label>
-        <mat-select formControlName="colorId" name="colorId" required>
-          <mat-option *ngFor="let c of currentColors" [value]="c._id">
+        <input matInput type="text" formControlName="color" name="color" [matAutocomplete]="auto" />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFnWrapper()">
+          <mat-option *ngFor="let c of filteredColors | async" [value]="c">
             {{ c.color[currentLang] }}
           </mat-option>
-        </mat-select>
-        <mat-error *ngIf="mountForm.get('colorId').hasError('required')">
+        </mat-autocomplete>
+        <mat-error *ngIf="mountForm.get('color').hasError('invalidAutocompleteObject')">
+          {{ 'error.invalidAutocompleteObject' | translate }}
+        </mat-error>
+        <mat-error *ngIf="mountForm.get('color').hasError('required')">
           {{ 'error.required' | translate: { input: 'form.color' | translate } }}
         </mat-error>
       </mat-form-field>

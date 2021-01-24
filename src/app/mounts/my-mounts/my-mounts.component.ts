@@ -12,7 +12,7 @@ import { MountGenderEnum } from './../models/enum/mount-gender.enum';
 import { MountsService } from './../mounts.service';
 import { AfterViewInit, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { LangChangeEvent, TranslateService } from '@ngx-translate/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { MountResponseDto } from '../models/dtos/responses/mount.response.dto';
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { AddOrUpdateMountPopupComponent } from '../add-or-update-mount-popup/add-or-update-mount-popup.component';
@@ -24,6 +24,8 @@ import {
 import { MountColorsService } from '../mount-colors/mount-colors.service';
 import { AccountsSettingsService } from 'src/app/my-account/accounts-settings/accounts-settings.service';
 import { CdkScrollable, ScrollDispatcher } from '@angular/cdk/scrolling';
+import { map, startWith } from 'rxjs/operators';
+import ValidatorUtil from 'src/app/common/utils/validator-util';
 
 export enum DeleteTypeEnum {
   Mount,
@@ -73,6 +75,7 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
   couplingFather: MountResponseDto;
   couplingChildName: string;
   accountSettings: AccountSettingsResponseDto;
+  filteredColors: Observable<MountColorDto[]>;
 
   constructor(
     private translateService: TranslateService,
@@ -96,7 +99,7 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
       name: [''],
       gender: [''],
       type: [''],
-      colorId: [''],
+      color: ['', ValidatorUtil.autocompleteObjectValidator()],
       sortField: [MountSortFieldEnum.Name],
       sortOrder: [SortOrderEnum.Asc],
       hasMaxedChild: [false],
@@ -112,7 +115,7 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
 
     //Listen on value changes on type to reset value of color and reset currentColors
     this.mountsFiltersForm.get('type').valueChanges.subscribe(type => {
-      this.mountsFiltersForm.get('colorId').setValue('');
+      this.mountsFiltersForm.get('color').setValue('');
       if (type) {
         this.setCurrentColors(type);
       }
@@ -125,6 +128,12 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
     this.couplingsFiltersForm.valueChanges.subscribe(() => {
       this.couplingError = '';
     });
+
+    this.filteredColors = this.mountsFiltersForm.get('color').valueChanges.pipe(
+      startWith(''),
+      map(value => (value ? (value.color ? value.color[this.currentLang] : value) : undefined)),
+      map(color => (color ? this._filterColors(color) : this.currentColors.slice())),
+    );
   }
 
   async ngAfterViewInit(): Promise<void> {
@@ -193,7 +202,7 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
   }
 
   isMountButtonDisabled(): boolean {
-    return this.mountLoading;
+    return this.mountLoading || !this.mountsFiltersForm.valid;
   }
 
   isCouplingButtonDisabled(): boolean {
@@ -303,8 +312,8 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
     if (filtersFormValue.type) {
       searchMountDto.type = filtersFormValue.type;
     }
-    if (filtersFormValue.colorId) {
-      searchMountDto.colorId = filtersFormValue.colorId;
+    if (filtersFormValue.color) {
+      searchMountDto.colorId = filtersFormValue.color._id;
     }
     if (filtersFormValue.hasMaxedChild) {
       searchMountDto.hasMaxedChild = filtersFormValue.hasMaxedChild;
@@ -500,5 +509,19 @@ export class MyMountsComponent implements OnDestroy, AfterViewInit {
 
   private setCurrentColors(type: string): void {
     this.currentColors = this.groupedColorDtos.find(c => c.type === type).colors;
+  }
+
+  private _filterColors(value: string): MountColorDto[] {
+    const filterValue = value.toLowerCase();
+
+    return this.currentColors.filter(color => color.color[this.currentLang].toLowerCase().indexOf(filterValue) === 0);
+  }
+
+  public displayFnWrapper() {
+    return color => this.displayFn(color);
+  }
+
+  public displayFn(color: MountColorDto): string {
+    return color && color.color ? color.color[this.currentLang] : undefined;
   }
 }

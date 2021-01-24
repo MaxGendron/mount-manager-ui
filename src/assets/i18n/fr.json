@@ -15,7 +15,8 @@
     "sameGender": "Impossible d'ajouter le même sexe",
     "notSameType": "Les types de montures ne sont pas les mêmes",
     "valueBetween": "La valeur doit être entre {{min}} et {{max}}",
-    "maxNumberOfChild": "Une monture a atteint la limite du nombre d'enfants."
+    "maxNumberOfChild": "Une monture a atteint la limite du nombre d'enfants.",
+    "invalidAutocompleteObject": "Veuillez choisir une valeur parmis la liste"
   },
   "button": {
     "login": "Se connecter",
