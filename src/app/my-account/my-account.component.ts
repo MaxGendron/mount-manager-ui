@@ -116,11 +116,8 @@ export class MyAccountComponent implements OnDestroy, AfterViewInit {
       this.accountSettingsInfo = await this.accountSettingsService.getAccountSettingByUserId().toPromise();
       //Get the servers
       this.servers = await this.serverService.getServers().toPromise();
-    } catch (e) {
-      this.error = this.translateService.instant('error.unexpectedPleaseRefresh');
-    }
 
-    //Set value to both forms
+          //Set value to both forms
     this.userForm.patchValue({ username: this.userInfo.username, email: this.userInfo.email });
     this.accountSettingForm.patchValue({
       igUsername: this.accountSettingsInfo.igUsername,
@@ -128,6 +125,9 @@ export class MyAccountComponent implements OnDestroy, AfterViewInit {
       mountTypes: this.accountSettingsInfo.mountTypes,
       autoFillChildName: this.accountSettingsInfo.autoFillChildName,
     });
+    } catch (e) {
+      this.error = this.translateService.instant('error.unexpectedPleaseRefresh');
+    }
 
     this.initialize = false;
   }
